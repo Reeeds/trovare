@@ -59,7 +59,7 @@ function CSVToArray(strData, strDelimiter) {
 }
 
 function CSV2JSON(csv) {
-    var array = CSVToArray(csv);
+    var array = CSVToArray(csv,";");
     var objArray = [];
     for (var i = 1; i < array.length; i++) {
         objArray[i - 1] = {};

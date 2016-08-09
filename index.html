@@ -25,21 +25,8 @@
         <!--<p>Sort Type: {{ sortType }}</p>-->
         <!--<p>Sort Reverse: {{ sortReverse }}</p>-->
         <!--<p>Search Query: {{ search }}</p>-->
-        <p>Count Rows: {{ contentArray.length }}</p>
+        <p>Count Rows: {{ contentJSON.length }}</p>
     </div>
-
-        <div >
-
-            <!--<div >-->
-                <!--<h2>CSV content is:</h2>-->
-                <!--<pre>{{ content }}</pre>-->
-                <!--<h2>JSON content is:</h2>-->
-                <!--<pre>{{ contentJSON }}</pre>-->
-                <!--<h2>Array content is:</h2>-->
-                <!--<pre>{{ contentArray }}</pre>-->
-            <!--</div>-->
-        </div>
-
         <form >
             <div class="form-group">
                 <div class="input-group">
@@ -56,9 +43,10 @@
 
         <thead>
         <tr>
-            <th ng-repeat="headers in contentArray[0] track by $index">
+
+            <th ng-repeat="(key,value) in contentJSON[0] track by $index">
                     <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
-                        {{headers}}
+                        {{key}}
                         <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-up"></span>
                         <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-down"></span>
                     </a>
@@ -67,7 +55,7 @@
         </thead>
 
         <tbody>
-            <tr ng-repeat="row in contentArray | orderBy:sortType | filter:search track by $index" ng-hide="$first" >
+            <tr ng-repeat="row in contentJSON | orderBy:sortType | filter:search track by $index">
                 <td ng-repeat="cell in row track by $index">
                     {{cell}}
                 </td>
@@ -76,50 +64,6 @@
 
     </table>
 
-
-    <!--Sushi
-      <table class="table table-bordered table-striped">
-
-          <thead>
-          <tr>
-              <td>
-                  <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
-                      Sushi Roll
-                      <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-up"></span>
-                      <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-down"></span>
-                  </a>
-              </td>
-              <td>
-                  <a href="#" ng-click="sortType = 'fish'; sortReverse = !sortReverse">
-                      Fish Type
-                      <span ng-show="sortType == 'fish' && !sortReverse" class="fa fa-caret-up"></span>
-                      <span ng-show="sortType == 'fish' && sortReverse" class="fa fa-caret-down"></span>
-
-                  </a>
-              </td>
-              <td>
-                  <a href="#" ng-click="sortType = 'tastiness'; sortReverse = !sortReverse">
-                      Taste Level
-                      <span ng-show="sortType == 'tastiness' && !sortReverse" class="fa fa-caret-up"></span>
-                      <span ng-show="sortType == 'tastiness' && sortReverse" class="fa fa-caret-down"></span>
-
-                  </a>
-              </td>
-          </tr>
-          </thead>
-
-          <tbody>
-          <tr ng-repeat="roll in sushi | orderBy:sortType:sortReverse | filter:searchFish">
-              <td>{{ roll.name }}</td>
-              <td>{{ roll.fish }}</td>
-              <td>{{ roll.tastiness }}</td>
-          </tr>
-          </tbody>
-
-      </table>
-
-
-      -->
 
   </div>
   </body>
