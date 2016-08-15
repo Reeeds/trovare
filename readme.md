@@ -1,3 +1,8 @@
+#Trovare
+## Einleitung
+Trovare erlaubt das Anzeigen und Filtern von HP QC Issues.
+
+## To do
 todos:
 - funktionierende sortierung
 - umstellen von array auf json

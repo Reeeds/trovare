@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="alert alert-info">
+    <input type="file" on-read-file="$ctrl.fileLoaded(fileContent)">
+    <p>Count Rows: {{ $ctrl.contentJson.length }}</p>
+  </div>
+
+  <form >
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+        <input type="text" class="form-control" placeholder="Find!!" ng-model="$ctrl.search" ng-model-options="{debounce: 500}" />
+      </div>
+    </div>
+  </form>
+
+  <ul>
+    <li ng-repeat="filter in $ctrl.filters">
+      <strong>{{filter.name}}</strong>
+      <ul>
+        <li ng-repeat="filterItem in filter.items">
+          {{filterItem.val}}
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th ng-repeat="(key,value) in $ctrl.contentJson[0] track by $index">
+          <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
+            {{key}}
+            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-up"></span>
+            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-down"></span>
+          </a>
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr ng-repeat="row in $ctrl.contentJson | orderBy:sortType | filter:$ctrl.search track by $index">
+        <td ng-repeat="cell in row track by $index">
+          {{cell}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div><!-- /.container -->
