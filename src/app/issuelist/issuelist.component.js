@@ -8,9 +8,9 @@
       controller: IssueListController
     });
 
-  IssueListController.$inject = ['convert', 'filterColumns'];
+  IssueListController.$inject = ['csv', 'filterColumns'];
 
-  function IssueListController(convert, filterColumns) {
+  function IssueListController(csv, filterColumns) {
     var vm = this;
 
     vm.content = "";
@@ -25,7 +25,7 @@
 
     function fileLoaded(fileContent) {
       vm.content = fileContent;
-      vm.contentJson = JSON.parse(convert.csvToJson(fileContent));
+      vm.contentJson = new csv(fileContent, { header: true }).parse();
 
       angular.forEach(filterColumns, function(filterColumn) {
         vm.filters[filterColumn] = { name: filterColumn, items: [], values: [] };
