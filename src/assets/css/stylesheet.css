@@ -5,3 +5,11 @@ body {
 .container {
     padding-left:5px;
 }
+
+.alert-info {
+    background-color:#20157B;
+}
+
+input[type='file'] {
+  width:800px;
+}

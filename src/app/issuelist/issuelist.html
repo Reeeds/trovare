@@ -1,4 +1,4 @@
-<div class="container">
+<div>
   <div class="alert alert-info">
     <input type="file" on-read-file="$ctrl.fileLoaded(fileContent)">
     <p>Count Rows: {{ $ctrl.contentJson.length }}</p>
@@ -13,7 +13,7 @@
     </div>
   </form>
 
-  <ul>
+<!--  <ul>
     <li ng-repeat="filter in $ctrl.filters">
       <strong>{{filter.name}}</strong>
       <ul>
@@ -22,7 +22,7 @@
         </li>
       </ul>
     </li>
-  </ul>
+  </ul>-->
 
   <table class="table table-bordered table-striped">
     <thead>
