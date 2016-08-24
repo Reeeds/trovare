@@ -1,0 +1,1 @@
+{"version":3,"sources":["global.scss"],"names":[],"mappings":"AAAA,KACE,YAAA,KAGF,WACI,aAAA,IAIJ,YACI,iBAAA","file":"global.css","sourcesContent":["body {\n  padding-top:10px;\n}\n\n.container {\n    padding-left:6px;\n}\n\n\n.alert-info {\n    background-color:#156586;\n\n}"],"sourceRoot":"/source/"}
