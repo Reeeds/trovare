@@ -1,6 +1,6 @@
 <div>
   <div class="alert alert-info">
-    <input type="file" on-read-file="$ctrl.fileLoaded(fileContent)">
+    <input type="file" on-read-file="$ctrl.fileLoaded(fileContent)" />
     <p>Count Rows: {{ $ctrl.contentJson.length }}</p>
   </div>
 
@@ -40,7 +40,7 @@
     </thead>
 
     <tbody>
-      <tr ng-repeat="row in $ctrl.contentJson | orderBy:$ctrl.orderBy:$ctrl.sortReverse | filter:$ctrl.search track by $index">
+      <tr ng-repeat="row in $ctrl.contentJson | multiSearch:$ctrl.search | orderBy:$ctrl.orderBy:$ctrl.sortReverse track by $index">
         <td ng-repeat="cell in row track by $index">
           {{cell}}
         </td>

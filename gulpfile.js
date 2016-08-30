@@ -65,6 +65,7 @@ var config = {
 
         "./src/app/issuelist/issuelist.module.js",
         "./src/app/issuelist/issuelist.config.js",
+        "./src/app/issuelist/multisearch.filter.js",
         "./src/app/issuelist/onreadfile.directive.js",
         "./src/app/issuelist/issuelist.component.js"
       ]
