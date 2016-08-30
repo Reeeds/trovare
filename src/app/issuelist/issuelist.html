@@ -28,18 +28,19 @@
   <table class="table table-bordered table-striped">
     <thead>
       <tr>
-        <th ng-repeat="(key,value) in $ctrl.contentJson[0] track by $index">
-          <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse">
-            {{key}}
-            <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-up"></span>
-            <span ng-show="sortType == 'name' && sortReverse" class="fa fa-caret-down"></span>
+        <th ng-repeat="header in $ctrl.headers track by $index">
+          <a href="#" ng-click="$ctrl.sortType = header.title; $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.updateFilterName()">
+            {{header.title}}
+            <span ng-show="$ctrl.sortType == header.title"
+                  ng-class="{ 'fa-caret-up': !$ctrl.sortReverse, 'fa-caret-down': $ctrl.sortReverse }"
+                  class="fa"></span>
           </a>
         </th>
       </tr>
     </thead>
 
     <tbody>
-      <tr ng-repeat="row in $ctrl.contentJson | orderBy:sortType | filter:$ctrl.search track by $index">
+      <tr ng-repeat="row in $ctrl.contentJson | orderBy:$ctrl.orderBy:$ctrl.sortReverse | filter:$ctrl.search track by $index">
         <td ng-repeat="cell in row track by $index">
           {{cell}}
         </td>
