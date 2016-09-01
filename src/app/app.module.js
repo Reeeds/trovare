@@ -3,7 +3,8 @@
 
   angular.module('app', [
     'app.issueList',
-    'app.csvjs'
+    'app.csvjs',
+    'app.ui'
   ]);
 
 })();

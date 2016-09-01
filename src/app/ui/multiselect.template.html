@@ -1,0 +1,16 @@
+<div class="multiselect">
+  <a class="multiselect-title">{{multiSelectCtrl.title}}</a>
+  <div class="multiselect-dropdown">
+    <ul class="multiselect-list">
+      <li class="selection">
+        <a ng-click="multiSelectCtrl.changeAll(true)">All</a> <a ng-click="multiSelectCtrl.changeAll(false)">None</a>
+      </li>
+      <li ng-repeat="selectionItem in multiSelectCtrl.itemList">
+        <label>
+          <input type="checkbox" ng-model="selectionItem.active" />
+          <span>{{selectionItem.title}}</span>
+        </label>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -63,6 +63,9 @@ var config = {
         "./src/app/csvjs/csvjs.module.js",
         "./src/app/csvjs/csv.service.js",
 
+        "./src/app/ui/ui.module.js",
+        "./src/app/ui/multiselect.directive.js",
+
         "./src/app/issuelist/issuelist.module.js",
         "./src/app/issuelist/issuelist.config.js",
         "./src/app/issuelist/multisearch.filter.js",
