@@ -2,10 +2,10 @@
   <div class="container">
     <div class="alert alert-info">
       <input type="file" on-read-file="$ctrl.fileLoaded(fileContent)" />
-      <p>Count Rows: {{ $ctrl.contentJson.length }}</p>
+      <p>{{ $ctrl.contentJson.length > 0 ? ('Showing ' + issueResultList.length + ' of ' + $ctrl.contentJson.length) : 'No issues found' }}</p>
     </div>
 
-    <form >
+    <form>
       <div class="form-group">
         <div class="input-group">
           <div class="input-group-addon"><i class="fa fa-search"></i></div>
@@ -36,9 +36,10 @@
     </thead>
 
     <tbody>
-      <tr ng-repeat="row in $ctrl.contentJson | multiSearch:$ctrl.search | orderBy:$ctrl.orderBy:$ctrl.sortReverse track by $index">
+      <tr ng-repeat="row in $ctrl.contentJson | multiSearch:$ctrl.search | orderBy:$ctrl.orderBy:$ctrl.sortReverse as issueResultList track by $index ">
         <td ng-repeat="(key,val) in row track by $index" ng-show="$ctrl.headers[key].active">{{val}}</td>
       </tr>
     </tbody>
   </table>
+
 </div>
