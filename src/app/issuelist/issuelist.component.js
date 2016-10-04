@@ -20,9 +20,12 @@
     vm.search             = '';     // set the default search/filter term
     vm.headers            = {};
     vm.collapsableColumns = collapsableColumns;
+    vm.limitTo            = 50;
+    vm.step               = 50;
 
     vm.fileLoaded   = fileLoaded;
     vm.orderBy = orderBy;
+    vm.loadMore = loadMore;
 
     //////////
 
@@ -41,6 +44,10 @@
 
     function orderBy(val) {
       return val[vm.sortType];
+    }
+
+    function loadMore() {
+      vm.limitTo += vm.step;
     }
   }
 })();

@@ -36,7 +36,7 @@
     </thead>
 
     <tbody>
-      <tr ng-repeat="row in $ctrl.contentJson | multiSearch:$ctrl.search | orderBy:$ctrl.orderBy:$ctrl.sortReverse as issueResultList track by $index ">
+      <tr ng-repeat="row in $ctrl.contentJson | multiSearch:$ctrl.search | orderBy:$ctrl.orderBy:$ctrl.sortReverse | limitTo: $ctrl.limitTo as issueResultList track by $index ">
         <td ng-repeat="(key,val) in row track by $index" ng-show="$ctrl.headers[key].active">
           <div ng-if="!$ctrl.headers[key].collapsable">
             {{val}}
@@ -48,5 +48,7 @@
       </tr>
     </tbody>
   </table>
+
+  <a class="load-more" ng-click="$ctrl.loadMore()" ng-show="$ctrl.contentJson.length > $ctrl.limitTo && issueResultList.length === $ctrl.limitTo">Load more</a>
 
 </div>
