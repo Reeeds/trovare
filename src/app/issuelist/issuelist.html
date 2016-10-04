@@ -37,7 +37,14 @@
 
     <tbody>
       <tr ng-repeat="row in $ctrl.contentJson | multiSearch:$ctrl.search | orderBy:$ctrl.orderBy:$ctrl.sortReverse as issueResultList track by $index ">
-        <td ng-repeat="(key,val) in row track by $index" ng-show="$ctrl.headers[key].active">{{val}}</td>
+        <td ng-repeat="(key,val) in row track by $index" ng-show="$ctrl.headers[key].active">
+          <div ng-if="!$ctrl.headers[key].collapsable">
+            {{val}}
+          </div>
+          <div ng-if="$ctrl.headers[key].collapsable">
+            <collapsable-text text="val" />
+          </div>
+        </td>
       </tr>
     </tbody>
   </table>

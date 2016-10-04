@@ -1,0 +1,10 @@
+<div class="collapsable-text">
+  <div class="content">
+    {{  collapsableTextCtrl.collapsed ? collapsableTextCtrl.getCollapsedContent(collapsableTextCtrl.text) : collapsableTextCtrl.text }}
+  </div>
+  <a ng-click="collapsableTextCtrl.collapsed = !collapsableTextCtrl.collapsed"
+     ng-if="collapsableTextCtrl.text !== collapsableTextCtrl.getCollapsedContent(collapsableTextCtrl.text)">
+    <span ng-show="collapsableTextCtrl.collapsed">Show more</span>
+    <span ng-hide="collapsableTextCtrl.collapsed">Show less</span>
+  </a>
+</div>

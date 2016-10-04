@@ -3,5 +3,6 @@
 
   angular
     .module('app.issueList')
-    .value('filterColumns', ['Fehlerklasse', 'Param-Team', 'Status', 'Erfasser', 'Zugewiesen an', 'Externer Bearbeiter']);
+    .value('filterColumns', ['Fehlerklasse', 'Param-Team', 'Status', 'Erfasser', 'Zugewiesen an', 'Externer Bearbeiter'])
+    .value('collapsableColumns', ['Kommentare'])
 })();
