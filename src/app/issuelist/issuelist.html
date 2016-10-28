@@ -1,7 +1,7 @@
 <div>
   <div class="container">
     <div class="alert alert-info">
-      <input type="file" on-read-file="$ctrl.fileLoaded(fileContent)" class="filestyle" data-classButton="btn btn-primary" data-input="false" data-classIcon="icon-plus" data-buttonText="Your label here." />
+      <input type="file" on-read-file="$ctrl.fileLoaded(fileContent)" class="filestyle" data-classButton="btn btn-primary" data-input="false" data-classIcon="icon-plus" />
       <p>{{ $ctrl.contentJson.length > 0 ? ('Showing ' + issueResultList.length + ' of ' + $ctrl.contentJson.length) : 'No issues found' }}</p>
     </div>
 
@@ -54,7 +54,7 @@
 </div>
 <script>
   $(document).ready(function(){
-    $(":file").filestyle();
+    //$(":file").filestyle({ buttonText: "Find file" });
     /*alert('Hallo Welt');*/
   });
 </script>

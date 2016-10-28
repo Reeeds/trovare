@@ -14,6 +14,8 @@
           'onReadFile': '&'
         },
         link: function(scope, element, attrs) {
+            element.filestyle({ buttonText: "Choose CSV" });
+
             element.on('change', function(onChangeEvent) {
                 var reader = new FileReader();
 
