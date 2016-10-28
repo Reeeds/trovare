@@ -149,7 +149,7 @@ gulp.task("app", function() {
   return gulp
     .src(config.app.src.files)
     .pipe(concat(config.app.dist.fileName))
-    .pipe(uglify())
+    //.pipe(uglify())
     .pipe(gulp.dest(config.app.dist.path))
     .resume();
 });

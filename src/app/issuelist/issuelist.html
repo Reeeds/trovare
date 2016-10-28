@@ -1,7 +1,7 @@
 <div>
   <div class="container">
     <div class="alert alert-info">
-      <input type="file" on-read-file="$ctrl.fileLoaded(fileContent)" class="filestyle" data-classButton="btn btn-primary" data-input="false" data-classIcon="icon-plus" />
+      <input id="uploadButton"type="file" on-read-file="$ctrl.fileLoaded(fileContent)" accept=".csv" class="filestyle" data-classButton="btn btn-primary" data-input="false" data-classIcon="icon-plus" />
       <p>{{ $ctrl.contentJson.length > 0 ? ('Showing ' + issueResultList.length + ' of ' + $ctrl.contentJson.length) : 'No issues found' }}</p>
     </div>
 
@@ -52,9 +52,3 @@
   <a class="load-more" ng-click="$ctrl.loadMore()" ng-show="$ctrl.contentJson.length > $ctrl.limitTo && issueResultList.length === $ctrl.limitTo">Load more</a>
 
 </div>
-<script>
-  $(document).ready(function(){
-    //$(":file").filestyle({ buttonText: "Find file" });
-    /*alert('Hallo Welt');*/
-  });
-</script>

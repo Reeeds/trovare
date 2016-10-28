@@ -1,1 +1,412 @@
-!function(){"use strict";var t=function(t){return null!=t},e=/^(\-|\+)?([0-9]+(\.[0-9]+)?|Infinity)$/,n=function(t){return t=t.toLowerCase(),"true"===t||"false"===t},i=["|","^"],o=[",",";","  ","|","^"],s=["\r\n","\r","\n"],l=function(t,i,o,s){var l,a="return ",r=s?function(t,i){return e.test(t)?"Number(values["+i+"]),":n(t)?"Boolean(values["+i+"].toLowerCase() === 'true'),":"String(values["+i+"]),"}:function(t,e){return"values["+e+"],"};if("object"===t){for(a+="{",l=0;l<i.length;++l)a+='"'+i[l]+'": '+r(o[l],l);a=a.slice(0,-1)+"}"}else{for(a+="[",l=0;l<i.length;++l)a+=r(o[l],l);a=a.slice(0,-1)+"]"}return new Function("values",a)},a=function(t,e){for(var n,o=0,s=0,l=e.length;l>s;s++){var a=e[s],r=-1==i.indexOf(a)?a:"\\"+a,c=t.match(new RegExp(r,"g"));c&&c.length>o&&(o=c.length,n=a)}return n||e[0]},r=function(e,n){if(n=t(n)?n:{},this.data=e,this.options={header:!!t(n.header)&&n.header,cast:!t(n.cast)||n.cast,line:n.line,delimiter:n.delimiter},this.data instanceof Array)this.options.line=t(n.line)?n.line:"\r\n",this.options.delimiter=t(n.delimiter)?n.delimiter:",";else{this.options.line||(this.options.line=a(this.data,s)),this.options.delimiter||(this.options.delimiter=a(this.data,o));for(var i=0;i<this.options.line.length;i++){var l=e.charCodeAt(e.length-this.options.line.length+i),r=this.options.line.charCodeAt(i);l!=r&&(this.data+=this.options.line.charAt(i))}}};r.prototype.set=function(t,e){return this.options[t]=e,this},r.prototype.encode=function(e){if(0===this.data.length)return"";var n,i,o,s,l,a,r=this.data,c=[],u=this.options.delimiter,p=r[0]instanceof Array?"array":"object",h=this.options.header,f=this.options.done,d=function(e){return t(e)?"string"!=typeof e?e:'"'+e.replace(/\"/g,'""')+'"':null},m=e?function(t){e(t.join(u))}:function(t){c.push(t.join(u))},b=r.length;if("object"===p?(o=Object.keys(r[0]),s=o.length):s=r[0].length,a=new Array(s),h){var g=h instanceof Array?h:o;for(i=0;s>i;++i)a[i]=d(g[i]);m(a)}if("object"===p)for(n=0;b>n;++n){for(l=r[n],i=0;s>i;++i)a[i]=d(l[o[i]]);m(a)}else for(n=0;b>n;++n){for(l=r[n],i=0;s>i;++i)a[i]=d(l[i]);m(a)}return c=c.join(this.options.line),f&&f(c),c},r.prototype.parse=function(t){if(0===this.data.trim().length)return[];var e,n,i,o,s=this.data,a=[],r=this.options.done,c=this.options.cast,u=this.options.header,p=u instanceof Array?u:[],h=this.options.line,f=p.length,d={row:[],cell:""},m={escaped:!1,quote:!1,cell:!0},b=function(t){d.row.push((m.escaped?t.slice(1,-1).replace(/""/g,'"'):t).trim()),d.cell="",m={escaped:!1,quote:!1,cell:!0}},g=1===h.length?b:function(t){b(t.slice(0,1-h.length))},y=t?function(){t(new e(d.row))}:function(){a.push(new e(d.row))},v=function(){u?f?(e=new l("object",p,d.row,c),y(),v=y):(p=d.row,f=p.length):(e||(e=new l("array",d.row,d.row,c)),y(),v=y)},$=s.length,x=h.charCodeAt(h.length-1),F=this.options.delimiter.charCodeAt(0);for(n=0,i=0;$>=i;++i)o=s.charCodeAt(i),m.cell&&(m.cell=!1,34===o)?m.escaped=!0:m.escaped&&34===o?m.quote=!m.quote:(m.escaped&&m.quote||!m.escaped)&&(o===F?(b(d.cell+s.slice(n,i)),n=i+1):o===x&&(g(d.cell+s.slice(n,i)),n=i+1,v(),d.row=[]));return r&&r(a),a},r.prototype.forEach=function(t){return this.data instanceof Array?this.encode(t):this.parse(t)},"function"==typeof define&&define.amd?define(function(){return r}):"object"==typeof module&&module.exports?module.exports=r:window&&(window.CSV=r)}(),function(){"use strict";angular.module("app",["app.issueList","app.csvjs","app.ui"])}(),function(){"use strict";angular.module("app.csvjs",[])}(),function(){"use strict";function t(t){if(t.CSV){t._thirdParty=t._thirdParty||{},t._thirdParty.CSV=t.CSV;try{delete t.CSV}catch(e){t.CSV=void 0}}var e=t._thirdParty.CSV;return e}angular.module("app.csvjs").factory("csv",t),t.$inject=["$window"]}(),function(){"use strict";angular.module("app.ui",[])}(),function(){"use strict";function t(){return{restrict:"E",scope:{title:"@",itemList:"="},link:e,controller:n,controllerAs:"multiSelectCtrl",bindToController:!0,templateUrl:"app/ui/multiselect.template.html",replace:!0}}function e(t,e,n){var i=e.find(".multiselect-title"),o=e.find(".multiselect-dropdown");i.click(function(t){t.stopPropagation(),e.hasClass("active")||$("body .multiselect").removeClass("active"),e.toggleClass("active")}),$("html, body").click(function(){e.removeClass("active")}),o.click(function(t){t.stopPropagation()})}function n(t){function e(t){angular.forEach(n.itemList,function(e){e.active=t})}var n=this;n.changeAll=e}angular.module("app.ui").directive("multiSelect",t),t.$inject=[],n.$inject=["$scope"]}(),function(){"use strict";function t(){function t(){}function e(){var t=100;return n.text.length>t?n.text.substr(0,t)+"...":n.text}var n=this;n.collapsed=!0,n.getCollapsedContent=e,t()}angular.module("app.ui").component("collapsableText",{templateUrl:"app/ui/collapsabletext.template.html",controller:t,controllerAs:"collapsableTextCtrl",bindings:{text:"<"}}),t.$inject=[]}(),function(){"use strict";angular.module("app.issueList",[])}(),function(){"use strict";angular.module("app.issueList").value("filterColumns",["Fehlerklasse","Param-Team","Status","Erfasser","Zugewiesen an","Externer Bearbeiter"]).value("collapsableColumns",["Kommentare"])}(),function(){"use strict";function t(){return function(t,i){if(""===i.trim())return t;var o=new Array,s=n(i);return angular.forEach(t,function(t){var n=!0;angular.forEach(t,function(t,e){var i=e.toString().toLowerCase().replace(/[\s]*/g,"");if(angular.forEach(s.keySearch,function(e){if(e.first.toString().toLowerCase().replace(/[\s]*/g,"")===i&&t.toString().toLowerCase().indexOf(e.second.toString().toLowerCase())===-1)return n=!1,!1}),!n)return!1}),angular.forEach(s.exclude,function(i){if(e(t,i))return n=!1,!1}),angular.forEach(s.match,function(i){if(!e(t,i))return n=!1,!1}),angular.forEach(s.matchOr,function(i){if(!e(t,i.first)&&!e(t,i.second))return n=!1,!1}),n&&o.push(t)}),o}}function e(t,e){var n=!1;return angular.forEach(t,function(t){t.toString().toLowerCase().indexOf(e.toString().toLowerCase())!==-1&&(n=!0)}),n}function n(t){var e={},n={};return n=i(/(?:\-\-)(?:(?:")([^\"]*)(?:\"))/g,t,1),e.exclude=n.matches,t=n.text,n=i(/\"([^\|\"]+)\"\|\"([^\"]+)\"/g,t,1,2),e.matchOr=n.matches,t=n.text,n=i(/\b([^\s\"]+):\"([^\"]+)\"/g,t,1,2),e.keySearch=n.matches,t=n.text,n=i(/(?:(?:")([^\"]*)(?:\"))/g,t,1),e.match=n.matches,t=n.text,n=i(/(?:\-\-)([^\s]*)/g,t,1),e.exclude=e.exclude.concat(n.matches),t=n.text,n=i(/\b([^\|][\S]+)\|([\S]+)\b/g,t,1,2),e.matchOr=e.matchOr.concat(n.matches),t=n.text,n=i(/\b([^\s]+):([^\s]+)\b/g,t,1,2),e.keySearch=e.keySearch.concat(n.matches),t=n.text,n=i(/\b[\S]+\b/g,t,0),e.match=e.match.concat(n.matches),t=n.text,e}function i(t,e,n,i){var o,s={matches:[],text:""};do o=t.exec(e),o&&("undefined"!=typeof i?s.matches.push({first:o[n],second:o[i]}):s.matches.push(o[n]));while(o);return s.text=e.replace(t,""),s}angular.module("app.issueList").filter("multiSearch",t)}(),function(){"use strict";function t(){return{restrict:"A",scope:{onReadFile:"&"},link:function(t,e,n){e.filestyle({buttonText:"Find file"}),e.on("change",function(e){var n=new FileReader;n.onload=function(e){t.$apply(function(){t.onReadFile({fileContent:e.target.result})})},n.readAsText((e.srcElement||e.target).files[0],"ISO-8859-4")})}}}angular.module("app.issueList").directive("onReadFile",t),t.$inject=[]}(),function(){"use strict";function t(t,e,n){function i(e){l.content=e,l.contentJson=new t(e,{header:!0}).parse(),angular.forEach(l.contentJson[0],function(t,e){l.headers[e]={title:e,collapsable:l.collapsableColumns.indexOf(e)!==-1,active:!0}})}function o(t){return t[l.sortType]}function s(){l.limitTo+=l.step}var l=this;l.content="",l.contentJson="",l.sortType="fish",l.sortReverse=!1,l.search="",l.headers={},l.collapsableColumns=n,l.limitTo=50,l.step=50,l.fileLoaded=i,l.orderBy=o,l.loadMore=s}angular.module("app.issueList").component("issueList",{templateUrl:"app/issuelist/issuelist.html",controller:t}),t.$inject=["csv","filterColumns","collapsableColumns"]}(),function(t){var e=0,n=function(e,n){this.options=n,this.$elementFilestyle=[],this.$element=t(e)};n.prototype={clear:function(){this.$element.val(""),this.$elementFilestyle.find(":text").val(""),this.$elementFilestyle.find(".badge").remove()},destroy:function(){this.$element.removeAttr("style").removeData("filestyle"),this.$elementFilestyle.remove()},disabled:function(t){if(t===!0)this.options.disabled||(this.$element.attr("disabled","true"),this.$elementFilestyle.find("label").attr("disabled","true"),this.options.disabled=!0);else{if(t!==!1)return this.options.disabled;this.options.disabled&&(this.$element.removeAttr("disabled"),this.$elementFilestyle.find("label").removeAttr("disabled"),this.options.disabled=!1)}},buttonBefore:function(t){if(t===!0)this.options.buttonBefore||(this.options.buttonBefore=!0,this.options.input&&(this.$elementFilestyle.remove(),this.constructor(),this.pushNameFiles()));else{if(t!==!1)return this.options.buttonBefore;this.options.buttonBefore&&(this.options.buttonBefore=!1,this.options.input&&(this.$elementFilestyle.remove(),this.constructor(),this.pushNameFiles()))}},icon:function(t){if(t===!0)this.options.icon||(this.options.icon=!0,this.$elementFilestyle.find("label").prepend(this.htmlIcon()));else{if(t!==!1)return this.options.icon;this.options.icon&&(this.options.icon=!1,this.$elementFilestyle.find(".icon-span-filestyle").remove())}},input:function(t){if(t===!0)this.options.input||(this.options.input=!0,this.options.buttonBefore?this.$elementFilestyle.append(this.htmlInput()):this.$elementFilestyle.prepend(this.htmlInput()),this.$elementFilestyle.find(".badge").remove(),this.pushNameFiles(),this.$elementFilestyle.find(".group-span-filestyle").addClass("input-group-btn"));else{if(t!==!1)return this.options.input;if(this.options.input){this.options.input=!1,this.$elementFilestyle.find(":text").remove();var e=this.pushNameFiles();e.length>0&&this.options.badge&&this.$elementFilestyle.find("label").append(' <span class="badge">'+e.length+"</span>"),this.$elementFilestyle.find(".group-span-filestyle").removeClass("input-group-btn")}}},size:function(t){if(void 0===t)return this.options.size;var e=this.$elementFilestyle.find("label"),n=this.$elementFilestyle.find("input");e.removeClass("btn-lg btn-sm"),n.removeClass("input-lg input-sm"),"nr"!=t&&(e.addClass("btn-"+t),n.addClass("input-"+t))},placeholder:function(t){return void 0===t?this.options.placeholder:(this.options.placeholder=t,void this.$elementFilestyle.find("input").attr("placeholder",t))},buttonText:function(t){return void 0===t?this.options.buttonText:(this.options.buttonText=t,void this.$elementFilestyle.find("label .buttonText").html(this.options.buttonText))},buttonName:function(t){return void 0===t?this.options.buttonName:(this.options.buttonName=t,void this.$elementFilestyle.find("label").attr({class:"btn "+this.options.buttonName}))},iconName:function(t){return void 0===t?this.options.iconName:void this.$elementFilestyle.find(".icon-span-filestyle").attr({class:"icon-span-filestyle "+this.options.iconName})},htmlIcon:function(){return this.options.icon?'<span class="icon-span-filestyle '+this.options.iconName+'"></span> ':""},htmlInput:function(){return this.options.input?'<input type="text" class="form-control '+("nr"==this.options.size?"":"input-"+this.options.size)+'" placeholder="'+this.options.placeholder+'" disabled> ':""},pushNameFiles:function(){var t="",e=[];void 0===this.$element[0].files?e[0]={name:this.$element[0]&&this.$element[0].value}:e=this.$element[0].files;for(var n=0;n<e.length;n++)t+=e[n].name.split("\\").pop()+", ";return""!==t?this.$elementFilestyle.find(":text").val(t.replace(/\, $/g,"")):this.$elementFilestyle.find(":text").val(""),e},constructor:function(){var n=this,i="",o=n.$element.attr("id"),s="";""!==o&&o||(o="filestyle-"+e,n.$element.attr({id:o}),e++),s='<span class="group-span-filestyle '+(n.options.input?"input-group-btn":"")+'"><label for="'+o+'" class="btn '+n.options.buttonName+" "+("nr"==n.options.size?"":"btn-"+n.options.size)+'" '+(n.options.disabled?'disabled="true"':"")+">"+n.htmlIcon()+'<span class="buttonText">'+n.options.buttonText+"</span></label></span>",i=n.options.buttonBefore?s+n.htmlInput():n.htmlInput()+s,n.$elementFilestyle=t('<div class="bootstrap-filestyle input-group">'+i+"</div>"),n.$elementFilestyle.find(".group-span-filestyle").attr("tabindex","0").keypress(function(t){if(13===t.keyCode||32===t.charCode)return n.$elementFilestyle.find("label").click(),!1}),n.$element.css({position:"absolute",clip:"rect(0px 0px 0px 0px)"}).attr("tabindex","-1").after(n.$elementFilestyle),n.options.disabled&&n.$element.attr("disabled","true"),n.$element.change(function(){var t=n.pushNameFiles();0==n.options.input&&n.options.badge?0==n.$elementFilestyle.find(".badge").length?n.$elementFilestyle.find("label").append(' <span class="badge">'+t.length+"</span>"):0==t.length?n.$elementFilestyle.find(".badge").remove():n.$elementFilestyle.find(".badge").html(t.length):n.$elementFilestyle.find(".badge").remove()}),window.navigator.userAgent.search(/firefox/i)>-1&&n.$elementFilestyle.find("label").click(function(){return n.$element.click(),!1})}};var i=t.fn.filestyle;t.fn.filestyle=function(e,i){var o="",s=this.each(function(){if("file"===t(this).attr("type")){var s=t(this),l=s.data("filestyle"),a=t.extend({},t.fn.filestyle.defaults,e,"object"==typeof e&&e);l||(s.data("filestyle",l=new n(this,a)),l.constructor()),"string"==typeof e&&(o=l[e](i))}});return void 0!==typeof o?o:s},t.fn.filestyle.defaults={buttonText:"Choose file",iconName:"glyphicon glyphicon-folder-open",buttonName:"btn-default",size:"nr",input:!0,badge:!0,icon:!0,buttonBefore:!1,disabled:!1,placeholder:""},t.fn.filestyle.noConflict=function(){return t.fn.filestyle=i,this},t(function(){t(".filestyle").each(function(){var e=t(this),n={input:"false"!==e.attr("data-input"),icon:"false"!==e.attr("data-icon"),buttonBefore:"true"===e.attr("data-buttonBefore"),disabled:"true"===e.attr("data-disabled"),size:e.attr("data-size"),buttonText:e.attr("data-buttonText"),buttonName:e.attr("data-buttonName"),iconName:e.attr("data-iconName"),badge:"false"!==e.attr("data-badge"),placeholder:e.attr("data-placeholder")};e.filestyle(n)})})}(window.jQuery);
+!function(){"use strict";var e=function(e){return null!=e},t=/^(\-|\+)?([0-9]+(\.[0-9]+)?|Infinity)$/,n=function(e){return e=e.toLowerCase(),"true"===e||"false"===e},i=["|","^"],o=[",",";","  ","|","^"],r=["\r\n","\r","\n"],s=function(e,i,o,r){var s,a="return ",l=r?function(e,i){return t.test(e)?"Number(values["+i+"]),":n(e)?"Boolean(values["+i+"].toLowerCase() === 'true'),":"String(values["+i+"]),"}:function(e,t){return"values["+t+"],"};if("object"===e){for(a+="{",s=0;s<i.length;++s)a+='"'+i[s]+'": '+l(o[s],s);a=a.slice(0,-1)+"}"}else{for(a+="[",s=0;s<i.length;++s)a+=l(o[s],s);a=a.slice(0,-1)+"]"}return new Function("values",a)},a=function(e,t){for(var n,o=0,r=0,s=t.length;s>r;r++){var a=t[r],l=-1==i.indexOf(a)?a:"\\"+a,c=e.match(new RegExp(l,"g"));c&&c.length>o&&(o=c.length,n=a)}return n||t[0]},l=function(t,n){if(n=e(n)?n:{},this.data=t,this.options={header:e(n.header)?n.header:!1,cast:e(n.cast)?n.cast:!0,line:n.line,delimiter:n.delimiter},this.data instanceof Array)this.options.line=e(n.line)?n.line:"\r\n",this.options.delimiter=e(n.delimiter)?n.delimiter:",";else{this.options.line||(this.options.line=a(this.data,r)),this.options.delimiter||(this.options.delimiter=a(this.data,o));for(var i=0;i<this.options.line.length;i++){var s=t.charCodeAt(t.length-this.options.line.length+i),l=this.options.line.charCodeAt(i);s!=l&&(this.data+=this.options.line.charAt(i))}}};l.prototype.set=function(e,t){return this.options[e]=t,this},l.prototype.encode=function(t){if(0===this.data.length)return"";var n,i,o,r,s,a,l=this.data,c=[],h=this.options.delimiter,u=l[0]instanceof Array?"array":"object",f=this.options.header,d=this.options.done,p=function(t){return e(t)?"string"!=typeof t?t:'"'+t.replace(/\"/g,'""')+'"':null},g=t?function(e){t(e.join(h))}:function(e){c.push(e.join(h))},w=l.length;if("object"===u?(o=Object.keys(l[0]),r=o.length):r=l[0].length,a=new Array(r),f){var m=f instanceof Array?f:o;for(i=0;r>i;++i)a[i]=p(m[i]);g(a)}if("object"===u)for(n=0;w>n;++n){for(s=l[n],i=0;r>i;++i)a[i]=p(s[o[i]]);g(a)}else for(n=0;w>n;++n){for(s=l[n],i=0;r>i;++i)a[i]=p(s[i]);g(a)}return c=c.join(this.options.line),d&&d(c),c},l.prototype.parse=function(e){if(0===this.data.trim().length)return[];var t,n,i,o,r=this.data,a=[],l=this.options.done,c=this.options.cast,h=this.options.header,u=h instanceof Array?h:[],f=this.options.line,d=u.length,p={row:[],cell:""},g={escaped:!1,quote:!1,cell:!0},w=function(e){p.row.push((g.escaped?e.slice(1,-1).replace(/""/g,'"'):e).trim()),p.cell="",g={escaped:!1,quote:!1,cell:!0}},m=1===f.length?w:function(e){w(e.slice(0,1-f.length))},y=e?function(){e(new t(p.row))}:function(){a.push(new t(p.row))},v=function(){h?d?(t=new s("object",u,p.row,c),y(),v=y):(u=p.row,d=u.length):(t||(t=new s("array",p.row,p.row,c)),y(),v=y)},A=r.length,j=f.charCodeAt(f.length-1),b=this.options.delimiter.charCodeAt(0);for(n=0,i=0;A>=i;++i)o=r.charCodeAt(i),g.cell&&(g.cell=!1,34===o)?g.escaped=!0:g.escaped&&34===o?g.quote=!g.quote:(g.escaped&&g.quote||!g.escaped)&&(o===b?(w(p.cell+r.slice(n,i)),n=i+1):o===j&&(m(p.cell+r.slice(n,i)),n=i+1,v(),p.row=[]));return l&&l(a),a},l.prototype.forEach=function(e){return this.data instanceof Array?this.encode(e):this.parse(e)},"function"==typeof define&&define.amd?define(function(){return l}):"object"==typeof module&&module.exports?module.exports=l:window&&(window.CSV=l)}();
+(function() {
+  'use strict';
+
+  angular.module('app', [
+    'app.issueList',
+    'app.csvjs',
+    'app.ui'
+  ]);
+
+})();
+
+(function() {
+  'use strict';
+
+  angular.module('app.csvjs', []);
+
+})();
+(function() {
+  'use strict';
+
+  angular
+    .module('app.csvjs')
+    .factory('csv', csvService);
+
+  csvService.$inject = ['$window'];
+
+  function csvService($window) {
+    if($window.CSV){
+      //Delete moment from window so it's not globally accessible.
+      //  We can still get at it through _thirdParty however, more on why later
+      $window._thirdParty = $window._thirdParty || {};
+      $window._thirdParty.CSV = $window.CSV;
+      try { delete $window.CSV; } catch (e) {$window.CSV = undefined;
+      /*<IE8 doesn't do delete of window vars, make undefined if delete error*/}
+    }
+    var csv = $window._thirdParty.CSV;
+    return csv;
+  }
+
+})();
+(function() {
+  'use strict';
+
+  angular.module('app.ui', []);
+
+})();
+(function() {
+    'use strict';
+
+    angular
+        .module('app.ui')
+        .directive('multiSelect', multiSelectDirective);
+
+    multiSelectDirective.$inject = [];
+
+    function multiSelectDirective() {
+        return {
+            restrict: 'E',
+            scope: {
+              title: '@',
+              itemList: '='
+            },
+            link: link,
+            controller: multiSelectController,
+            controllerAs: 'multiSelectCtrl',
+            bindToController: true,
+            templateUrl: 'app/ui/multiselect.template.html',
+            replace: true
+        };
+    }
+
+    function link($scope, element, attrs) {
+      var $title = element.find(".multiselect-title");
+      var $dropdown = element.find(".multiselect-dropdown");
+
+      $title.click(function(e) {
+        e.stopPropagation();
+
+        if (!element.hasClass("active")) {
+          $("body .multiselect").removeClass("active");
+        }
+
+        element.toggleClass("active");
+      });
+
+      $("html, body").click(function() {
+        element.removeClass("active");
+      });
+
+      $dropdown.click(function(e) {
+        e.stopPropagation();
+      });
+    }
+
+    multiSelectController.$inject = ['$scope'];
+
+    function multiSelectController($scope) {
+        var vm = this;
+
+        vm.changeAll = changeAll;
+
+        //////////
+
+        function changeAll(active) {
+          angular.forEach(vm.itemList, function(item) {
+            item.active = active;
+          });
+        }
+    }
+
+})();
+(function() {
+  'use strict';
+
+  angular
+    .module('app.ui')
+    .component('collapsableText', {
+      templateUrl: 'app/ui/collapsabletext.template.html',
+      controller: CollapsableTextController,
+      controllerAs: 'collapsableTextCtrl',
+      bindings: {
+        text: '<'
+      }
+    });
+
+  CollapsableTextController.$inject = [];
+
+  function CollapsableTextController() {
+    var vm = this;
+
+    vm.collapsed = true;
+    vm.getCollapsedContent = getCollapsedContent;
+
+    //////////
+
+    init();
+
+    //////////
+
+    function init() {
+
+    }
+
+    function getCollapsedContent() {
+      var max = 100;
+      return (vm.text.length > max ? vm.text.substr(0, max) + "..." : vm.text);
+    }
+  }
+
+})();
+(function() {
+  'use strict';
+
+  angular.module('app.issueList', []);
+
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('app.issueList')
+    .value('filterColumns', ['Fehlerklasse', 'Param-Team', 'Status', 'Erfasser', 'Zugewiesen an', 'Externer Bearbeiter'])
+    .value('collapsableColumns', ['Kommentare'])
+})();
+
+(function() {
+  'use strict';
+
+angular
+    .module('app.issueList')
+    .filter('multiSearch', multiSearch);
+
+  function multiSearch() {
+    return function(items, searchText) {
+      if (searchText.trim() === "") return items;
+
+      var filteredItems = new Array();
+      var searchItems = parseSearchText(searchText);
+
+      angular.forEach(items, function(row) {
+        var isRowSearchResult = true;
+
+        // Check for key search
+        angular.forEach(row, function(val, key) {
+          var searchKey = key.toString().toLowerCase().replace(/[\s]*/g, "");
+
+          angular.forEach(searchItems["keySearch"], function(keySearch) {
+            if (keySearch.first.toString().toLowerCase().replace(/[\s]*/g, "") === searchKey) {
+              if (val.toString().toLowerCase().indexOf(keySearch.second.toString().toLowerCase()) === -1) {
+                isRowSearchResult = false;
+                return false;
+              }
+            }
+          });
+
+          if (!isRowSearchResult) return false;
+        });
+
+        // Check for excluded Words
+        angular.forEach(searchItems["exclude"], function(excludeItem) {
+          if (containsRowString(row, excludeItem)) {
+            isRowSearchResult = false;
+            return false;
+          }
+        });
+
+        // Check for matches
+        angular.forEach(searchItems["match"], function(matchItem) {
+          if (!containsRowString(row, matchItem)) {
+            isRowSearchResult = false;
+            return false;
+          }
+        });
+
+        // Check for or-matches
+        angular.forEach(searchItems["matchOr"], function(orMatch) {
+          if (!containsRowString(row, orMatch.first) && !containsRowString(row, orMatch.second)) {
+            isRowSearchResult = false;
+            return false;
+          }
+        });
+
+        if (isRowSearchResult) {
+          filteredItems.push(row);
+        }
+      });
+
+      return filteredItems;
+    }
+  }
+
+  function containsRowString(row, string) {
+    var isStringInRow = false;
+
+    angular.forEach(row, function(val) {
+      if (val.toString().toLowerCase().indexOf(string.toString().toLowerCase()) !== -1) {
+        isStringInRow = true;
+      }
+    });
+
+    return isStringInRow;
+  }
+
+
+  function parseSearchText(searchText) {
+    var matches = {};
+    var output = {};
+
+    // --"EXCLUDE WORDS"
+    output = checkPattern(/(?:\-\-)(?:(?:")([^\"]*)(?:\"))/g, searchText, 1);
+    matches["exclude"] = output.matches;
+    searchText = output.text;
+
+    // "MATCH THIS"|"OR THIS"
+    output = checkPattern(/\"([^\|\"]+)\"\|\"([^\"]+)\"/g, searchText, 1, 2);
+    matches["matchOr"] = output.matches;
+    searchText = output.text;
+
+    // COLUMNKEY:"VALUE WITH SPACE"
+    output = checkPattern(/\b([^\s\"]+):\"([^\"]+)\"/g, searchText, 1, 2);
+    matches["keySearch"] = output.matches;
+    searchText = output.text;
+
+    // "MATCH WORDS"
+    output = checkPattern(/(?:(?:")([^\"]*)(?:\"))/g, searchText, 1);
+    matches["match"] = output.matches;
+    searchText = output.text;
+
+    // --EXCLUDETHIS
+    output = checkPattern(/(?:\-\-)([^\s]*)/g, searchText, 1);
+    matches["exclude"] = matches["exclude"].concat(output.matches);
+    searchText = output.text;
+
+    // MATCHTHIS|ORTHIS
+    output = checkPattern(/\b([^\|][\S]+)\|([\S]+)\b/g, searchText, 1, 2);
+    matches["matchOr"] = matches["matchOr"].concat(output.matches);
+    searchText = output.text;
+
+    // COLUMNKEY:VALUE
+    output = checkPattern(/\b([^\s]+):([^\s]+)\b/g, searchText, 1, 2);
+    matches["keySearch"] = matches["keySearch"].concat(output.matches);
+    searchText = output.text;
+
+    // MATCHTHIS
+    output = checkPattern(/\b[\S]+\b/g, searchText, 0);
+    matches["match"] = matches["match"].concat(output.matches);
+    searchText = output.text;
+
+    return matches;
+  }
+
+  function checkPattern(pattern, text, index, index2) {
+      var result = { matches: [], text: "" }
+      var match;
+
+      do {
+          match = pattern.exec(text);
+          if (match) {
+          		if (typeof(index2) !== 'undefined') {
+              	result.matches.push({ "first": match[index], "second": match[index2] });
+              } else {
+              	result.matches.push(match[index]);
+              }
+          }
+      } while (match);
+
+      result.text = text.replace(pattern, "");
+      return result;
+  }
+
+})();
+(function() {
+  'use strict';
+
+  angular
+    .module('app.issueList')
+    .directive('onReadFile', onReadFile);
+
+  onReadFile.$inject = [];
+
+  function onReadFile() {
+    var validFormats = ['csv'];
+
+    return {
+        restrict: 'A',
+        scope: {
+          'onReadFile': '&'
+        },
+        link: function(scope, element, attrs) {
+            element.filestyle({ buttonText: 'Choose CSV' });
+
+            element.on('change', function(onChangeEvent) {
+                var value = element.val();
+                var extension = value.substring(value.lastIndexOf('.') + 1).toLowerCase();
+                var isValidFormat = validFormats.indexOf(extension) !== -1;
+
+                if (isValidFormat) {
+                  var reader = new FileReader();
+
+                  reader.onload = function(onLoadEvent) {
+                      scope.$apply(function() {
+                          scope.onReadFile({ fileContent: onLoadEvent.target.result });
+                      });
+                  };
+
+                  reader.readAsText((onChangeEvent.srcElement || onChangeEvent.target).files[0], 'ISO-8859-4'); // TODO Reto: fix that
+                } else {
+                  alert("File type not supported!");
+                }
+            });
+        }
+    };
+  }
+})();
+
+(function() {
+  'use strict';
+
+  angular
+    .module('app.issueList')
+    .component('issueList', {
+      templateUrl: 'app/issuelist/issuelist.html',
+      controller: IssueListController
+    });
+
+  IssueListController.$inject = ['csv', 'filterColumns', 'collapsableColumns'];
+
+  function IssueListController(csv, filterColumns, collapsableColumns) {
+    var vm = this;
+
+    vm.content            = "";
+    vm.contentJson        = "";
+    vm.sortType           = 'fish'; // set the default sort type
+    vm.sortReverse        = false;  // set the default sort order
+    vm.search             = '';     // set the default search/filter term
+    vm.headers            = {};
+    vm.collapsableColumns = collapsableColumns;
+    vm.limitTo            = 50;
+    vm.step               = 50;
+
+    vm.fileLoaded   = fileLoaded;
+    vm.orderBy = orderBy;
+    vm.loadMore = loadMore;
+
+    //////////
+
+    function fileLoaded(fileContent) {
+      vm.content = fileContent;
+      vm.contentJson = new csv(fileContent, { header: true }).parse();
+
+      angular.forEach(vm.contentJson[0], function(val, key) {
+        vm.headers[key] = {
+          title: key,
+          collapsable: (vm.collapsableColumns.indexOf(key) !== -1),
+          active: true
+        };
+      });
+    }
+
+    function orderBy(val) {
+      return val[vm.sortType];
+    }
+
+    function loadMore() {
+      vm.limitTo += vm.step;
+    }
+  }
+})();
+
+(function($){var nextId=0;var Filestyle=function(element,options){this.options=options;this.$elementFilestyle=[];this.$element=$(element)};Filestyle.prototype={clear:function(){this.$element.val("");this.$elementFilestyle.find(":text").val("");this.$elementFilestyle.find(".badge").remove()},destroy:function(){this.$element.removeAttr("style").removeData("filestyle");this.$elementFilestyle.remove()},disabled:function(value){if(value===true){if(!this.options.disabled){this.$element.attr("disabled","true");this.$elementFilestyle.find("label").attr("disabled","true");this.options.disabled=true}}else{if(value===false){if(this.options.disabled){this.$element.removeAttr("disabled");this.$elementFilestyle.find("label").removeAttr("disabled");this.options.disabled=false}}else{return this.options.disabled}}},buttonBefore:function(value){if(value===true){if(!this.options.buttonBefore){this.options.buttonBefore=true;if(this.options.input){this.$elementFilestyle.remove();this.constructor();this.pushNameFiles()}}}else{if(value===false){if(this.options.buttonBefore){this.options.buttonBefore=false;if(this.options.input){this.$elementFilestyle.remove();this.constructor();this.pushNameFiles()}}}else{return this.options.buttonBefore}}},icon:function(value){if(value===true){if(!this.options.icon){this.options.icon=true;this.$elementFilestyle.find("label").prepend(this.htmlIcon())}}else{if(value===false){if(this.options.icon){this.options.icon=false;this.$elementFilestyle.find(".icon-span-filestyle").remove()}}else{return this.options.icon}}},input:function(value){if(value===true){if(!this.options.input){this.options.input=true;if(this.options.buttonBefore){this.$elementFilestyle.append(this.htmlInput())}else{this.$elementFilestyle.prepend(this.htmlInput())}this.$elementFilestyle.find(".badge").remove();this.pushNameFiles();this.$elementFilestyle.find(".group-span-filestyle").addClass("input-group-btn")}}else{if(value===false){if(this.options.input){this.options.input=false;this.$elementFilestyle.find(":text").remove();var files=this.pushNameFiles();if(files.length>0&&this.options.badge){this.$elementFilestyle.find("label").append(' <span class="badge">'+files.length+"</span>")}this.$elementFilestyle.find(".group-span-filestyle").removeClass("input-group-btn")}}else{return this.options.input}}},size:function(value){if(value!==undefined){var btn=this.$elementFilestyle.find("label"),input=this.$elementFilestyle.find("input");btn.removeClass("btn-lg btn-sm");input.removeClass("input-lg input-sm");if(value!="nr"){btn.addClass("btn-"+value);input.addClass("input-"+value)}}else{return this.options.size}},placeholder:function(value){if(value!==undefined){this.options.placeholder=value;this.$elementFilestyle.find("input").attr("placeholder",value)}else{return this.options.placeholder}},buttonText:function(value){if(value!==undefined){this.options.buttonText=value;this.$elementFilestyle.find("label .buttonText").html(this.options.buttonText)}else{return this.options.buttonText}},buttonName:function(value){if(value!==undefined){this.options.buttonName=value;this.$elementFilestyle.find("label").attr({"class":"btn "+this.options.buttonName})}else{return this.options.buttonName}},iconName:function(value){if(value!==undefined){this.$elementFilestyle.find(".icon-span-filestyle").attr({"class":"icon-span-filestyle "+this.options.iconName})}else{return this.options.iconName}},htmlIcon:function(){if(this.options.icon){return'<span class="icon-span-filestyle '+this.options.iconName+'"></span> '}else{return""}},htmlInput:function(){if(this.options.input){return'<input type="text" class="form-control '+(this.options.size=="nr"?"":"input-"+this.options.size)+'" placeholder="'+this.options.placeholder+'" disabled> '}else{return""}},pushNameFiles:function(){var content="",files=[];if(this.$element[0].files===undefined){files[0]={name:this.$element[0]&&this.$element[0].value}}else{files=this.$element[0].files}for(var i=0;i<files.length;i++){content+=files[i].name.split("\\").pop()+", "}if(content!==""){this.$elementFilestyle.find(":text").val(content.replace(/\, $/g,""))}else{this.$elementFilestyle.find(":text").val("")}return files},constructor:function(){var _self=this,html="",id=_self.$element.attr("id"),files=[],btn="",$label;if(id===""||!id){id="filestyle-"+nextId;_self.$element.attr({id:id});nextId++}btn='<span class="group-span-filestyle '+(_self.options.input?"input-group-btn":"")+'"><label for="'+id+'" class="btn '+_self.options.buttonName+" "+(_self.options.size=="nr"?"":"btn-"+_self.options.size)+'" '+(_self.options.disabled?'disabled="true"':"")+">"+_self.htmlIcon()+'<span class="buttonText">'+_self.options.buttonText+"</span></label></span>";html=_self.options.buttonBefore?btn+_self.htmlInput():_self.htmlInput()+btn;_self.$elementFilestyle=$('<div class="bootstrap-filestyle input-group">'+html+"</div>");_self.$elementFilestyle.find(".group-span-filestyle").attr("tabindex","0").keypress(function(e){if(e.keyCode===13||e.charCode===32){_self.$elementFilestyle.find("label").click();return false}});_self.$element.css({position:"absolute",clip:"rect(0px 0px 0px 0px)"}).attr("tabindex","-1").after(_self.$elementFilestyle);if(_self.options.disabled){_self.$element.attr("disabled","true")}_self.$element.change(function(){var files=_self.pushNameFiles();if(_self.options.input==false&&_self.options.badge){if(_self.$elementFilestyle.find(".badge").length==0){_self.$elementFilestyle.find("label").append(' <span class="badge">'+files.length+"</span>")}else{if(files.length==0){_self.$elementFilestyle.find(".badge").remove()}else{_self.$elementFilestyle.find(".badge").html(files.length)}}}else{_self.$elementFilestyle.find(".badge").remove()}});if(window.navigator.userAgent.search(/firefox/i)>-1){_self.$elementFilestyle.find("label").click(function(){_self.$element.click();return false})}}};var old=$.fn.filestyle;$.fn.filestyle=function(option,value){var get="",element=this.each(function(){if($(this).attr("type")==="file"){var $this=$(this),data=$this.data("filestyle"),options=$.extend({},$.fn.filestyle.defaults,option,typeof option==="object"&&option);if(!data){$this.data("filestyle",(data=new Filestyle(this,options)));data.constructor()}if(typeof option==="string"){get=data[option](value)}}});if(typeof get!==undefined){return get}else{return element}};$.fn.filestyle.defaults={buttonText:"Choose file",iconName:"glyphicon glyphicon-folder-open",buttonName:"btn-default",size:"nr",input:true,badge:true,icon:true,buttonBefore:false,disabled:false,placeholder:""};$.fn.filestyle.noConflict=function(){$.fn.filestyle=old;return this};$(function(){$(".filestyle").each(function(){var $this=$(this),options={input:$this.attr("data-input")==="false"?false:true,icon:$this.attr("data-icon")==="false"?false:true,buttonBefore:$this.attr("data-buttonBefore")==="true"?true:false,disabled:$this.attr("data-disabled")==="true"?true:false,size:$this.attr("data-size"),buttonText:$this.attr("data-buttonText"),buttonName:$this.attr("data-buttonName"),iconName:$this.attr("data-iconName"),badge:$this.attr("data-badge")==="false"?false:true,placeholder:$this.attr("data-placeholder")};$this.filestyle(options)})})})(window.jQuery);
