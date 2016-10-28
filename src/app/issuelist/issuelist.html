@@ -17,8 +17,12 @@
         </div>
       </div>
     </form>
+    <input type="text" name="id" id="id-issue-input">
 
-    <multi-select title="Spalten" item-list="$ctrl.headers" />
+    <button onclick="openIssue()">Open Issue</button>
+
+
+    <multi-select title="Columns" item-list="$ctrl.headers" ng-hide="$ctrl.content == ''" />
   </div>
 
   <table class="table table-bordered table-striped">
@@ -52,3 +56,10 @@
   <a class="load-more" ng-click="$ctrl.loadMore()" ng-show="$ctrl.contentJson.length > $ctrl.limitTo && issueResultList.length === $ctrl.limitTo">Load more</a>
 
 </div>
+<script>
+  function openIssue(){
+    var idIssue=document.getElementById('id-issue-input').value;
+    window.open('https://www.community.avaloq.com/community/iss/edit_view.cfm?issue_id=' + idIssue,"_blank");
+  }
+
+</script>
