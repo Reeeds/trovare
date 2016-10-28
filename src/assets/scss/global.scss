@@ -14,6 +14,7 @@ body {
 
 a {
   cursor: pointer;
+  color:#156586;
 }
 
 
@@ -22,6 +23,26 @@ a {
   margin: 50px 0;
   font-size: 1.5rem;
   text-align: center;
+}
+
+.table-rows {
+  font-size:12px;
+
+  tr:nth-child(2n+1) > th {
+      background-color: #66B6D7;
+  }
+
+}
+
+.table-headers {
+ font-size:12px;
+ .table-header {
+   vertical-align: top;
+ }
+}
+
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+    background-color: RGBA(21, 101, 134, 0.12);
 }
 
 @import "modules/multiselect";
