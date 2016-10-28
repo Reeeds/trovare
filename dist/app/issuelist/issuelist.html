@@ -18,7 +18,7 @@
       </div>
     </form>
 
-    <multi-select title="Spalten" item-list="$ctrl.headers" />
+    <multi-select title="Spalten" item-list="$ctrl.headers" ng-hide="$ctrl.content == ''" />
   </div>
 
   <table class="table table-bordered table-striped">
