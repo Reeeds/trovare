@@ -17,11 +17,7 @@
         </div>
       </div>
     </form>
-    <input type="text" name="id" id="id-issue-input">
-
-    <button onclick="openIssue()">Open Issue</button>
-
-
+    
     <multi-select title="Columns" item-list="$ctrl.headers" ng-hide="$ctrl.content == ''" />
   </div>
 
@@ -42,8 +38,11 @@
     <tbody>
       <tr ng-repeat="row in $ctrl.contentJson | multiSearch:$ctrl.search | orderBy:$ctrl.orderBy:$ctrl.sortReverse | limitTo: $ctrl.limitTo as issueResultList track by $index ">
         <td ng-repeat="(key,val) in row track by $index" ng-show="$ctrl.headers[key].active">
-          <div ng-if="!$ctrl.headers[key].collapsable">
+          <div ng-if="!$ctrl.headers[key].collapsable && !row._trovare[key]">
             {{val}}
+          </div>
+          <div ng-if="!$ctrl.headers[key].collapsable && row._trovare[key]">
+            <a ng-href="{{row._trovare[key]}}" target="_blank">{{val}}</a>
           </div>
           <div ng-if="$ctrl.headers[key].collapsable">
             <collapsable-text text="val" />

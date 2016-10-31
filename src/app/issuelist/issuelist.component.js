@@ -15,6 +15,7 @@
 
     vm.content            = "";
     vm.contentJson        = "";
+    vm.contentJsonLink    = "";
     vm.sortType           = 'fish'; // set the default sort type
     vm.sortReverse        = false;  // set the default sort order
     vm.search             = '';     // set the default search/filter term
@@ -27,6 +28,7 @@
     vm.orderBy = orderBy;
     vm.loadMore = loadMore;
 
+    /*
     //////////
     var mockData = "";
 
@@ -38,10 +40,12 @@
 
     fileLoaded(mockData);
     //////////
+    */
 
     function fileLoaded(fileContent) {
       vm.content = fileContent;
       vm.contentJson = new csv(fileContent, { header: true }).parse();
+      vm.contentJsonLink = {};
 
       angular.forEach(vm.contentJson[0], function(val, key) {
         vm.headers[key] = {
@@ -51,46 +55,13 @@
         };
       });
 
-      console.log('Hoi');
-
       angular.forEach(vm.contentJson, function(row) {
-        /*//Test 1 ohne config
-        var url = 'https://www.community.avaloq.com/community/iss/edit_view.cfm?issue_id=';
-        console.log(row['Externer Bearbeiter']);
-        if (row['Externer Bearbeiter']=='Avaloq' ) {
-          console.log(row['Externer Bearbeiter Ref.']);
-          if (row['Externer Bearbeiter Ref.'] != '') {
-            console.log(url + row['Externer Bearbeiter Ref.']);
-          }
-        }
-        */
-        var url = 'https://www.community.avaloq.com/community/iss/edit_view.cfm?issue_id=';
-                console.log(row['Externer Bearbeiter']);
-                if (row['Externer Bearbeiter']=='Avaloq' ) {
-                  console.log(row['Externer Bearbeiter Ref.']);
-                  if (row['Externer Bearbeiter Ref.'] != '') {
-                    console.log(url + row['Externer Bearbeiter Ref.']);
-                    window.open(url + row['Externer Bearbeiter Ref.'],"_blank");
-                  }
-                }
-
-
-      });
-
-
-
-      angular.forEach(vm.contentJson, function(row) {
-
-        //console.log(row);  alle rows ausgeben
-       // console.log(row);
-
-
-
-
-
+        row['_trovare'] = {};
 
         angular.forEach(externalLinks, function(extLink) {
-
+          if (row[extLink.match.field].toLowerCase() == extLink.match.value.toLowerCase()) {
+            row['_trovare'][extLink.link.field] = (extLink.link.url + row[extLink.link.field]);
+          }
         });
       });
     }
