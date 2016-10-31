@@ -8,13 +8,14 @@
       controller: IssueListController
     });
 
-  IssueListController.$inject = ['csv', 'filterColumns', 'collapsableColumns'];
+  IssueListController.$inject = ['csv', 'filterColumns', 'collapsableColumns', 'externalLinks'];
 
-  function IssueListController(csv, filterColumns, collapsableColumns) {
+  function IssueListController(csv, filterColumns, collapsableColumns, externalLinks) {
     var vm = this;
 
     vm.content            = "";
     vm.contentJson        = "";
+    vm.contentJsonLink    = "";
     vm.sortType           = 'fish'; // set the default sort type
     vm.sortReverse        = false;  // set the default sort order
     vm.search             = '';     // set the default search/filter term
@@ -27,8 +28,8 @@
     vm.orderBy = orderBy;
     vm.loadMore = loadMore;
 
-    //////////
     /*
+    //////////
     var mockData = "";
 
     mockData += "Issue ID;Titel;Status;Fehlerklasse;Erfasser;Zugewiesen an;Entwicklungs-Team;Planung Entwicklung;Externer Bearbeiter;Externer Bearbeiter Ref.;Prozessbereich;Target Cycle;Target Release\n";
@@ -39,11 +40,11 @@
 
     fileLoaded(mockData);
     */
-    //////////
 
     function fileLoaded(fileContent) {
       vm.content = fileContent;
       vm.contentJson = new csv(fileContent, { header: true }).parse();
+      vm.contentJsonLink = {};
 
       angular.forEach(vm.contentJson[0], function(val, key) {
         vm.headers[key] = {
@@ -51,6 +52,16 @@
           collapsable: (vm.collapsableColumns.indexOf(key) !== -1),
           active: true
         };
+      });
+
+      angular.forEach(vm.contentJson, function(row) {
+        row['_trovare'] = {};
+
+        angular.forEach(externalLinks, function(extLink) {
+          if (row[extLink.match.field].toLowerCase() == extLink.match.value.toLowerCase()) {
+            row['_trovare'][extLink.link.field] = (extLink.link.url + row[extLink.link.field]);
+          }
+        });
       });
     }
 
