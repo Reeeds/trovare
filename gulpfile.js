@@ -72,8 +72,9 @@ var config = {
         "./src/app/issuelist/multisearch.filter.js",
         "./src/app/issuelist/onreadfile.directive.js",
         "./src/app/issuelist/issuelist.component.js",
+        "./src/app/issuelist/parser.service.js",
 
-        "./src/assets/js/bootstrap-filestyle.min.js",
+        "./src/assets/js/bootstrap-filestyle.min.js"
 
       ]
     },

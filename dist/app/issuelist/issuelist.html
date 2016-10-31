@@ -1,7 +1,7 @@
 <div>
   <div class="container">
     <div class="alert alert-info">
-      <input id="uploadButton"type="file" on-read-file="$ctrl.fileLoaded(fileContent)" accept=".csv" class="filestyle" data-classButton="btn btn-primary" data-input="false" data-classIcon="icon-plus" />
+      <input id="uploadButton" type="file" on-read-file="$ctrl.fileLoaded(fileContent)" accept=".csv" class="filestyle" data-classButton="btn btn-primary" data-input="false" data-classIcon="icon-plus" />
       <p>{{ $ctrl.contentJson.length > 0 ? ('Showing ' + issueResultList.length + ' of ' + $ctrl.contentJson.length) : 'No issues found' }}</p>
     </div>
 
@@ -18,7 +18,7 @@
       </div>
     </form>
 
-    <multi-select title="Columns" item-list="$ctrl.headers" ng-hide="$ctrl.content == ''" />
+    <multi-select title="Columns" item-list="$ctrl.headers" ng-hide="$ctrl.content == ''"></multi-select>
 
   </div>
 
@@ -38,7 +38,7 @@
 
     <tbody class="table-rows">
       <tr ng-repeat="row in $ctrl.contentJson | multiSearch:$ctrl.search | orderBy:$ctrl.orderBy:$ctrl.sortReverse | limitTo: $ctrl.limitTo as issueResultList track by $index ">
-        <td ng-repeat="(key,val) in row track by $index" ng-show="$ctrl.headers[key].active">
+        <td ng-repeat="(key,val) in row track by $index" ng-show="$ctrl.headers[key].active" ng-bind-html="(key,val) | highlight:search.val">
           <div ng-if="!$ctrl.headers[key].collapsable && !row._trovare[key]">
             {{val}}
           </div>
@@ -46,7 +46,7 @@
             <a ng-href="{{row._trovare[key]}}" target="_blank">{{val}}</a>
           </div>
           <div ng-if="$ctrl.headers[key].collapsable">
-            <collapsable-text text="val" />
+            <collapsable-text text="val"></collapsable-text>
           </div>
         </td>
       </tr>
