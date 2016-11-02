@@ -13,7 +13,8 @@
         },
         link: {
           url: 'https://www.community.avaloq.com/community/iss/edit_view.cfm?issue_id=',
-          field: 'Externer Bearbeiter Ref.'
+          field: 'Externer Bearbeiter Ref.',
+          pattern: "[\\d]+"
         }
       },
       {
@@ -23,7 +24,8 @@
         },
         link: {
           url: 'https://redmine.ti8m.ch/issues/',
-          field: 'Externer Bearbeiter Ref.'
+          field: 'Externer Bearbeiter Ref.',
+          pattern: "[\\d]+"
         }
       },
       {
@@ -33,7 +35,8 @@
         },
         link: {
           url: 'https://secure.ergon.ch/jira/browse/LUKBMEDEXT-',
-          field: 'Externer Bearbeiter Ref.'
+          field: 'Externer Bearbeiter Ref.',
+          pattern: "[\\d]+"
         }
       }
     ]);

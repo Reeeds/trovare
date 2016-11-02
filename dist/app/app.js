@@ -171,7 +171,8 @@
         },
         link: {
           url: 'https://www.community.avaloq.com/community/iss/edit_view.cfm?issue_id=',
-          field: 'Externer Bearbeiter Ref.'
+          field: 'Externer Bearbeiter Ref.',
+          pattern: "[\\d]+"
         }
       },
       {
@@ -181,7 +182,8 @@
         },
         link: {
           url: 'https://redmine.ti8m.ch/issues/',
-          field: 'Externer Bearbeiter Ref.'
+          field: 'Externer Bearbeiter Ref.',
+          pattern: "[\\d]+"
         }
       },
       {
@@ -191,7 +193,8 @@
         },
         link: {
           url: 'https://secure.ergon.ch/jira/browse/LUKBMEDEXT-',
-          field: 'Externer Bearbeiter Ref.'
+          field: 'Externer Bearbeiter Ref.',
+          pattern: "[\\d]+"
         }
       }
     ]);
@@ -364,7 +367,7 @@ angular
     mockData += "Issue ID;Titel;Status;Fehlerklasse;Erfasser;Zugewiesen an;Entwicklungs-Team;Planung Entwicklung;Externer Bearbeiter;Externer Bearbeiter Ref.;Prozessbereich;Target Cycle;Target Release\n";
     mockData += "41223;Buchungsdetails | Total Buchungsbetrag wird im PDF nicht angezeigt;Assigned;A - Critical;LU14843;lue0759;ZIW A;R16-7_DEC;Avaloq;;Projekt NTS;;NTS_R2.1\n";
     mockData += "41210;NTS: AFP Administration: EBV-Nummer wird nicht erkannt;Assigned;A - Critical;lu10921;lue0549;ZIW A;;;;Projekt NTS;;\n";
-    mockData += "41208;Zahlungsvorlage - Roter Einzahlungsschein - Begünstigtenangaben fehlen;Warten auf Drittlieferant;A - Critical;LU12518;lue0759;ZIW A;R16-7_DEC;Avaloq;280135;Projekt NTS;;NTS_R2.1\n";
+    mockData += "41208;Zahlungsvorlage - Roter Einzahlungsschein - Begï¿½nstigtenangaben fehlen;Warten auf Drittlieferant;A - Critical;LU12518;lue0759;ZIW A;R16-7_DEC;Avaloq;280135;Projekt NTS;;NTS_R2.1\n";
     mockData += "41205;Bankbelege: es sind nicht alle Dokumente in einer Mailbox ersichtlich (Folgeissue / Groupmanager Fehler Avaloq);Warten auf Drittlieferant;A - Critical;lue0456;lue0456;ZIW A;R16-7_DEC;Avaloq;280086;Projekt NTS;;NTS_R2.1";
 
     fileLoaded(mockData);
@@ -388,7 +391,10 @@ angular
 
         angular.forEach(externalLinks, function(extLink) {
           if (row[extLink.match.field].toLowerCase() == extLink.match.value.toLowerCase()) {
-            row['_trovare'][extLink.link.field] = (extLink.link.url + row[extLink.link.field]);
+            var fieldValue = row[extLink.link.field].match(new RegExp(extLink.link.pattern));
+            if (fieldValue !== null) {
+              row['_trovare'][extLink.link.field] = (extLink.link.url + fieldValue);
+            }
           }
         });
       });
