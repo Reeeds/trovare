@@ -4,7 +4,8 @@
   angular.module('app', [
     'app.issueList',
     'app.csvjs',
-    'app.ui'
+    'app.ui',
+    'ngSanitize'
   ]);
 
 })();

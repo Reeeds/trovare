@@ -1,6 +1,6 @@
 <div class="collapsable-text">
-  <div class="content">
-    {{  collapsableTextCtrl.collapsed ? collapsableTextCtrl.getCollapsedContent(collapsableTextCtrl.text) : collapsableTextCtrl.text }}
+  <div class="content"
+       ng-bind-html="collapsableTextCtrl.collapsed ? collapsableTextCtrl.getCollapsedContent(collapsableTextCtrl.text) : (collapsableTextCtrl.text | highlighter: collapsableTextCtrl.getTerms())">
   </div>
   <a ng-click="collapsableTextCtrl.collapsed = !collapsableTextCtrl.collapsed"
      ng-if="collapsableTextCtrl.text !== collapsableTextCtrl.getCollapsedContent(collapsableTextCtrl.text)">

@@ -72,6 +72,7 @@ angular
     angular.forEach(row, function(val) {
       if (val.toString().toLowerCase().indexOf(string.toString().toLowerCase()) !== -1) {
         isStringInRow = true;
+        return false;
       }
     });
 

@@ -13,6 +13,15 @@ body {
 
 }
 
+.highlighted {
+  &.yellow  { background-color: #ffeb3b; }
+  &.green   { background-color: #8bc34a; }
+  &.orange  { background-color: #ff9800; }
+  &.blue    { background-color: #2196f3; color: #ffffff; }
+  &.purple  { background-color: #9c27b0; color: #ffffff; }
+  &.red     { background-color: #f44336; color: #ffffff; }
+}
+
 a {
   cursor: pointer;
   color:#156586;
@@ -49,5 +58,6 @@ a {
 .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
     background-color: RGBA(21, 101, 134, 0.12);
 }
+
 
 @import "modules/multiselect";

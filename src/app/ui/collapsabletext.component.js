@@ -8,14 +8,17 @@
       controller: CollapsableTextController,
       controllerAs: 'collapsableTextCtrl',
       bindings: {
-        text: '<'
+        text: '<',
+        getTerms: '&'
       }
     });
 
-  CollapsableTextController.$inject = [];
+  CollapsableTextController.$inject = ['$filter'];
 
-  function CollapsableTextController() {
+  function CollapsableTextController($filter) {
     var vm = this;
+
+    var highlighter = $filter('highlighter');
 
     vm.collapsed = true;
     vm.getCollapsedContent = getCollapsedContent;
@@ -32,7 +35,11 @@
 
     function getCollapsedContent() {
       var max = 100;
-      return (vm.text.length > max ? vm.text.substr(0, max) + "..." : vm.text);
+      var text = (vm.text.length > max ? vm.text.substr(0, max) + "..." : vm.text);
+
+      text = highlighter(text, vm.getTerms());
+
+      return text;
     }
   }
 

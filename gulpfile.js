@@ -73,6 +73,7 @@ var config = {
         "./src/app/issuelist/onreadfile.directive.js",
         "./src/app/issuelist/issuelist.component.js",
         "./src/app/issuelist/parser.service.js",
+        "./src/app/issuelist/highlighter.filter.js",
 
         "./src/assets/js/bootstrap-filestyle.min.js"
 

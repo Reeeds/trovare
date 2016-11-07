@@ -1,0 +1,55 @@
+<div>
+  <div class="container">
+    <div class="alert alert-info">
+      <input id="uploadButton" type="file" on-read-file="$ctrl.fileLoaded(fileContent)" accept=".csv" class="filestyle" data-classButton="btn btn-primary" data-input="false" data-classIcon="icon-plus" />
+      <p>{{ $ctrl.contentJson.length > 0 ? ('Showing ' + issueResultList.length + ' of ' + $ctrl.contentJson.length) : 'No issues found' }}</p>
+    </div>
+
+    <form>
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-addon"><i class="fa fa-search"></i></div>
+          <input type="text"
+                 class="form-control"
+                 placeholder="Search"
+                 ng-model="$ctrl.search"
+                 ng-model-options="{debounce: 500}" />
+        </div>
+      </div>
+    </form>
+
+    <multi-select title="Columns" item-list="$ctrl.headers" ng-hide="$ctrl.content == ''"></multi-select>
+  </div>
+
+  <table class="table table-bordered table-striped">
+    <thead class="table-headers">
+      <tr>
+        <th class="table-header" ng-repeat="header in $ctrl.headers track by $index" ng-show="header.active">
+          <a href="#" ng-click="$ctrl.sortType = header.title; $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.updateFilterName()">
+            {{header.title}}
+            <span ng-show="$ctrl.sortType == header.title"
+                  ng-class="{ 'fa-caret-up': !$ctrl.sortReverse, 'fa-caret-down': $ctrl.sortReverse }"
+                  class="fa"></span>
+          </a>
+        </th>
+      </tr>
+    </thead>
+
+    <tbody class="table-rows">
+      <tr ng-repeat="row in $ctrl.contentJson | multiSearch:$ctrl.search | orderBy:$ctrl.orderBy:$ctrl.sortReverse | limitTo: $ctrl.limitTo as issueResultList track by $index ">
+        <td ng-repeat="(key,val) in row track by $index" ng-show="$ctrl.headers[key].active">
+          <div ng-if="!$ctrl.headers[key].collapsable && !row._trovare[key]" ng-bind-html="val | highlighter: $ctrl.getSearchWords()"></div>
+          <div ng-if="!$ctrl.headers[key].collapsable && row._trovare[key]">
+            <a ng-href="{{row._trovare[key]}}" target="_blank" ng-bind-html="val | highlighter: $ctrl.getSearchWords()"></a>
+          </div>
+          <div ng-if="$ctrl.headers[key].collapsable">
+            <collapsable-text text="val" get-terms="$ctrl.getSearchWords()"></collapsable-text>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <a class="load-more" ng-click="$ctrl.loadMore()" ng-show="$ctrl.contentJson.length > $ctrl.limitTo && issueResultList.length === $ctrl.limitTo">Load more</a>
+
+</div>

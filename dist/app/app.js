@@ -5,7 +5,8 @@
   angular.module('app', [
     'app.issueList',
     'app.csvjs',
-    'app.ui'
+    'app.ui',
+    'ngSanitize'
   ]);
 
 })();
@@ -120,14 +121,17 @@
       controller: CollapsableTextController,
       controllerAs: 'collapsableTextCtrl',
       bindings: {
-        text: '<'
+        text: '<',
+        getTerms: '&'
       }
     });
 
-  CollapsableTextController.$inject = [];
+  CollapsableTextController.$inject = ['$filter'];
 
-  function CollapsableTextController() {
+  function CollapsableTextController($filter) {
     var vm = this;
+
+    var highlighter = $filter('highlighter');
 
     vm.collapsed = true;
     vm.getCollapsedContent = getCollapsedContent;
@@ -144,7 +148,11 @@
 
     function getCollapsedContent() {
       var max = 100;
-      return (vm.text.length > max ? vm.text.substr(0, max) + "..." : vm.text);
+      var text = (vm.text.length > max ? vm.text.substr(0, max) + "..." : vm.text);
+
+      text = highlighter(text, vm.getTerms());
+
+      return text;
     }
   }
 
@@ -279,6 +287,7 @@ angular
     angular.forEach(row, function(val) {
       if (val.toString().toLowerCase().indexOf(string.toString().toLowerCase()) !== -1) {
         isStringInRow = true;
+        return false;
       }
     });
 
@@ -336,13 +345,13 @@ angular
   angular
     .module('app.issueList')
     .component('issueList', {
-      templateUrl: 'app/issuelist/issuelist.html',
+      templateUrl: 'app/issuelist/issuelist.template.html',
       controller: IssueListController
     });
 
-  IssueListController.$inject = ['csv', 'filterColumns', 'collapsableColumns', 'externalLinks'];
+  IssueListController.$inject = ['csv', 'filterColumns', 'collapsableColumns', 'externalLinks', 'parserService'];
 
-  function IssueListController(csv, filterColumns, collapsableColumns, externalLinks) {
+  function IssueListController(csv, filterColumns, collapsableColumns, externalLinks, parserService) {
     var vm = this;
 
     vm.content            = "";
@@ -356,6 +365,7 @@ angular
     vm.limitTo            = 50;
     vm.step               = 50;
 
+    vm.getSearchWords = getSearchWords;
     vm.fileLoaded   = fileLoaded;
     vm.orderBy = orderBy;
     vm.loadMore = loadMore;
@@ -372,6 +382,14 @@ angular
 
     fileLoaded(mockData);
     */
+
+    function getSearchWords() {
+      if (vm.search !== "") {
+        return parserService.getSearchWords(vm.search);
+      }
+
+      return [];
+    }
 
     function fileLoaded(fileContent) {
       vm.content = fileContent;
@@ -420,79 +438,149 @@ angular
   parserService.$inject = [];
 
   function parserService() {
+    var parsed = {};
+
     var service = {
-      parse: parse
+      parse: parse,
+      getSearchWords: getSearchWords
     };
 
     return service;
 
     //////////
 
-      function parse(searchText) {
-        var matches = {};
-        var output = {};
-
-        // --"EXCLUDE WORDS"
-        output = checkPattern(/(?:\-\-)(?:(?:")([^\"]*)(?:\"))/g, searchText, 1);
-        matches["exclude"] = output.matches;
-        searchText = output.text;
-
-        // "MATCH THIS"|"OR THIS"
-        output = checkPattern(/\"([^\|\"]+)\"\|\"([^\"]+)\"/g, searchText, 1, 2);
-        matches["matchOr"] = output.matches;
-        searchText = output.text;
-
-        // COLUMNKEY:"VALUE WITH SPACE"
-        output = checkPattern(/\b([^\s\"]+):\"([^\"]+)\"/g, searchText, 1, 2);
-        matches["keySearch"] = output.matches;
-        searchText = output.text;
-
-        // "MATCH WORDS"
-        output = checkPattern(/(?:(?:")([^\"]*)(?:\"))/g, searchText, 1);
-        matches["match"] = output.matches;
-        searchText = output.text;
-
-        // --EXCLUDETHIS
-        output = checkPattern(/(?:\-\-)([^\s]*)/g, searchText, 1);
-        matches["exclude"] = matches["exclude"].concat(output.matches);
-        searchText = output.text;
-
-        // MATCHTHIS|ORTHIS
-        output = checkPattern(/\b([^\|][\S]+)\|([\S]+)\b/g, searchText, 1, 2);
-        matches["matchOr"] = matches["matchOr"].concat(output.matches);
-        searchText = output.text;
-
-        // COLUMNKEY:VALUE
-        output = checkPattern(/\b([^\s]+):([^\s]+)\b/g, searchText, 1, 2);
-        matches["keySearch"] = matches["keySearch"].concat(output.matches);
-        searchText = output.text;
-
-        // MATCHTHIS
-        output = checkPattern(/\b[\S]+\b/g, searchText, 0);
-        matches["match"] = matches["match"].concat(output.matches);
-        searchText = output.text;
-
-        return matches;
+    function parse(searchText) {
+      if (angular.isDefined(parsed[searchText])) {
+        return parsed[searchText];
       }
 
-      function checkPattern(pattern, text, index, index2) {
-          var result = { matches: [], text: "" }
-          var match;
+      var matches = {};
+      var output = {};
+      var parsedSearchText = searchText;
 
-          do {
-              match = pattern.exec(text);
-              if (match) {
-              		if (typeof(index2) !== 'undefined') {
-                  	result.matches.push({ "first": match[index], "second": match[index2] });
-                  } else {
-                  	result.matches.push(match[index]);
-                  }
-              }
-          } while (match);
+      // --"EXCLUDE WORDS"
+      output = checkPattern(/(?:\-\-)(?:(?:")([^\"]*)(?:\"))/g, parsedSearchText, 1);
+      matches["exclude"] = output.matches;
+      parsedSearchText = output.text;
 
-          result.text = text.replace(pattern, "");
-          return result;
-      }
+      // "MATCH THIS"|"OR THIS"
+      output = checkPattern(/\"([^\|\"]+)\"\|\"([^\"]+)\"/g, parsedSearchText, 1, 2);
+      matches["matchOr"] = output.matches;
+      parsedSearchText = output.text;
+
+      // COLUMNKEY:"VALUE WITH SPACE"
+      output = checkPattern(/\b([^\s\"]+):\"([^\"]+)\"/g, parsedSearchText, 1, 2);
+      matches["keySearch"] = output.matches;
+      parsedSearchText = output.text;
+
+      // "MATCH WORDS"
+      output = checkPattern(/(?:(?:")([^\"]*)(?:\"))/g, parsedSearchText, 1);
+      matches["match"] = output.matches;
+      parsedSearchText = output.text;
+
+      // --EXCLUDETHIS
+      output = checkPattern(/(?:\-\-)([^\s]*)/g, parsedSearchText, 1);
+      matches["exclude"] = matches["exclude"].concat(output.matches);
+      parsedSearchText = output.text;
+
+      // MATCHTHIS|ORTHIS
+      output = checkPattern(/\b([^\|][\S]+)\|([\S]+)\b/g, parsedSearchText, 1, 2);
+      matches["matchOr"] = matches["matchOr"].concat(output.matches);
+      parsedSearchText = output.text;
+
+      // COLUMNKEY:VALUE
+      output = checkPattern(/\b([^\s]+):([^\s]+)\b/g, parsedSearchText, 1, 2);
+      matches["keySearch"] = matches["keySearch"].concat(output.matches);
+      parsedSearchText = output.text;
+
+      // MATCHTHIS
+      output = checkPattern(/\b[\S]+\b/g, parsedSearchText, 0);
+      matches["match"] = matches["match"].concat(output.matches);
+      parsedSearchText = output.text;
+
+      console.log(matches);
+
+      parsed[searchText] = matches;
+      return matches;
+    }
+
+    function getSearchWords(searchText) {
+      var matches = parse(searchText);
+      var searchWords = [];
+
+      angular.forEach(matches.matchOr, function(matchOr) {
+        searchWords.push(matchOr.first);
+        searchWords.push(matchOr.second);
+      });
+
+      angular.forEach(matches.match, function(match) {
+        searchWords.push(match);
+      });
+
+      return searchWords;
+    }
+
+    function checkPattern(pattern, text, index, index2) {
+        var result = { matches: [], text: "" }
+        var match;
+
+        do {
+            match = pattern.exec(text);
+            if (match) {
+                if (typeof(index2) !== 'undefined') {
+                  result.matches.push({ "first": match[index].trim(), "second": match[index2].trim() });
+                } else {
+                  result.matches.push(match[index].trim());
+                }
+            }
+        } while (match);
+
+        result.text = text.replace(pattern, "");
+        return result;
+    }
   }
+})();
+(function() {
+  'use strict';
+
+angular
+    .module('app.issueList')
+    .filter('highlighter', highlighter);
+
+  highlighter.$inject = ['parserService', '$sanitize', '$sce'];
+
+  function highlighter(parserService, $sanitize, $sce) {
+    var colorClasses = ["yellow", "green", "orange", "blue", "purple", "red"];
+
+    return function(content, terms) {
+      var textContent = escapeHtmlString(content); //$sanitize(content);
+
+      if (content.toString().indexOf("QC-40821") !== -1) {
+        console.log(textContent);
+      }
+
+      angular.forEach(terms, function(term, idx) {
+        textContent = highlightTerm(textContent, term, idx);
+      });
+
+      return $sce.trustAsHtml(textContent);
+    }
+
+    function highlightTerm(content, term, idx) {
+      var color = colorClasses[ idx % colorClasses.length ];
+      var regEx = new RegExp('(' + term + ')', 'gi');
+      content = content.replace(regEx, '<span class="highlighted ' + color + '">$1</span>');
+      return content;
+    }
+
+    function escapeHtmlString(string) {
+      var tagsToReplace = { '&': '&amp;', '<': '&lt;', '>': '&gt;' };
+
+      return string.toString().replace(/[&<>]/g, function(tag) {
+        return tagsToReplace[tag] || tag;
+      });
+    }
+  }
+
 })();
 (function($){var nextId=0;var Filestyle=function(element,options){this.options=options;this.$elementFilestyle=[];this.$element=$(element)};Filestyle.prototype={clear:function(){this.$element.val("");this.$elementFilestyle.find(":text").val("");this.$elementFilestyle.find(".badge").remove()},destroy:function(){this.$element.removeAttr("style").removeData("filestyle");this.$elementFilestyle.remove()},disabled:function(value){if(value===true){if(!this.options.disabled){this.$element.attr("disabled","true");this.$elementFilestyle.find("label").attr("disabled","true");this.options.disabled=true}}else{if(value===false){if(this.options.disabled){this.$element.removeAttr("disabled");this.$elementFilestyle.find("label").removeAttr("disabled");this.options.disabled=false}}else{return this.options.disabled}}},buttonBefore:function(value){if(value===true){if(!this.options.buttonBefore){this.options.buttonBefore=true;if(this.options.input){this.$elementFilestyle.remove();this.constructor();this.pushNameFiles()}}}else{if(value===false){if(this.options.buttonBefore){this.options.buttonBefore=false;if(this.options.input){this.$elementFilestyle.remove();this.constructor();this.pushNameFiles()}}}else{return this.options.buttonBefore}}},icon:function(value){if(value===true){if(!this.options.icon){this.options.icon=true;this.$elementFilestyle.find("label").prepend(this.htmlIcon())}}else{if(value===false){if(this.options.icon){this.options.icon=false;this.$elementFilestyle.find(".icon-span-filestyle").remove()}}else{return this.options.icon}}},input:function(value){if(value===true){if(!this.options.input){this.options.input=true;if(this.options.buttonBefore){this.$elementFilestyle.append(this.htmlInput())}else{this.$elementFilestyle.prepend(this.htmlInput())}this.$elementFilestyle.find(".badge").remove();this.pushNameFiles();this.$elementFilestyle.find(".group-span-filestyle").addClass("input-group-btn")}}else{if(value===false){if(this.options.input){this.options.input=false;this.$elementFilestyle.find(":text").remove();var files=this.pushNameFiles();if(files.length>0&&this.options.badge){this.$elementFilestyle.find("label").append(' <span class="badge">'+files.length+"</span>")}this.$elementFilestyle.find(".group-span-filestyle").removeClass("input-group-btn")}}else{return this.options.input}}},size:function(value){if(value!==undefined){var btn=this.$elementFilestyle.find("label"),input=this.$elementFilestyle.find("input");btn.removeClass("btn-lg btn-sm");input.removeClass("input-lg input-sm");if(value!="nr"){btn.addClass("btn-"+value);input.addClass("input-"+value)}}else{return this.options.size}},placeholder:function(value){if(value!==undefined){this.options.placeholder=value;this.$elementFilestyle.find("input").attr("placeholder",value)}else{return this.options.placeholder}},buttonText:function(value){if(value!==undefined){this.options.buttonText=value;this.$elementFilestyle.find("label .buttonText").html(this.options.buttonText)}else{return this.options.buttonText}},buttonName:function(value){if(value!==undefined){this.options.buttonName=value;this.$elementFilestyle.find("label").attr({"class":"btn "+this.options.buttonName})}else{return this.options.buttonName}},iconName:function(value){if(value!==undefined){this.$elementFilestyle.find(".icon-span-filestyle").attr({"class":"icon-span-filestyle "+this.options.iconName})}else{return this.options.iconName}},htmlIcon:function(){if(this.options.icon){return'<span class="icon-span-filestyle '+this.options.iconName+'"></span> '}else{return""}},htmlInput:function(){if(this.options.input){return'<input type="text" class="form-control '+(this.options.size=="nr"?"":"input-"+this.options.size)+'" placeholder="'+this.options.placeholder+'" disabled> '}else{return""}},pushNameFiles:function(){var content="",files=[];if(this.$element[0].files===undefined){files[0]={name:this.$element[0]&&this.$element[0].value}}else{files=this.$element[0].files}for(var i=0;i<files.length;i++){content+=files[i].name.split("\\").pop()+", "}if(content!==""){this.$elementFilestyle.find(":text").val(content.replace(/\, $/g,""))}else{this.$elementFilestyle.find(":text").val("")}return files},constructor:function(){var _self=this,html="",id=_self.$element.attr("id"),files=[],btn="",$label;if(id===""||!id){id="filestyle-"+nextId;_self.$element.attr({id:id});nextId++}btn='<span class="group-span-filestyle '+(_self.options.input?"input-group-btn":"")+'"><label for="'+id+'" class="btn '+_self.options.buttonName+" "+(_self.options.size=="nr"?"":"btn-"+_self.options.size)+'" '+(_self.options.disabled?'disabled="true"':"")+">"+_self.htmlIcon()+'<span class="buttonText">'+_self.options.buttonText+"</span></label></span>";html=_self.options.buttonBefore?btn+_self.htmlInput():_self.htmlInput()+btn;_self.$elementFilestyle=$('<div class="bootstrap-filestyle input-group">'+html+"</div>");_self.$elementFilestyle.find(".group-span-filestyle").attr("tabindex","0").keypress(function(e){if(e.keyCode===13||e.charCode===32){_self.$elementFilestyle.find("label").click();return false}});_self.$element.css({position:"absolute",clip:"rect(0px 0px 0px 0px)"}).attr("tabindex","-1").after(_self.$elementFilestyle);if(_self.options.disabled){_self.$element.attr("disabled","true")}_self.$element.change(function(){var files=_self.pushNameFiles();if(_self.options.input==false&&_self.options.badge){if(_self.$elementFilestyle.find(".badge").length==0){_self.$elementFilestyle.find("label").append(' <span class="badge">'+files.length+"</span>")}else{if(files.length==0){_self.$elementFilestyle.find(".badge").remove()}else{_self.$elementFilestyle.find(".badge").html(files.length)}}}else{_self.$elementFilestyle.find(".badge").remove()}});if(window.navigator.userAgent.search(/firefox/i)>-1){_self.$elementFilestyle.find("label").click(function(){_self.$element.click();return false})}}};var old=$.fn.filestyle;$.fn.filestyle=function(option,value){var get="",element=this.each(function(){if($(this).attr("type")==="file"){var $this=$(this),data=$this.data("filestyle"),options=$.extend({},$.fn.filestyle.defaults,option,typeof option==="object"&&option);if(!data){$this.data("filestyle",(data=new Filestyle(this,options)));data.constructor()}if(typeof option==="string"){get=data[option](value)}}});if(typeof get!==undefined){return get}else{return element}};$.fn.filestyle.defaults={buttonText:"Choose file",iconName:"glyphicon glyphicon-folder-open",buttonName:"btn-default",size:"nr",input:true,badge:true,icon:true,buttonBefore:false,disabled:false,placeholder:""};$.fn.filestyle.noConflict=function(){$.fn.filestyle=old;return this};$(function(){$(".filestyle").each(function(){var $this=$(this),options={input:$this.attr("data-input")==="false"?false:true,icon:$this.attr("data-icon")==="false"?false:true,buttonBefore:$this.attr("data-buttonBefore")==="true"?true:false,disabled:$this.attr("data-disabled")==="true"?true:false,size:$this.attr("data-size"),buttonText:$this.attr("data-buttonText"),buttonName:$this.attr("data-buttonName"),iconName:$this.attr("data-iconName"),badge:$this.attr("data-badge")==="false"?false:true,placeholder:$this.attr("data-placeholder")};$this.filestyle(options)})})})(window.jQuery);

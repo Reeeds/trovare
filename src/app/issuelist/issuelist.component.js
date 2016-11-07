@@ -4,13 +4,13 @@
   angular
     .module('app.issueList')
     .component('issueList', {
-      templateUrl: 'app/issuelist/issuelist.html',
+      templateUrl: 'app/issuelist/issuelist.template.html',
       controller: IssueListController
     });
 
-  IssueListController.$inject = ['csv', 'filterColumns', 'collapsableColumns', 'externalLinks'];
+  IssueListController.$inject = ['csv', 'filterColumns', 'collapsableColumns', 'externalLinks', 'parserService'];
 
-  function IssueListController(csv, filterColumns, collapsableColumns, externalLinks) {
+  function IssueListController(csv, filterColumns, collapsableColumns, externalLinks, parserService) {
     var vm = this;
 
     vm.content            = "";
@@ -24,6 +24,7 @@
     vm.limitTo            = 50;
     vm.step               = 50;
 
+    vm.getSearchWords = getSearchWords;
     vm.fileLoaded   = fileLoaded;
     vm.orderBy = orderBy;
     vm.loadMore = loadMore;
@@ -40,6 +41,14 @@
 
     fileLoaded(mockData);
     */
+
+    function getSearchWords() {
+      if (vm.search !== "") {
+        return parserService.getSearchWords(vm.search);
+      }
+
+      return [];
+    }
 
     function fileLoaded(fileContent) {
       vm.content = fileContent;

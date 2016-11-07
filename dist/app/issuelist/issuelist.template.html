@@ -19,7 +19,6 @@
     </form>
 
     <multi-select title="Columns" item-list="$ctrl.headers" ng-hide="$ctrl.content == ''"></multi-select>
-
   </div>
 
   <table class="table table-bordered table-striped">
@@ -38,15 +37,13 @@
 
     <tbody class="table-rows">
       <tr ng-repeat="row in $ctrl.contentJson | multiSearch:$ctrl.search | orderBy:$ctrl.orderBy:$ctrl.sortReverse | limitTo: $ctrl.limitTo as issueResultList track by $index ">
-        <td ng-repeat="(key,val) in row track by $index" ng-show="$ctrl.headers[key].active" ng-bind-html="(key,val) | highlight:search.val">
-          <div ng-if="!$ctrl.headers[key].collapsable && !row._trovare[key]">
-            {{val}}
-          </div>
+        <td ng-repeat="(key,val) in row track by $index" ng-show="$ctrl.headers[key].active">
+          <div ng-if="!$ctrl.headers[key].collapsable && !row._trovare[key]" ng-bind-html="val | highlighter: $ctrl.getSearchWords()"></div>
           <div ng-if="!$ctrl.headers[key].collapsable && row._trovare[key]">
-            <a ng-href="{{row._trovare[key]}}" target="_blank">{{val}}</a>
+            <a ng-href="{{row._trovare[key]}}" target="_blank" ng-bind-html="val | highlighter: $ctrl.getSearchWords()"></a>
           </div>
           <div ng-if="$ctrl.headers[key].collapsable">
-            <collapsable-text text="val"></collapsable-text>
+            <collapsable-text text="val" get-terms="$ctrl.getSearchWords()"></collapsable-text>
           </div>
         </td>
       </tr>
