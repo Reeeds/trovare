@@ -68,8 +68,6 @@
       matches["match"] = matches["match"].concat(output.matches);
       parsedSearchText = output.text;
 
-      console.log(matches);
-
       parsed[searchText] = matches;
       return matches;
     }
