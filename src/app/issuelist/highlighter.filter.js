@@ -5,23 +5,19 @@ angular
     .module('app.issueList')
     .filter('highlighter', highlighter);
 
-  highlighter.$inject = ['parserService', '$sanitize', '$sce'];
+  highlighter.$inject = ['parserService'];
 
-  function highlighter(parserService, $sanitize, $sce) {
+  function highlighter(parserService) {
     var colorClasses = ["yellow", "green", "orange", "blue", "purple", "red"];
 
     return function(content, terms) {
-      var textContent = escapeHtmlString(content); //$sanitize(content);
-
-      if (content.toString().indexOf("QC-40821") !== -1) {
-        console.log(textContent);
-      }
+      var textContent = escapeHtmlString(content);
 
       angular.forEach(terms, function(term, idx) {
         textContent = highlightTerm(textContent, term, idx);
       });
 
-      return $sce.trustAsHtml(textContent);
+      return textContent;
     }
 
     function highlightTerm(content, term, idx) {
