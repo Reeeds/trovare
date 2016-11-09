@@ -10,8 +10,8 @@ var gulp		     	= require("gulp");
 /*----- Utilities ---------------------------------------------*/
 
 var gutil			    = require("gulp-util");
-//var plumber			= require('gulp-plumber');
-//var notify          = require("gulp-notify");
+var plumber			= require('gulp-plumber');
+var notify          = require("gulp-notify");
 var runSequence 	= require('run-sequence');
 
 /*----- Sass / CSS --------------------------------------------*/
@@ -117,6 +117,18 @@ var config = {
 
 *****************************************************************/
 
+var onError = function(err) {
+	notify.onError({
+		//User error, not err. notify will pass the error object as error variable
+		title: "Gulp: Error for <%= error.plugin %>",
+		subtitle: "<%= error.fileName %> did not compile!",
+		message:  "<%= error.message %>",
+		emitError: true
+    })(err);
+
+	this.emit('end');
+};
+
 /*----- Sass / CSS --------------------------------------------*/
 
 
@@ -124,6 +136,7 @@ var config = {
 gulp.task("compile", function () {
     return gulp
       .src(config.stylesheets.src.paths)
+      .pipe(plumber({ errorHandler: onError }))
       .pipe(sourcemaps.init())
 		  .pipe(sass())
 		  .pipe(autoprefixer({
@@ -132,7 +145,10 @@ gulp.task("compile", function () {
       }))
 		  .pipe(mincss())
 		  .pipe(sourcemaps.write("./"))
-		  .pipe(gulp.dest(config.stylesheets.dist.path));
+		  .pipe(gulp.dest(config.stylesheets.dist.path))
+		  .pipe(notify({ message: "SASS successfully compiled."
+		               , onLast: true
+		                , title: "Trovare Notification"}));
 });
 
 gulp.task("copy-templates", function() {
