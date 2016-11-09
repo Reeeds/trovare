@@ -377,7 +377,7 @@ angular
     mockData += "Issue ID;Titel;Status;Fehlerklasse;Erfasser;Zugewiesen an;Entwicklungs-Team;Planung Entwicklung;Externer Bearbeiter;Externer Bearbeiter Ref.;Prozessbereich;Target Cycle;Target Release\n";
     mockData += "41223;Buchungsdetails | Total Buchungsbetrag wird im PDF nicht angezeigt;Assigned;A - Critical;LU14843;lue0759;ZIW A;R16-7_DEC;Avaloq;;Projekt NTS;;NTS_R2.1\n";
     mockData += "41210;NTS: AFP Administration: EBV-Nummer wird nicht erkannt;Assigned;A - Critical;lu10921;lue0549;ZIW A;;;;Projekt NTS;;\n";
-    mockData += "41208;Zahlungsvorlage - Roter Einzahlungsschein - Beg�nstigtenangaben fehlen;Warten auf Drittlieferant;A - Critical;LU12518;lue0759;ZIW A;R16-7_DEC;Avaloq;280135;Projekt NTS;;NTS_R2.1\n";
+    mockData += "41208;Zahlungsvorlage - Roter Einzahlungsschein - Begünstigtenangaben fehlen;Warten auf Drittlieferant;A - Critical;LU12518;lue0759;ZIW A;R16-7_DEC;Avaloq;280135;Projekt NTS;;NTS_R2.1\n";
     mockData += "41205;Bankbelege: es sind nicht alle Dokumente in einer Mailbox ersichtlich (Folgeissue / Groupmanager Fehler Avaloq);Warten auf Drittlieferant;A - Critical;lue0456;lue0456;ZIW A;R16-7_DEC;Avaloq;280086;Projekt NTS;;NTS_R2.1";
 
     fileLoaded(mockData);
@@ -498,8 +498,6 @@ angular
       matches["match"] = matches["match"].concat(output.matches);
       parsedSearchText = output.text;
 
-      console.log(matches);
-
       parsed[searchText] = matches;
       return matches;
     }
@@ -547,23 +545,19 @@ angular
     .module('app.issueList')
     .filter('highlighter', highlighter);
 
-  highlighter.$inject = ['parserService', '$sanitize', '$sce'];
+  highlighter.$inject = ['parserService'];
 
-  function highlighter(parserService, $sanitize, $sce) {
-    var colorClasses = ["yellow", "green", "orange", "blue", "purple", "red"];
+  function highlighter(parserService) {
+    var colorClasses = ["color_1", "color_2", "color_3", "color_4", "color_5", "color_6"];
 
     return function(content, terms) {
-      var textContent = escapeHtmlString(content); //$sanitize(content);
-
-      if (content.toString().indexOf("QC-40821") !== -1) {
-        console.log(textContent);
-      }
+      var textContent = escapeHtmlString(content);
 
       angular.forEach(terms, function(term, idx) {
         textContent = highlightTerm(textContent, term, idx);
       });
 
-      return $sce.trustAsHtml(textContent);
+      return textContent;
     }
 
     function highlightTerm(content, term, idx) {

@@ -146,7 +146,7 @@ gulp.task("compile", function () {
 		  .pipe(mincss())
 		  .pipe(sourcemaps.write("./"))
 		  .pipe(gulp.dest(config.stylesheets.dist.path))
-		  .pipe(notify({ message: "SASS successfully compiled."
+		  .pipe(notify({ message: "Successfully compiled."
 		               , onLast: true
 		                , title: "Trovare Notification"}));
 });

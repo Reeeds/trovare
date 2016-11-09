@@ -8,7 +8,7 @@ angular
   highlighter.$inject = ['parserService'];
 
   function highlighter(parserService) {
-    var colorClasses = ["yellow", "green", "orange", "blue", "purple", "red"];
+    var colorClasses = ["color_1", "color_2", "color_3", "color_4", "color_5", "color_6"];
 
     return function(content, terms) {
       var textContent = escapeHtmlString(content);

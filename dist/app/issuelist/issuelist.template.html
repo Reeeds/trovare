@@ -5,18 +5,40 @@
       <p>{{ $ctrl.contentJson.length > 0 ? ('Showing ' + issueResultList.length + ' of ' + $ctrl.contentJson.length) : 'No issues found' }}</p>
     </div>
 
-    <form>
-      <div class="form-group">
-        <div class="input-group">
-          <div class="input-group-addon"><i class="fa fa-search"></i></div>
-          <input type="text"
-                 class="form-control"
-                 placeholder="Search"
-                 ng-model="$ctrl.search"
-                 ng-model-options="{debounce: 500}" />
+
+    <div class="row">
+      <div class="col-md-11">
+        <div class="form-group">
+          <div class="input-group">
+            <div class="input-group-addon"><i class="fa fa-search"></i></div>
+            <input type="text"
+                   class="form-control"
+                   placeholder="Search"
+                   ng-model="$ctrl.search"
+                   ng-model-options="{debounce: 500}" />
+          </div>
         </div>
       </div>
-    </form>
+      <div class="col-md-1">
+        <div class="info-box">
+          <i class="icon glyphicon glyphicon-info-sign"></i>
+          <div class="tooltip">
+
+            Folgende Suchmöglichkeiten bestehen:
+            <ul>
+                <li>MatchThis AndThis</li>
+                <li>"Match this in one cell"</li>
+                <li>--ExcludeThis</li>
+                <li>--"Exclude this"</li>
+                <li>MatchThis|OrThis</li>
+                <li>"Match this"|"or this"</li>
+                <li>ErstelltAm:01.09.2016</li>
+                <li>Status:"Warten auf Drittlieferant"</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <multi-select title="Columns" item-list="$ctrl.headers" ng-hide="$ctrl.content == ''"></multi-select>
   </div>
@@ -40,7 +62,7 @@
         <td ng-repeat="(key,val) in row track by $index" ng-show="$ctrl.headers[key].active">
           <div ng-if="!$ctrl.headers[key].collapsable && !row._trovare[key]" ng-bind-html="val | highlighter: $ctrl.getSearchWords()"></div>
           <div ng-if="!$ctrl.headers[key].collapsable && row._trovare[key]">
-            <a ng-href="{{row._trovare[key]}}" target="_blank" ng-bind-html="val | highlighter: $ctrl.getSearchWords()"></a>
+            <a class="issue_link" ng-href="{{row._trovare[key]}}" target="_blank" ng-bind-html="val | highlighter: $ctrl.getSearchWords()"></a>
           </div>
           <div ng-if="$ctrl.headers[key].collapsable">
             <collapsable-text text="val" get-terms="$ctrl.getSearchWords()"></collapsable-text>

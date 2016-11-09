@@ -1,51 +1,62 @@
-body {
-  padding-top:10px;
+@import "colors";
+
+@mixin clearfix() {
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
 }
 
-.container {
+
+body {
+  padding-top:10px;
+  margin-left:7px;
+}
+
+.header-container {
     padding-left:6px;
 }
 
 
 .alert-info {
-    background-color:#156586;
+    background-color:$header_background;
     padding:4px;
 
 }
 
 .highlighted {
-  &.yellow  { background-color: #ffeb3b; }
-  &.green   { background-color: #8bc34a; }
-  &.orange  { background-color: #ff9800; }
-  &.blue    { background-color: #2196f3; color: #ffffff; }
-  &.purple  { background-color: #9c27b0; color: #ffffff; }
-  &.red     { background-color: #f44336; color: #ffffff; }
+  &.color_1  { background-color: $highlight_color_1; }
+  &.color_2  { background-color: $highlight_color_2; }
+  &.color_3  { background-color: $highlight_color_3; }
+  &.color_4  { background-color: $highlight_color_4; }
+  &.color_5  { background-color: $highlight_color_5; }
+  &.color_6  { background-color: $highlight_color_6; }
 }
 
 a {
   cursor: pointer;
-  color:#156586;
-  text-decoration: underline;
+  color: $text_standard;
   &:hover {
-    color:red;
-  }
+      color: $issue_link_hover;
+    }
 }
 
+.issue_link {
+  color: $red ;
+  &:hover {
+    color: $issue_link_hover;
+  }
+}
 
 .load-more {
   display: block;
   margin: 50px 0;
   font-size: 1.5rem;
   text-align: center;
-}
-
-.table-rows {
-  font-size:12px;
-
-  tr:nth-child(2n+1) > th {
-      background-color: #66B6D7;
-  }
-
 }
 
 .table-headers {
@@ -56,8 +67,104 @@ a {
 }
 
 .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
-    background-color: RGBA(21, 101, 134, 0.12);
+    background-color: $table_row_odd;
 }
+
+/*
+.form-group {
+    @include clearfix();
+
+    position: relative;
+    margin-bottom: 15px;
+
+    .input-group {
+      width: calc(100% - 46px);
+      float: left;
+    }
+
+    .info-box {
+        position: relative;
+        float: left;
+
+        .icon {
+          width: 46px;
+          line-height: 46px;
+          text-align: center;
+        }
+
+        &:hover .tooltip {
+          visibility: visible;
+          opacity: 1;
+        }
+
+        .tooltip {
+            position: absolute;
+            visibility: hidden;
+            padding: 2px 5px;
+            border-radius: 3px;
+            background-color: $black;
+            color: $white;
+            z-index: 900;
+        }
+    }
+}
+*/
+
+
+.info-box {
+  width: 46px;
+  position: relative;
+
+  .icon {
+    width: 46px;
+    line-height: 46px;
+    text-align: center;
+  }
+
+  &:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .tooltip {
+      position: absolute;
+      visibility: hidden;
+      padding: 2px 5px;
+      width:240px;
+      border-radius: 3px;
+      background-color: $tooltip_background;
+      color: $tooltip_font;
+      z-index: 900;
+      border: 1px solid $tooltip_border;
+      /*border: $tooltip_border;*/
+      margin-top: 5px;
+      right: 0;
+      text-transform:none;
+
+      &:after, &:before {
+        height: 0;
+        width: 0;
+        position: absolute;
+        bottom: 100%;
+        border: solid transparent;
+        content: " ";
+        pointer-events: none;
+        left: calc(100% - 23px);
+      }
+
+      &:after {
+        border-bottom-color: $tooltip_arrow;
+        border-width: 10px;
+        margin-left: -10px;
+      }
+      &:before {
+        border-bottom-color: $tooltip_arrow_border;
+        border-width: 11px;
+        margin-left: -11px;
+      }
+  }
+}
+
 
 
 @import "modules/multiselect";
