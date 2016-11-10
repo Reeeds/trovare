@@ -4,12 +4,7 @@ Trovare erlaubt das Anzeigen und Filtern von HP QC Issues.
 
 ## To do
 todos:
-- umstellen von array auf json
-- umlautproblem? oder liegts am csv?
-- layout verbessern
-- performance verbessern
 - aufräumen
-- nur csv-files zulassen
 
 ## Suche
 Folgende Suchmöglichkeiten bestehen:

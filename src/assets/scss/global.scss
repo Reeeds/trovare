@@ -25,6 +25,13 @@ body {
 .alert-info {
     background-color:$header_background;
     padding:4px;
+    /*Animation*/
+    //background-color: red;
+    -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 2s; /* Safari 4.0 - 8.0 */
+    animation-name: example;
+    animation-duration: 4s;
+    animation-iteration-count: 20;
 
 }
 
@@ -141,6 +148,8 @@ a {
       right: 0;
       text-transform:none;
 
+
+
       &:after, &:before {
         height: 0;
         width: 0;
@@ -165,6 +174,17 @@ a {
   }
 }
 
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes example {
+    from {background-color: $header_background;}
+    to {background-color: $bloodred;}
+}
+
+/* Standard syntax */
+@keyframes example {
+    from {background-color: $header_background;}
+    to {background-color: $bloodred;}
+}
 
 
 @import "modules/multiselect";
