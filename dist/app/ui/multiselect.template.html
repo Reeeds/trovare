@@ -3,14 +3,19 @@
   <div class="multiselect-dropdown">
     <ul class="multiselect-list">
       <li class="selection">
-        <a ng-click="multiSelectCtrl.changeAll(true)">All</a> <a ng-click="multiSelectCtrl.changeAll(false)">None</a>
+        <a class="link" ng-click="multiSelectCtrl.changeAll(true)">All</a> <a class="link" ng-click="multiSelectCtrl.changeAll(false)">None</a>
       </li>
-      <li ng-repeat="selectionItem in multiSelectCtrl.itemList">
-        <label>
-          <input type="checkbox" ng-model="selectionItem.active" />
+      <li ng-repeat="(key, selectionItem) in multiSelectCtrl.itemList" class="multiselect-list-item">
+        <a ng-click="multiSelectCtrl.changeSelection(key, selectionItem)" class="multiselect-list-item-link">
+          <i class="icon glyphicon glyphicon-ok"
+             ng-class="{ 'check-active':   (multiSelectCtrl.data.disabledItems.indexOf(key) == -1),
+                         'check-inactive': (multiSelectCtrl.data.disabledItems.indexOf(key) != -1) }"></i>
           <span>{{selectionItem.title}}</span>
-        </label>
+        </a>
       </li>
     </ul>
+    <div class="multiselect-dropdown-button">
+      <button class="btn btn-primary" ng-clicK="multiSelectCtrl.applyChanges()">Apply</button>
+    </div>
   </div>
 </div>

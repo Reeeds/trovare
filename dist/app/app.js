@@ -74,6 +74,7 @@
     function link($scope, element, attrs) {
       var $title = element.find(".multiselect-title");
       var $dropdown = element.find(".multiselect-dropdown");
+      var $applyButton = element.find(".multiselect-dropdown-button .btn");
 
       $title.click(function(e) {
         e.stopPropagation();
@@ -85,6 +86,10 @@
         element.toggleClass("active");
       });
 
+      $applyButton.click(function() {
+        element.removeClass("active");
+      });
+
       $("html, body").click(function() {
         element.removeClass("active");
       });
@@ -94,19 +99,43 @@
       });
     }
 
-    multiSelectController.$inject = ['$scope'];
+    multiSelectController.$inject = [];
 
-    function multiSelectController($scope) {
+    function multiSelectController() {
         var vm = this;
 
+        vm.data = {
+          disabledItems: []
+        };
+
         vm.changeAll = changeAll;
+        vm.changeSelection = changeSelection;
+        vm.applyChanges = applyChanges;
 
         //////////
 
         function changeAll(active) {
-          angular.forEach(vm.itemList, function(item) {
-            item.active = active;
+          angular.forEach(vm.itemList, function(item, key) {
+            if (active !== (vm.data.disabledItems.indexOf(key) === -1)) {
+              changeSelection(key, item);
+            }
           });
+        }
+
+        function changeSelection(key, item) {
+          if (vm.data.disabledItems.indexOf(key) === -1) {
+            vm.data.disabledItems.push(key);
+          } else {
+            vm.data.disabledItems.splice(vm.data.disabledItems.indexOf(key), 1);
+          }
+        }
+
+        function applyChanges() {
+          if (angular.isObject(vm.itemList)) {
+            angular.forEach(vm.itemList, function(item, key) {
+              item.active = (vm.data.disabledItems.indexOf(key) === -1);
+            });
+          }
         }
     }
 

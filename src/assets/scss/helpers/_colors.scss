@@ -11,6 +11,7 @@ $bloodred:        #DC143C;
 $black:           #000000;
 $white:           #ffffff;
 $darkgrey:        #333333;
+$grey:            #B4B4B4;
 $lightgrey:       #f8f5f0;
 $greyblue:        #a3a3c2;
 $greyblue_light:  #f0f0f5;
@@ -58,3 +59,6 @@ $tooltip_border:        $darkgrey;
 $tooltip_arrow:         $lightgrey;
 $tooltip_arrow_border:  $darkgrey;
 $text_standard:         $darkgrey;
+
+$checkbox-inactive_color:  $grey;
+$checkbox-active_color:    $blue;
