@@ -1,0 +1,21 @@
+/* ------------------------------------------------------------------------------------------
+   KEYFRAMES
+   ------------------------------------------------------------------------------------------ */
+@-webkit-keyframes example {
+  from {
+    background-color: $header_background;
+  }
+  to {
+    background-color: $bloodred;
+  }
+}
+
+/* Standard syntax */
+@keyframes example {
+  from {
+    background-color: $header_background;
+  }
+  to {
+    background-color: $bloodred;
+  }
+}

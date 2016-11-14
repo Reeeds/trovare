@@ -1,190 +1,25 @@
-@import "colors";
-
-@mixin clearfix() {
-    &:before,
-    &:after {
-        content: "";
-        display: table;
-    }
-    &:after {
-        clear: both;
-    }
-}
-
-
-body {
-  padding-top:10px;
-  margin-left:7px;
-}
-
-.header-container {
-    padding-left:6px;
-}
-
-
-.alert-info {
-    background-color:$header_background;
-    padding:4px;
-    /*Animation*/
-    //background-color: red;
-    -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
-    -webkit-animation-duration: 2s; /* Safari 4.0 - 8.0 */
-    animation-name: example;
-    animation-duration: 4s;
-    animation-iteration-count: 20;
-
-}
-
-.highlighted {
-  &.color_1  { background-color: $highlight_color_1; }
-  &.color_2  { background-color: $highlight_color_2; }
-  &.color_3  { background-color: $highlight_color_3; }
-  &.color_4  { background-color: $highlight_color_4; }
-  &.color_5  { background-color: $highlight_color_5; }
-  &.color_6  { background-color: $highlight_color_6; }
-}
-
-a {
-  cursor: pointer;
-  color: $text_standard;
-  &:hover {
-      color: $issue_link_hover;
-    }
-}
-
-.issue_link {
-  color: $red ;
-  &:hover {
-    color: $issue_link_hover;
-  }
-}
-
-.load-more {
-  display: block;
-  margin: 50px 0;
-  font-size: 1.5rem;
-  text-align: center;
-}
-
-.table-headers {
- font-size:12px;
- .table-header {
-   vertical-align: top;
- }
-}
-
-.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
-    background-color: $table_row_odd;
-}
-
-/*
-.form-group {
-    @include clearfix();
-
-    position: relative;
-    margin-bottom: 15px;
-
-    .input-group {
-      width: calc(100% - 46px);
-      float: left;
-    }
-
-    .info-box {
-        position: relative;
-        float: left;
-
-        .icon {
-          width: 46px;
-          line-height: 46px;
-          text-align: center;
-        }
-
-        &:hover .tooltip {
-          visibility: visible;
-          opacity: 1;
-        }
-
-        .tooltip {
-            position: absolute;
-            visibility: hidden;
-            padding: 2px 5px;
-            border-radius: 3px;
-            background-color: $black;
-            color: $white;
-            z-index: 900;
-        }
-    }
-}
-*/
-
-
-.info-box {
-  width: 46px;
-  position: relative;
-
-  .icon {
-    width: 46px;
-    line-height: 46px;
-    text-align: center;
-  }
-
-  &:hover .tooltip {
-    visibility: visible;
-    opacity: 1;
-  }
-
-  .tooltip {
-      position: absolute;
-      visibility: hidden;
-      padding: 2px 5px;
-      width:240px;
-      border-radius: 3px;
-      background-color: $tooltip_background;
-      color: $tooltip_font;
-      z-index: 900;
-      border: 1px solid $tooltip_border;
-      /*border: $tooltip_border;*/
-      margin-top: 5px;
-      right: 0;
-      text-transform:none;
+/* ------------------------------------------------------------------------------------------
+   HELPERS
+   ------------------------------------------------------------------------------------------ */
+@import "helpers/colors";
+@import "helpers/mixins";
+@import "helpers/keyframes";
 
 
 
-      &:after, &:before {
-        height: 0;
-        width: 0;
-        position: absolute;
-        bottom: 100%;
-        border: solid transparent;
-        content: " ";
-        pointer-events: none;
-        left: calc(100% - 23px);
-      }
-
-      &:after {
-        border-bottom-color: $tooltip_arrow;
-        border-width: 10px;
-        margin-left: -10px;
-      }
-      &:before {
-        border-bottom-color: $tooltip_arrow_border;
-        border-width: 11px;
-        margin-left: -11px;
-      }
-  }
-}
-
-/* Safari 4.0 - 8.0 */
-@-webkit-keyframes example {
-    from {background-color: $header_background;}
-    to {background-color: $bloodred;}
-}
-
-/* Standard syntax */
-@keyframes example {
-    from {background-color: $header_background;}
-    to {background-color: $bloodred;}
-}
+/* ------------------------------------------------------------------------------------------
+   BASE
+   ------------------------------------------------------------------------------------------ */
+@import "base/general";
+@import "base/typography";
 
 
+
+/* ------------------------------------------------------------------------------------------
+   MODULES
+   ------------------------------------------------------------------------------------------ */
+@import "modules/alert";
+@import "modules/highlighting";
+@import "modules/info-box";
 @import "modules/multiselect";
+@import "modules/tables";

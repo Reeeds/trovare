@@ -8,7 +8,7 @@ angular
   highlighter.$inject = ['parserService'];
 
   function highlighter(parserService) {
-    var colorClasses = ["color_1", "color_2", "color_3", "color_4", "color_5", "color_6"];
+    var styleClasses = ["style-1", "style-2", "style-3", "style-4", "style-5", "style-6"];
 
     return function(content, terms) {
       var textContent = escapeHtmlString(content);
@@ -21,9 +21,9 @@ angular
     }
 
     function highlightTerm(content, term, idx) {
-      var color = colorClasses[ idx % colorClasses.length ];
+      var style = styleClasses[ idx % styleClasses.length ];
       var regEx = new RegExp('(' + term + ')', 'gi');
-      content = content.replace(regEx, '<span class="highlighted ' + color + '">$1</span>');
+      content = content.replace(regEx, '<span class="highlighted ' + style + '">$1</span>');
       return content;
     }
 

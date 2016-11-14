@@ -1,0 +1,14 @@
+/* ------------------------------------------------------------------------------------------
+   ALERTS
+   ------------------------------------------------------------------------------------------ */
+.alert-info {
+  background-color: $header_background;
+  padding: 4px;
+  -webkit-animation-name: example;
+  -webkit-animation-duration: 2s;
+  animation: {
+    name: example;
+    duration: 4s;
+    iteration-count: 20;
+  }
+}
