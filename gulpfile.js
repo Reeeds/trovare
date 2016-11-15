@@ -34,11 +34,7 @@ var uglify = require('gulp-uglify');
 
 *****************************************************************/
 
-// set paths: less,images,scripts
-
-
 var config = {
-
   stylesheets: {
     watch: {
       paths: ["./src/assets/scss/**/*.scss"]
@@ -48,6 +44,18 @@ var config = {
     },
     dist: {
       path: "./dist/assets/css/"
+    }
+  },
+
+  js: {
+    watch: {
+      paths: [".src/assets/js/*.js"]
+    },
+    src: {
+      paths: ["./src/assets/js/*.js"]
+    },
+    dist: {
+      path: "./dist/assets/js"
     }
   },
 
@@ -151,6 +159,12 @@ gulp.task("compile", function () {
 		                , title: "Trovare Notification"}));
 });
 
+gulp.task("copy-js", function() {
+  return gulp
+    .src(config.js.src.paths)
+    .pipe(gulp.dest(config.js.dist.path));
+});
+
 gulp.task("copy-templates", function() {
   return gulp
     .src(config.templates.src.paths)
@@ -181,6 +195,10 @@ gulp.task("watch", function () {
     runSequence('compile');
   });
 
+  gulp.watch(config.js.watch.paths, function() {
+    runSequence('copy-js');
+  });
+
   gulp.watch(config.templates.watch.paths, function() {
     runSequence('copy-templates');
   });
@@ -205,5 +223,5 @@ gulp.task("watch", function () {
 
 // default task
 gulp.task("default", function () {
-	runSequence(["compile", "copy-templates", "copy-index", "app", "watch"]);
+	runSequence(["compile", "copy-js", "copy-templates", "copy-index", "app", "watch"]);
 });
