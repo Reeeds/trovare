@@ -14,6 +14,7 @@
       'Zugewiesen an':            'Zugew. an',
       'Planung Entwicklung':      'Planung Entw.'
     })
+    .value('singleLineColumns', ['Entwicklungs-Team', 'Fehlerklasse'])
     .value('externalLinks', [
       {
         match: {

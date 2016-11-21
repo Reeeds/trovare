@@ -46,9 +46,7 @@
     <thead class="table-headers">
       <tr>
         <th class="table-header" ng-repeat="(columnKey,header) in $ctrl.headers track by $index" ng-show="header.active">
-          <a href="#"
-             ng-click="$ctrl.sortType = header.title; $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.updateFilterName()"
-             title="{{columnKey}}">
+          <a ng-click="$ctrl.sortType = header.title; $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.updateFilterName()" title="{{columnKey}}">
             {{header.title}}
             <span ng-show="$ctrl.sortType == header.title"
                   ng-class="{ 'fa-caret-up': !$ctrl.sortReverse, 'fa-caret-down': $ctrl.sortReverse }"
@@ -60,7 +58,8 @@
 
     <tbody class="table-rows">
       <tr ng-repeat="row in $ctrl.contentJson | multiSearch:$ctrl.search | orderBy:$ctrl.orderBy:$ctrl.sortReverse | limitTo: $ctrl.limitTo as issueResultList track by $index ">
-        <td ng-repeat="(key,val) in row track by $index" ng-show="$ctrl.headers[key].active">
+        <td ng-repeat="(key,val) in row track by $index" ng-show="$ctrl.headers[key].active"
+            ng-class="{ 'no-break': ($ctrl.headers[key].singleLine) }">
           <div ng-if="!$ctrl.headers[key].collapsable && !row._trovare[key]" ng-bind-html="val | highlighter: $ctrl.getSearchWords()"></div>
           <div ng-if="!$ctrl.headers[key].collapsable && row._trovare[key]">
             <a class="issue_link" ng-href="{{row._trovare[key]}}" target="_blank" ng-bind-html="val | highlighter: $ctrl.getSearchWords()"></a>

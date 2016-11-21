@@ -8,9 +8,9 @@
       controller: IssueListController
     });
 
-  IssueListController.$inject = ['csv', 'filterColumns', 'collapsableColumns', 'columnHeaders', 'externalLinks', 'parserService'];
+  IssueListController.$inject = ['csv', 'filterColumns', 'collapsableColumns', 'singleLineColumns', 'columnHeaders', 'externalLinks', 'parserService'];
 
-  function IssueListController(csv, filterColumns, collapsableColumns, columnHeaders, externalLinks, parserService) {
+  function IssueListController(csv, filterColumns, collapsableColumns, singleLineColumns, columnHeaders, externalLinks, parserService) {
     var vm = this;
 
     vm.content            = "";
@@ -59,6 +59,7 @@
         vm.headers[key] = {
           title: angular.isDefined(columnHeaders[key]) ? columnHeaders[key] : key,
           collapsable: (vm.collapsableColumns.indexOf(key) !== -1),
+          singleLine: (singleLineColumns.indexOf(key) !== -1),
           active: true
         };
       });
