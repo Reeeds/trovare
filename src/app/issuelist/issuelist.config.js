@@ -5,7 +5,16 @@
     .module('app.issueList')
     .value('filterColumns', ['Fehlerklasse', 'Param-Team', 'Status', 'Erfasser', 'Zugewiesen an', 'Externer Bearbeiter'])
     .value('collapsableColumns', ['Beschreibung', 'Kommentare'])
-     .value('externalLinks', [
+    .value('columnHeaders', {
+      'Entwicklungs-Team':        'Team',
+      'Issue ID':                 'ID',
+      'Fehlerklasse':             'Prio',
+      'Externer Bearbeiter':      'Ext. Bearbeiter',
+      'Externer Bearbeiter Ref.': 'Ext. Bearbeiter Ref.',
+      'Zugewiesen an':            'Zugew. an',
+      'Planung Entwicklung':      'Planung Entw.'
+    })
+    .value('externalLinks', [
       {
         match: {
           value: 'Avaloq',

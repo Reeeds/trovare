@@ -45,8 +45,10 @@
   <table class="table table-bordered table-striped">
     <thead class="table-headers">
       <tr>
-        <th class="table-header" ng-repeat="header in $ctrl.headers track by $index" ng-show="header.active">
-          <a href="#" ng-click="$ctrl.sortType = header.title; $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.updateFilterName()">
+        <th class="table-header" ng-repeat="(columnKey,header) in $ctrl.headers track by $index" ng-show="header.active">
+          <a href="#"
+             ng-click="$ctrl.sortType = header.title; $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.updateFilterName()"
+             title="{{columnKey}}">
             {{header.title}}
             <span ng-show="$ctrl.sortType == header.title"
                   ng-class="{ 'fa-caret-up': !$ctrl.sortReverse, 'fa-caret-down': $ctrl.sortReverse }"

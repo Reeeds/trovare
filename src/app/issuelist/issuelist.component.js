@@ -8,9 +8,9 @@
       controller: IssueListController
     });
 
-  IssueListController.$inject = ['csv', 'filterColumns', 'collapsableColumns', 'externalLinks', 'parserService'];
+  IssueListController.$inject = ['csv', 'filterColumns', 'collapsableColumns', 'columnHeaders', 'externalLinks', 'parserService'];
 
-  function IssueListController(csv, filterColumns, collapsableColumns, externalLinks, parserService) {
+  function IssueListController(csv, filterColumns, collapsableColumns, columnHeaders, externalLinks, parserService) {
     var vm = this;
 
     vm.content            = "";
@@ -57,7 +57,7 @@
 
       angular.forEach(vm.contentJson[0], function(val, key) {
         vm.headers[key] = {
-          title: key,
+          title: angular.isDefined(columnHeaders[key]) ? columnHeaders[key] : key,
           collapsable: (vm.collapsableColumns.indexOf(key) !== -1),
           active: true
         };

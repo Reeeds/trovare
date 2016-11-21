@@ -200,7 +200,16 @@
     .module('app.issueList')
     .value('filterColumns', ['Fehlerklasse', 'Param-Team', 'Status', 'Erfasser', 'Zugewiesen an', 'Externer Bearbeiter'])
     .value('collapsableColumns', ['Beschreibung', 'Kommentare'])
-     .value('externalLinks', [
+    .value('columnHeaders', {
+      'Entwicklungs-Team':        'Team',
+      'Issue ID':                 'ID',
+      'Fehlerklasse':             'Prio',
+      'Externer Bearbeiter':      'Ext. Bearbeiter',
+      'Externer Bearbeiter Ref.': 'Ext. Bearbeiter Ref.',
+      'Zugewiesen an':            'Zugew. an',
+      'Planung Entwicklung':      'Planung Entw.'
+    })
+    .value('externalLinks', [
       {
         match: {
           value: 'Avaloq',
@@ -378,9 +387,9 @@ angular
       controller: IssueListController
     });
 
-  IssueListController.$inject = ['csv', 'filterColumns', 'collapsableColumns', 'externalLinks', 'parserService'];
+  IssueListController.$inject = ['csv', 'filterColumns', 'collapsableColumns', 'columnHeaders', 'externalLinks', 'parserService'];
 
-  function IssueListController(csv, filterColumns, collapsableColumns, externalLinks, parserService) {
+  function IssueListController(csv, filterColumns, collapsableColumns, columnHeaders, externalLinks, parserService) {
     var vm = this;
 
     vm.content            = "";
@@ -427,7 +436,7 @@ angular
 
       angular.forEach(vm.contentJson[0], function(val, key) {
         vm.headers[key] = {
-          title: key,
+          title: angular.isDefined(columnHeaders[key]) ? columnHeaders[key] : key,
           collapsable: (vm.collapsableColumns.indexOf(key) !== -1),
           active: true
         };
