@@ -52,7 +52,7 @@
 
     function fileLoaded(fileContent) {
       vm.content = fileContent;
-      vm.contentJson = new csv(fileContent, { header: true }).parse();
+      vm.contentJson = new csv(fileContent, { header: true, cast: false }).parse();
       vm.contentJsonLink = {};
 
       angular.forEach(vm.contentJson[0], function(val, key) {
@@ -68,7 +68,7 @@
 
         angular.forEach(externalLinks, function(extLink) {
           if (row[extLink.match.field].toLowerCase() == extLink.match.value.toLowerCase()) {
-            var fieldValue = row[extLink.link.field].match(new RegExp(extLink.link.pattern));
+            var fieldValue = (row[extLink.link.field]).toString().match(new RegExp(extLink.link.pattern));
             if (fieldValue !== null) {
               row['_trovare'][extLink.link.field] = (extLink.link.url + fieldValue);
             }
