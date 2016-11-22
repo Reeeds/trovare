@@ -14,9 +14,8 @@
     var vm = this;
 
     vm.content            = "";
-    vm.contentJson        = "";
-    vm.contentJsonLink    = "";
-    vm.sortType           = 'fish'; // set the default sort type
+    vm.rows               = "";
+    vm.sortType           = '';     // set the default sort type
     vm.sortReverse        = false;  // set the default sort order
     vm.search             = '';     // set the default search/filter term
     vm.headers            = {};
@@ -52,10 +51,10 @@
 
     function fileLoaded(fileContent) {
       vm.content = fileContent;
-      vm.contentJson = new csv(fileContent, { header: true, cast: false }).parse();
-      vm.contentJsonLink = {};
+      vm.rows = new csv(fileContent, { header: true, cast: false }).parse();
+      vm.headers = {};
 
-      angular.forEach(vm.contentJson[0], function(val, key) {
+      angular.forEach(vm.rows[0], function(val, key) {
         vm.headers[key] = {
           title: angular.isDefined(columnHeaders[key]) ? columnHeaders[key] : key,
           collapsable: (vm.collapsableColumns.indexOf(key) !== -1),
@@ -64,7 +63,7 @@
         };
       });
 
-      angular.forEach(vm.contentJson, function(row) {
+      angular.forEach(vm.rows, function(row) {
         row['_trovare'] = {};
 
         angular.forEach(externalLinks, function(extLink) {

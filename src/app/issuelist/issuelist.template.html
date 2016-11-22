@@ -2,9 +2,8 @@
   <div class="container">
     <div class="alert alert-info">
       <input id="uploadButton" type="file" on-read-file="$ctrl.fileLoaded(fileContent)" accept=".csv" class="filestyle" data-classButton="btn btn-primary" data-input="false" data-classIcon="icon-plus" />
-      <p>{{ $ctrl.contentJson.length > 0 ? ('Showing ' + issueResultList.length + ' of ' + $ctrl.contentJson.length) : 'No issues found' }}</p>
+      <p>{{ $ctrl.rows.length > 0 ? ('Showing ' + issueResultList.length + ' of ' + $ctrl.rows.length) : 'No issues found' }}</p>
     </div>
-
 
     <div class="row">
       <div class="col-md-11">
@@ -46,9 +45,9 @@
     <thead class="table-headers">
       <tr>
         <th class="table-header" ng-repeat="(columnKey,header) in $ctrl.headers track by $index" ng-show="header.active">
-          <a ng-click="$ctrl.sortType = header.title; $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.updateFilterName()" title="{{columnKey}}">
+          <a ng-click="$ctrl.sortType = columnKey; $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.updateFilterName()" title="{{columnKey}}">
             {{header.title}}
-            <span ng-show="$ctrl.sortType == header.title"
+            <span ng-show="$ctrl.sortType == columnKey"
                   ng-class="{ 'fa-caret-up': !$ctrl.sortReverse, 'fa-caret-down': $ctrl.sortReverse }"
                   class="fa"></span>
           </a>
@@ -57,7 +56,7 @@
     </thead>
 
     <tbody class="table-rows">
-      <tr ng-repeat="row in $ctrl.contentJson | multiSearch:$ctrl.search | orderBy:$ctrl.orderBy:$ctrl.sortReverse | limitTo: $ctrl.limitTo as issueResultList track by $index ">
+      <tr ng-repeat="row in $ctrl.rows | multiSearch:$ctrl.search | orderBy:$ctrl.orderBy:$ctrl.sortReverse | limitTo: $ctrl.limitTo as issueResultList track by $index ">
         <td ng-repeat="(key,val) in row track by $index" ng-show="$ctrl.headers[key].active"
             ng-class="{ 'no-break': ($ctrl.headers[key].singleLine) }">
           <div ng-if="!$ctrl.headers[key].collapsable && !row._trovare[key]" ng-bind-html="val | highlighter: $ctrl.getSearchWords()"></div>
@@ -72,6 +71,6 @@
     </tbody>
   </table>
 
-  <a class="load-more" ng-click="$ctrl.loadMore()" ng-show="$ctrl.contentJson.length > $ctrl.limitTo && issueResultList.length === $ctrl.limitTo">Load more</a>
+  <a class="load-more" ng-click="$ctrl.loadMore()" ng-show="$ctrl.rows.length > $ctrl.limitTo && issueResultList.length === $ctrl.limitTo">Load more</a>
 
 </div>
