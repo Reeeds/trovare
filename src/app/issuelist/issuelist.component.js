@@ -27,6 +27,7 @@
     vm.fileLoaded   = fileLoaded;
     vm.orderBy = orderBy;
     vm.loadMore = loadMore;
+    vm.appendColumnnFilterToSearch = appendColumnnFilterToSearch;
 
     /*
     //////////
@@ -83,6 +84,23 @@
 
     function loadMore() {
       vm.limitTo += vm.step;
+    }
+
+    function appendColumnnFilterToSearch(key, text) {
+      if (angular.isString(text) && text.length > 0) {
+        var newSearchTerm = vm.search;
+
+        if (newSearchTerm !== "") {
+          newSearchTerm += " ";
+        }
+
+        if (text.indexOf(" ") !== -1) {
+          text = '"'+ text + '"';
+        }
+
+        newSearchTerm += key + ":" + text;
+        vm.search = newSearchTerm;
+      }
     }
   }
 })();

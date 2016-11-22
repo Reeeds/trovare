@@ -51,6 +51,18 @@
                   ng-class="{ 'fa-caret-up': !$ctrl.sortReverse, 'fa-caret-down': $ctrl.sortReverse }"
                   class="fa"></span>
           </a>
+          <div class="header-filter-form">
+            <form ng-submit="$ctrl.appendColumnnFilterToSearch(columnKey, header.filter); header.filter=''">
+              <div class="form-group">
+                <div class="input-group">
+                  <input type="text"
+                         class="form-control"
+                         placeholder="Filter this column"
+                         ng-model="header.filter" />
+                </div>
+              </div>
+            </form>
+          </div>
         </th>
       </tr>
     </thead>
