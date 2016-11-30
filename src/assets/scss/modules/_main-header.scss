@@ -59,6 +59,14 @@ $main-header-height: 50px;
     float: left;
     margin: 0 $space;
 
+    &.right {
+      float: right;
+    }
+
+    &.gap-before {
+      margin-left: $space-large;
+    }
+
     .header-control {
       @include vertical-centered($main-header-height, $btn-height);
 

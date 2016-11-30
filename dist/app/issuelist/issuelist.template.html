@@ -7,26 +7,19 @@
     <div class="file-info">
       <i class="icon ion-information-circled"></i>{{ $ctrl.rows.length > 0 ? ('Showing ' + issueResultList.length + ' of ' + $ctrl.rows.length) : 'No issues found' }}
     </div>
-    <div class="header-control-container">
-      <multi-select class="header-control" title="Columns" item-list="$ctrl.headers" ng-hide="$ctrl.content == ''"></multi-select>
+    <div class="header-control-container gap-before" ng-hide="$ctrl.content == ''">
+      <form class="form header-control">
+        <div class="form-group">
+          <input type="text" class="form-input search" placeholder="Search" ng-model="$ctrl.search" ng-model-options="{debounce: 500}" />
+        </div>
+      </form>
+    </div>
+    <div class="header-control-container" ng-hide="$ctrl.content == ''">
+      <multi-select class="header-control" title="Columns" item-list="$ctrl.headers" ></multi-select>
     </div>
 </div>
 
-<div class="content-container centered with-main-header">
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="box">
-        <form class="form">
-          <div class="form-group">
-            <input type="text" class="form-input large search" placeholder="Search" ng-model="$ctrl.search" ng-model-options="{debounce: 500}" />
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="content-container">
+<div class="content-container with-main-header">
   <table class="table table-striped">
     <thead class="table-headers">
     <tr>
