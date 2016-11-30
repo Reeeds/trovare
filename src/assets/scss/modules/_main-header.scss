@@ -1,0 +1,74 @@
+/* ------------------------------------------------------------------------------------------
+   MAIN HEADER
+   ------------------------------------------------------------------------------------------ */
+$main-header-height: 50px;
+
+.main-header {
+  @include clearfix();
+
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  background-color: $color-primary-lt;
+  color: $color-primary-contrast;
+
+  .app-name {
+    float: left;
+    margin-right: $space-medium;
+    padding: 0 $space;
+    line-height: $main-header-height;
+
+    .main {
+      font-weight: $font-weight-bold;
+      text-transform: uppercase;
+      margin-right: $space-tiny;
+    }
+
+    .sub  {
+      font-weight: $font-weight-light;
+    }
+  }
+
+  .upload-form {
+    float: left;
+
+    label {
+      @include vertical-centered($main-header-height, $btn-height);
+      background-color: $color-primary-dk;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $color-primary-dkr;
+      }
+    }
+
+    .file {
+      display: none;
+    }
+  }
+
+  .file-info {
+    float: left;
+    margin: 0 $space;
+    font-size: $font-size-small;
+    line-height: $main-header-height;
+  }
+
+  .header-control-container {
+    float: left;
+    margin: 0 $space;
+
+    .header-control {
+      @include vertical-centered($main-header-height, $btn-height);
+
+      .multiselect-title {
+        color: inherit;
+      }
+    }
+  }
+}
+
+.with-main-header {
+  margin-top: $main-header-height;
+}

@@ -2,6 +2,12 @@
   position: relative;
 
   &.active {
+    .multiselect-title {
+      .icon {
+        transform: rotate(180deg);
+      }
+    }
+
     .multiselect-dropdown {
       display: block;
     }
@@ -9,6 +15,10 @@
 
   .multiselect-title {
     cursor: pointer;
+
+    .icon {
+
+    }
   }
 
   .multiselect-dropdown {
@@ -16,39 +26,44 @@
     height: 400px;
     display: none;
     position: absolute;
-    border: solid 1px rgb(120, 120, 120);
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
+    border-radius: $border-radius;
     background: rgb(255, 255, 255);
 
+    $multiselect-dropdown-button-size: $btn-height + (2 * $space-tiny);
+
     .multiselect-list {
-      height: 350px;
+      height: (400px - $multiselect-dropdown-button-size);
       list-style: none;
       margin: 0;
-      padding: 15px;
+      padding: $space-tiny 0;
       overflow: auto;
+      border-radius: $border-radius;
 
       .selection {
-        .link {
-          margin: 0 15px 0 0;
-          text-decoration: none;
-          cursor: pointer;
-        }
+        padding: $space-small $space;
       }
 
       .multiselect-list-item {
 
         .multiselect-list-item-link {
-          line-height: 1.3em;
+          display: block;
+          padding: $space-small $space;
+          color: $color-primary;
+          font-size: $font-size;
+          cursor: pointer;
+          transition: background-color 300ms ease;
+
+          &:hover {
+            background-color: rgb(245, 245, 245);
+          }
 
           .icon {
             display: inline-block;
             margin-right: 5px;
 
-            &.check-active {
-              color: $checkbox-active_color
-            }
-
             &.check-inactive {
-              color: $checkbox-inactive_color;
+              opacity: 0.15;
             }
           }
         }
@@ -56,14 +71,8 @@
     }
 
     .multiselect-dropdown-button {
-      height: 50px;
-
-      .btn {
-        width: 100%;
-        padding: 0;
-        border-radius: 0;
-        line-height: 50px;
-      }
+      height: $multiselect-dropdown-button-size;
+      padding: $space-tiny;
     }
   }
 }

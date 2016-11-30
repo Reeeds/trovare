@@ -1,28 +1,26 @@
 /* ------------------------------------------------------------------------------------------
+   TYPOGRAPHY > GENERAL
+   ------------------------------------------------------------------------------------------ */
+html, body {
+  font-family: $font;
+  font-size: 100%;
+}
+
+.text-centered {
+  text-align: center;
+}
+
+/* ------------------------------------------------------------------------------------------
    TYPOGRAPHY > HYPERLINKS
    ------------------------------------------------------------------------------------------ */
-a {
-  color: $text_standard;
+.link {
+  color: $color-primary;
+  text-decoration: none;
   cursor: pointer;
 
   &:hover {
-    color: $issue_link_hover;
+    text-decoration: underline;
   }
-}
-
-.issue_link {
-  color: $red;
-
-  &:hover {
-    color: $issue_link_hover;
-  }
-}
-
-.load-more {
-  display: block;
-  margin: 50px 0;
-  font-size: 1.5rem;
-  text-align: center;
 }
 
 .no-break {

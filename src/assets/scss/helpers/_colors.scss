@@ -42,6 +42,23 @@ $blue-light-5:    #00001a;
 /* ------------------------------------------------------------------------------------------
    COLORS > FUNCTIONAL VARIABLES
    ------------------------------------------------------------------------------------------ */
+$color-primary:           darken($blue, 18);
+
+$color-primary-lt:        lighten($color-primary, 3);
+$color-primary-ltr:       lighten($color-primary, 5);
+$color-primary-ltst:      lighten($color-primary, 10);
+
+
+$color-primary-dk:        darken($color-primary, 3);
+$color-primary-dkr:       darken($color-primary, 5);
+$color-primary-dkst:      darken($color-primary, 10);
+
+$color-primary-contrast:  $white;
+
+$color-border:            lighten($grey, 15);
+$color-table-row-odd:     lighten($grey, 27);
+
+
 $highlight_color_1:     $yellow;
 $highlight_color_2:     $green;
 $highlight_color_3:     $orange;

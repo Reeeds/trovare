@@ -1,88 +1,75 @@
-<div>
-  <div class="container">
-    <div class="alert alert-info">
-      <input id="uploadButton" type="file" on-read-file="$ctrl.fileLoaded(fileContent)" accept=".csv" class="filestyle" data-classButton="btn btn-primary" data-input="false" data-classIcon="icon-plus" />
-      <p>{{ $ctrl.rows.length > 0 ? ('Showing ' + issueResultList.length + ' of ' + $ctrl.rows.length) : 'No issues found' }}</p>
+<div class="main-header">
+    <div class="app-name"><i class="icon ion-ionic"></i><span class="main">trovare</span></div>
+    <div class="upload-form">
+      <label class="btn btn-primary" for="file-upload">Load CSV</label>
+      <input type="file" id="file-upload" on-read-file="$ctrl.fileLoaded(fileContent)" accept=".csv" class="file" />
     </div>
+    <div class="file-info">
+      <i class="icon ion-information-circled"></i>{{ $ctrl.rows.length > 0 ? ('Showing ' + issueResultList.length + ' of ' + $ctrl.rows.length) : 'No issues found' }}
+    </div>
+    <div class="header-control-container">
+      <multi-select class="header-control" title="Columns" item-list="$ctrl.headers" ng-hide="$ctrl.content == ''"></multi-select>
+    </div>
+</div>
 
-    <div class="row">
-      <div class="col-md-11">
-        <div class="form-group">
-          <div class="input-group">
-            <div class="input-group-addon"><i class="fa fa-search"></i></div>
-            <input type="text"
-                   class="form-control"
-                   placeholder="Search"
-                   ng-model="$ctrl.search"
-                   ng-model-options="{debounce: 500}" />
+<div class="content-container centered with-main-header">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box">
+        <form class="form">
+          <div class="form-group">
+            <input type="text" class="form-input large search" placeholder="Search" ng-model="$ctrl.search" ng-model-options="{debounce: 500}" />
           </div>
-        </div>
-      </div>
-      <div class="col-md-1">
-        <div class="info-box">
-          <i class="icon glyphicon glyphicon-info-sign"></i>
-          <div class="tooltip">
-            Folgende Suchmöglichkeiten bestehen:
-            <ul>
-                <li>MatchThis AndThis</li>
-                <li>"Match this in one cell"</li>
-                <li>--ExcludeThis</li>
-                <li>--"Exclude this"</li>
-                <li>MatchThis|OrThis</li>
-                <li>"Match this"|"or this"</li>
-                <li>ErstelltAm:01.09.2016</li>
-                <li>Status:"Warten auf Drittlieferant"</li>
-            </ul>
-          </div>
-        </div>
+        </form>
       </div>
     </div>
-
-    <multi-select title="Columns" item-list="$ctrl.headers" ng-hide="$ctrl.content == ''"></multi-select>
   </div>
+</div>
 
-  <table class="table table-bordered table-striped">
+<div class="content-container">
+  <table class="table table-striped">
     <thead class="table-headers">
-      <tr>
-        <th class="table-header" ng-repeat="(columnKey,header) in $ctrl.headers track by $index" ng-show="header.active">
-          <a ng-click="$ctrl.sortType = columnKey; $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.updateFilterName()" title="{{columnKey}}">
-            {{header.title}}
+    <tr>
+      <th class="table-header" ng-repeat="(columnKey,header) in $ctrl.headers track by $index" ng-show="header.active">
+        <a class="link" ng-click="$ctrl.sortType = columnKey; $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.updateFilterName()" title="{{columnKey}}">
+          {{header.title}}
             <span ng-show="$ctrl.sortType == columnKey"
-                  ng-class="{ 'fa-caret-up': !$ctrl.sortReverse, 'fa-caret-down': $ctrl.sortReverse }"
-                  class="fa"></span>
-          </a>
-          <div class="header-filter-form">
-            <form ng-submit="$ctrl.appendColumnnFilterToSearch(columnKey, header.filter); header.filter=''">
-              <div class="form-group">
-                <div class="input-group">
-                  <input type="text"
-                         class="form-control"
-                         placeholder="Filter this column"
-                         ng-model="header.filter" />
-                </div>
-              </div>
-            </form>
-          </div>
-        </th>
-      </tr>
+                  ng-class="{ 'ion-arrow-up-b': !$ctrl.sortReverse, 'ion-arrow-down-b': $ctrl.sortReverse }"
+                  class="icon icon-right"></span>
+        </a>
+        <div class="header-filter-form">
+          <form class="form" ng-submit="$ctrl.appendColumnnFilterToSearch(columnKey, header.filter); header.filter=''">
+            <div class="form-group">
+              <label class="form-label">Filter by {{header.title}}</label>
+              <input type="text"
+                     class="form-input"
+                     placeholder="Filter this column"
+                     ng-model="header.filter" />
+            </div>
+          </form>
+        </div>
+      </th>
+    </tr>
     </thead>
 
     <tbody class="table-rows">
-      <tr ng-repeat="row in $ctrl.rows | multiSearch:$ctrl.search | orderBy:$ctrl.orderBy:$ctrl.sortReverse | limitTo: $ctrl.limitTo as issueResultList track by $index ">
-        <td ng-repeat="(key,val) in row track by $index" ng-show="$ctrl.headers[key].active"
-            ng-class="{ 'no-break': ($ctrl.headers[key].singleLine) }">
-          <div ng-if="!$ctrl.headers[key].collapsable && !row._trovare[key]" ng-bind-html="val | highlighter: $ctrl.getSearchWords()"></div>
-          <div ng-if="!$ctrl.headers[key].collapsable && row._trovare[key]">
-            <a class="issue_link" ng-href="{{row._trovare[key]}}" target="_blank" ng-bind-html="val | highlighter: $ctrl.getSearchWords()"></a>
-          </div>
-          <div ng-if="$ctrl.headers[key].collapsable">
-            <collapsable-text text="val" get-terms="$ctrl.getSearchWords()"></collapsable-text>
-          </div>
-        </td>
-      </tr>
+    <tr ng-repeat="row in $ctrl.rows | multiSearch:$ctrl.search | orderBy:$ctrl.orderBy:$ctrl.sortReverse | limitTo: $ctrl.limitTo as issueResultList track by $index ">
+      <td ng-repeat="(key,val) in row track by $index" ng-show="$ctrl.headers[key].active"
+          ng-class="{ 'no-break': ($ctrl.headers[key].singleLine) }">
+        <div ng-if="!$ctrl.headers[key].collapsable && !row._trovare[key]" ng-bind-html="val | highlighter: $ctrl.getSearchWords()"></div>
+        <div ng-if="!$ctrl.headers[key].collapsable && row._trovare[key]">
+          <a class="link" ng-href="{{row._trovare[key]}}" target="_blank" ng-bind-html="val | highlighter: $ctrl.getSearchWords()"></a>
+        </div>
+        <div ng-if="$ctrl.headers[key].collapsable">
+          <collapsable-text text="val" get-terms="$ctrl.getSearchWords()"></collapsable-text>
+        </div>
+      </td>
+    </tr>
     </tbody>
   </table>
 
-  <a class="load-more" ng-click="$ctrl.loadMore()" ng-show="$ctrl.rows.length > $ctrl.limitTo && issueResultList.length === $ctrl.limitTo">Load more</a>
-
+  <div class="text-centered">
+    <a class="btn btn-primary" ng-click="$ctrl.loadMore()" ng-show="$ctrl.rows.length > $ctrl.limitTo && issueResultList.length === $ctrl.limitTo"><i class="icon ion-refresh"></i>Load more</a>
+  </div>
 </div>
+

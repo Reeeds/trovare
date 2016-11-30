@@ -16,8 +16,6 @@
           'onReadFile': '&'
         },
         link: function(scope, element, attrs) {
-            element.filestyle({ buttonText: 'Choose CSV' });
-
             element.on('change', function(onChangeEvent) {
                 var value = element.val();
                 var extension = value.substring(value.lastIndexOf('.') + 1).toLowerCase();

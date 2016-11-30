@@ -1,0 +1,49 @@
+/* ------------------------------------------------------------------------------------------
+   BUTTON
+   ------------------------------------------------------------------------------------------ */
+.btn {
+  height: $btn-height;
+  display: inline-block;
+  padding: $space-tiny $space-small;
+  border-radius: $border-radius;
+  border: 1px solid $color-primary;
+  color: $color-primary;
+  font-size: $font-size;
+  font-weight: $font-weight-medium;
+  line-height: ($btn-height - (2 * $space-tiny) - 2px);
+  cursor: pointer;
+  text-align: center;
+
+  &:hover {
+    border-color: $color-primary-dk;
+    color: $color-primary-dk;
+  }
+
+  &.btn-primary {
+    background-color: $color-primary;
+    color: $color-primary-contrast;
+
+    &:hover {
+      background-color: $color-primary-dk;
+    }
+
+    &:active {
+      background-color: $color-primary-dkst;
+    }
+  }
+
+  &.btn-outline {
+    border-color: transparent;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  &.btn-block {
+    width: 100%;
+    display: block;
+  }
+
+  &.btn-alt {
+    color: $color-primary-contrast;
+  }
+}

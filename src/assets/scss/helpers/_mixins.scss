@@ -12,3 +12,8 @@
     clear: both;
   }
 }
+
+@mixin vertical-centered($container-height, $element-height) {
+  margin-top: (($container-height - $element-height) / 2);
+  margin-bottom: (($container-height - $element-height) / 2);
+}

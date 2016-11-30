@@ -1,13 +1,43 @@
+/* ------------------------------------------------------------------------------------------
+   TABLE
+   ------------------------------------------------------------------------------------------ */
+.table {
+  margin: 0 0 $space 0;
+  border-collapse: collapse;
+  font-size: $font-size;
+  text-align: left;
 
-.table-headers {
-  font-size: 12px;
+  thead tr th, tbody tr td, tfoot tr td {
+    padding: $space-tiny;
+    border: {
+      color: $color-border;
+      style: solid;
+      width: 0 0 1px 0;
+    }
+  }
 
-  .table-header {
-    vertical-align: top;
+  thead {
+    font-size: $font-size-small;
+    font-weight: $font-weight-medium;
+    text-transform: uppercase;
+
+    tr {
+      th {
+        border-top-width: 1px;
+      }
+    }
+  }
+
+  tbody {
+    font-weight: $font-weight-light;
+  }
+
+  &.table-striped {
+    tbody tr, tfoot tr {
+      &:nth-child(odd) {
+        background-color: $color-table-row-odd;
+      }
+    }
   }
 }
 
-.table-striped > tbody > tr:nth-child(2n+1) > td,
-.table-striped > tbody > tr:nth-child(2n+1) > th {
-  background-color: $table_row_odd;
-}
