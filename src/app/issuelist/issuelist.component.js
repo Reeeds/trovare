@@ -83,6 +83,7 @@
     }
 
     function loadMore() {
+      console.log("LOAD MORE");
       vm.limitTo += vm.step;
     }
 

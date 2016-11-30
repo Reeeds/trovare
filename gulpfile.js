@@ -74,6 +74,7 @@ var config = {
         "./src/app/ui/ui.module.js",
         "./src/app/ui/multiselect.directive.js",
         "./src/app/ui/collapsabletext.component.js",
+        "./src/app/ui/autoloader.directive.js",
 
         "./src/app/issuelist/issuelist.module.js",
         "./src/app/issuelist/issuelist.config.js",
