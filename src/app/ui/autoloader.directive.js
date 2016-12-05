@@ -25,12 +25,9 @@
       $container.scroll(function() {
         if ($container.scrollTop() + $container.innerHeight() >= $container.prop("scrollHeight")) {
           if (!scrolledToBottom) {
-            console.log("BOTTOM");
-
             $scope.$apply(function() {
                 $scope.autoLoader();
             });
-
           }
           scrolledToBottom = true;
         } else {

@@ -12,6 +12,7 @@ $main-header-height: 50px;
   left: 0;
   background-color: $color-primary-lt;
   color: $color-primary-contrast;
+  z-index: 999;
 
   .app-name {
     float: left;
