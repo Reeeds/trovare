@@ -1,0 +1,15 @@
+/* ------------------------------------------------------------------------------------------
+   DOT
+   ------------------------------------------------------------------------------------------ */
+.dot {
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+  border-radius: 100%;
+  background-color: $lightgrey;
+
+  &.dot-red    { background-color: $red; }
+  &.dot-orange { background-color: $orange; }
+  &.dot-yellow { background-color: $yellow; }
+  &.dot-green  { background-color: $green; }
+}

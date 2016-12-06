@@ -50,10 +50,17 @@
       <tr ng-repeat="row in $ctrl.rows | multiSearch:$ctrl.search | orderBy:$ctrl.orderBy:$ctrl.sortReverse | limitTo: $ctrl.limitTo as issueResultList track by $index ">
         <td ng-repeat="(key,val) in row track by $index" ng-show="$ctrl.headers[key].active"
             ng-class="{ 'no-break': ($ctrl.headers[key].singleLine) }">
-          <div ng-if="!$ctrl.headers[key].collapsable && !row._trovare[key]" ng-bind-html="val | highlighter: $ctrl.getSearchWords()"></div>
-          <div ng-if="!$ctrl.headers[key].collapsable && row._trovare[key]">
-            <a class="link" ng-href="{{row._trovare[key]}}" target="_blank" ng-bind-html="val | highlighter: $ctrl.getSearchWords()"></a>
+
+          <div ng-if="!$ctrl.headers[key].collapsable && !row._trovare.extLinks[key] && !row._trovare.colorColumns[key]" ng-bind-html="val | highlighter: $ctrl.getSearchWords()"></div>
+
+          <div ng-if="!$ctrl.headers[key].collapsable && row._trovare.extLinks[key]">
+            <a class="link" ng-href="{{row._trovare.extLinks[key]}}" target="_blank" ng-bind-html="val | highlighter: $ctrl.getSearchWords()"></a>
           </div>
+
+          <div ng-if="!$ctrl.headers[key].collapsable && row._trovare.colorColumns[key]">
+            <span class="dot" ng-class="'dot-' + row._trovare.colorColumns[key]" title="{{row[key]}}"></span>
+          </div>
+
           <div ng-if="$ctrl.headers[key].collapsable">
             <collapsable-text text="val" get-terms="$ctrl.getSearchWords()"></collapsable-text>
           </div>

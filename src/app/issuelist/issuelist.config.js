@@ -15,6 +15,17 @@
       'Planung Entwicklung':      'Planung Entw.'
     })
     .value('singleLineColumns', ['Entwicklungs-Team', 'Fehlerklasse'])
+    .value('colourColumns', [
+      {
+        column: 'Fehlerklasse',
+        colors: {
+          'A - Critical': 'red',
+          'B - High':     'orange',
+          'C - Medium':   'yellow',
+          'D - Low':      'green'
+        }
+      }
+    ])
     .value('externalLinks', [
       {
         match: {

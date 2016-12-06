@@ -249,6 +249,17 @@
       'Planung Entwicklung':      'Planung Entw.'
     })
     .value('singleLineColumns', ['Entwicklungs-Team', 'Fehlerklasse'])
+    .value('colourColumns', [
+      {
+        column: 'Fehlerklasse',
+        colors: {
+          'A - Critical': 'red',
+          'B - High':     'orange',
+          'C - Medium':   'yellow',
+          'D - Low':      'green'
+        }
+      }
+    ])
     .value('externalLinks', [
       {
         match: {
@@ -425,9 +436,9 @@ angular
       controller: IssueListController
     });
 
-  IssueListController.$inject = ['csv', 'filterColumns', 'collapsableColumns', 'singleLineColumns', 'columnHeaders', 'externalLinks', 'parserService'];
+  IssueListController.$inject = ['csv', 'filterColumns', 'collapsableColumns', 'singleLineColumns', 'columnHeaders', 'colourColumns', 'externalLinks', 'parserService'];
 
-  function IssueListController(csv, filterColumns, collapsableColumns, singleLineColumns, columnHeaders, externalLinks, parserService) {
+  function IssueListController(csv, filterColumns, collapsableColumns, singleLineColumns, columnHeaders, colourColumns, externalLinks, parserService) {
     var vm = this;
 
     vm.content            = "";
@@ -482,13 +493,19 @@ angular
       });
 
       angular.forEach(vm.rows, function(row) {
-        row['_trovare'] = {};
+        row['_trovare'] = { colorColumns: {}, extLinks: {} };
+
+        angular.forEach(colourColumns, function(colorColumn) {
+          if (angular.isDefined(row[colorColumn.column]) && angular.isDefined(colorColumn.colors[row[colorColumn.column]])) {
+            row._trovare.colorColumns[colorColumn.column] = colorColumn.colors[row[colorColumn.column]]
+          }
+        });
 
         angular.forEach(externalLinks, function(extLink) {
           if (row[extLink.match.field].toLowerCase() == extLink.match.value.toLowerCase()) {
             var fieldValue = (row[extLink.link.field]).toString().match(new RegExp(extLink.link.pattern));
             if (fieldValue !== null) {
-              row['_trovare'][extLink.link.field] = (extLink.link.url + fieldValue);
+              row._trovare.extLinks[extLink.link.field] = (extLink.link.url + fieldValue);
             }
           }
         });
