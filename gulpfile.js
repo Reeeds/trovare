@@ -75,6 +75,7 @@ var config = {
         "./src/app/ui/multiselect.directive.js",
         "./src/app/ui/collapsabletext.component.js",
         "./src/app/ui/autoloader.directive.js",
+        "./src/app/ui/linebreak.filter.js",
 
         "./src/app/issuelist/issuelist.module.js",
         "./src/app/issuelist/issuelist.config.js",
@@ -84,7 +85,6 @@ var config = {
         "./src/app/issuelist/parser.service.js",
         "./src/app/issuelist/highlighter.filter.js",
         "./src/app/issuelist/tablefield.component.js",
-
 
         "./src/assets/js/bootstrap-filestyle.min.js"
 
