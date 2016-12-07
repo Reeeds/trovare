@@ -6,7 +6,8 @@
     'app.issueList',
     'app.csvjs',
     'app.ui',
-    'ngSanitize'
+    'ngSanitize',
+    'ngclipboard'
   ]);
 
 })();
@@ -737,7 +738,8 @@ angular
         row: '<',
         key: '<',
         val: '<',
-        getSearchWords: '&'
+        getSearchWords: '&',
+        autoCopy: '<?'
       }
     });
 

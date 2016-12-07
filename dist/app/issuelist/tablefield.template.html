@@ -1,4 +1,9 @@
-<div ng-if="!tableFieldCtrl.headers[tableFieldCtrl.key].collapsable && !tableFieldCtrl.row._trovare.extLinks[tableFieldCtrl.key] && !tableFieldCtrl.row._trovare.colorColumns[tableFieldCtrl.key]"
+<div ng-if="tableFieldCtrl.autoCopy && !tableFieldCtrl.headers[tableFieldCtrl.key].collapsable && !tableFieldCtrl.row._trovare.extLinks[tableFieldCtrl.key] && !tableFieldCtrl.row._trovare.colorColumns[tableFieldCtrl.key]"
+     ng-bind-html="tableFieldCtrl.val | highlighter: tableFieldCtrl.getSearchWords()"
+     ngclipboard data-clipboard-text="{{tableFieldCtrl.val}}"
+     class="copyable"></div>
+
+<div ng-if="tableFieldCtrl.autoCopy !== true && !tableFieldCtrl.headers[tableFieldCtrl.key].collapsable && !tableFieldCtrl.row._trovare.extLinks[tableFieldCtrl.key] && !tableFieldCtrl.row._trovare.colorColumns[tableFieldCtrl.key]"
      ng-bind-html="tableFieldCtrl.val | highlighter: tableFieldCtrl.getSearchWords()"></div>
 
 <div ng-if="!tableFieldCtrl.headers[tableFieldCtrl.key].collapsable && tableFieldCtrl.row._trovare.extLinks[tableFieldCtrl.key]">
@@ -12,3 +17,4 @@
 <div ng-if="tableFieldCtrl.headers[tableFieldCtrl.key].collapsable">
   <collapsable-text text="tableFieldCtrl.val" get-terms="tableFieldCtrl.getSearchWords()"></collapsable-text>
 </div>
+

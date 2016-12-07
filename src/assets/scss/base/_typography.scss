@@ -26,3 +26,16 @@ html, body {
 .no-break {
   white-space: nowrap;
 }
+
+.copyable {
+  padding: 1px 3px;
+  border-radius: $border-radius;
+  border: 1px dashed $color-border;
+  cursor: pointer;
+  transition: border-color 250ms ease, color 250ms ease;
+
+  &:hover {
+    border-color: $color-primary;
+    color: $color-primary;
+  }
+}

@@ -12,7 +12,8 @@
         row: '<',
         key: '<',
         val: '<',
-        getSearchWords: '&'
+        getSearchWords: '&',
+        autoCopy: '<?'
       }
     });
 

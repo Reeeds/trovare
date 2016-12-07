@@ -5,7 +5,8 @@
     'app.issueList',
     'app.csvjs',
     'app.ui',
-    'ngSanitize'
+    'ngSanitize',
+    'ngclipboard'
   ]);
 
 })();
