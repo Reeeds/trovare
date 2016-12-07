@@ -1,0 +1,14 @@
+<div ng-if="!tableFieldCtrl.headers[tableFieldCtrl.key].collapsable && !tableFieldCtrl.row._trovare.extLinks[tableFieldCtrl.key] && !tableFieldCtrl.row._trovare.colorColumns[tableFieldCtrl.key]"
+     ng-bind-html="tableFieldCtrl.val | highlighter: tableFieldCtrl.getSearchWords()"></div>
+
+<div ng-if="!tableFieldCtrl.headers[tableFieldCtrl.key].collapsable && tableFieldCtrl.row._trovare.extLinks[tableFieldCtrl.key]">
+  <a class="link" ng-href="{{tableFieldCtrl.row._trovare.extLinks[tableFieldCtrl.key]}}" target="_blank" ng-bind-html="tableFieldCtrl.val | highlighter: tableFieldCtrl.getSearchWords()"></a>
+</div>
+
+<div ng-if="!tableFieldCtrl.headers[tableFieldCtrl.key].collapsable && tableFieldCtrl.row._trovare.colorColumns[tableFieldCtrl.key]">
+  <span class="dot" ng-class="'dot-' + tableFieldCtrl.row._trovare.colorColumns[tableFieldCtrl.key]" title="{{::tableFieldCtrl.row[tableFieldCtrl.key]}}"></span>
+</div>
+
+<div ng-if="tableFieldCtrl.headers[tableFieldCtrl.key].collapsable">
+  <collapsable-text text="tableFieldCtrl.val" get-terms="tableFieldCtrl.getSearchWords()"></collapsable-text>
+</div>

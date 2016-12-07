@@ -83,6 +83,8 @@ var config = {
         "./src/app/issuelist/issuelist.component.js",
         "./src/app/issuelist/parser.service.js",
         "./src/app/issuelist/highlighter.filter.js",
+        "./src/app/issuelist/tablefield.component.js",
+
 
         "./src/assets/js/bootstrap-filestyle.min.js"
 

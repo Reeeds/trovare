@@ -76,6 +76,7 @@ $tooltip_border:        $darkgrey;
 $tooltip_arrow:         $lightgrey;
 $tooltip_arrow_border:  $darkgrey;
 $text_standard:         $darkgrey;
+$text_light:            lighten($darkgrey, 30);
 
 $checkbox-inactive_color:  $grey;
 $checkbox-active_color:    $blue;

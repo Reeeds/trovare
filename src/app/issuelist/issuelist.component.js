@@ -8,9 +8,9 @@
       controller: IssueListController
     });
 
-  IssueListController.$inject = ['csv', 'filterColumns', 'collapsableColumns', 'singleLineColumns', 'columnHeaders', 'colourColumns', 'externalLinks', 'parserService'];
+  IssueListController.$inject = ['csv', 'filterColumns', 'collapsableColumns', 'singleLineColumns', 'columnHeaders', 'colourColumns', 'multiColumns', 'externalLinks', 'parserService'];
 
-  function IssueListController(csv, filterColumns, collapsableColumns, singleLineColumns, columnHeaders, colourColumns, externalLinks, parserService) {
+  function IssueListController(csv, filterColumns, collapsableColumns, singleLineColumns, columnHeaders, colourColumns, multiColumns, externalLinks, parserService) {
     var vm = this;
 
     vm.content            = "";
@@ -20,7 +20,7 @@
     vm.search             = '';     // set the default search/filter term
     vm.headers            = {};
     vm.collapsableColumns = collapsableColumns;
-    vm.limitTo            = 50;
+    vm.limitTo            = 5;
     vm.step               = 50;
 
     vm.getSearchWords = getSearchWords;
@@ -55,13 +55,37 @@
       vm.rows = new csv(fileContent, { header: true, cast: false }).parse();
       vm.headers = {};
 
-      angular.forEach(vm.rows[0], function(val, key) {
-        vm.headers[key] = {
+      var newHeader = function(key) {
+        return {
+          key: key,
           title: angular.isDefined(columnHeaders[key]) ? columnHeaders[key] : key,
           collapsable: (vm.collapsableColumns.indexOf(key) !== -1),
           singleLine: (singleLineColumns.indexOf(key) !== -1),
-          active: true
+          active: true,
+          subHeaders: {}
         };
+      }
+
+      angular.forEach(vm.rows[0], function(val, key) {
+        var added = false;
+
+        angular.forEach(multiColumns, function(multiColumn) {
+          var idxOf = multiColumn.indexOf(key);
+
+          if (idxOf === 0) {
+            vm.headers[key] = newHeader(key);
+            added = true;
+            return false;
+          } else if (idxOf !== -1) {
+            vm.headers[multiColumn[0]].subHeaders[idxOf] = newHeader(key);
+            added = true;
+            return false;
+          }
+        });
+
+        if (!added) {
+          vm.headers[key] = newHeader(key);
+        }
       });
 
       angular.forEach(vm.rows, function(row) {

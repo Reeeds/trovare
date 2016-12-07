@@ -9,10 +9,14 @@
       'Entwicklungs-Team':        'Team',
       'Issue ID':                 'ID',
       'Fehlerklasse':             'Prio',
-      'Externer Bearbeiter':      'Ext. Bearbeiter',
-      'Externer Bearbeiter Ref.': 'Ext. Bearbeiter Ref.',
-      'Zugewiesen an':            'Zugew. an',
-      'Planung Entwicklung':      'Planung Entw.'
+      'Externer Bearbeiter':      'Extern',
+      'Externer Bearbeiter Ref.': 'Ref.',
+      'Zugewiesen an':            'Zugew.',
+      'Planung Entwicklung':      'Planung Entw.',
+      'Problem-Melder':           'Melder',
+      'Erstellt am':              'Erstellt',
+      'Geändert am':              'Geändert',
+      'Issue Typ':                'Typ'
     })
     .value('singleLineColumns', ['Entwicklungs-Team', 'Fehlerklasse'])
     .value('colourColumns', [
@@ -25,6 +29,12 @@
           'D - Low':      'green'
         }
       }
+    ])
+    .value('multiColumns', [
+      [ "Erfasser", "Zugewiesen an", "Problem-Melder" ],
+      [ "Externer Bearbeiter", "Externer Bearbeiter Ref." ],
+      [ "Erstellt am", "Geändert am" ],
+      [ "Target Cycle", "Target Release" ]
     ])
     .value('externalLinks', [
       {

@@ -15,7 +15,7 @@
       </form>
     </div>
     <div class="header-control-container" ng-hide="$ctrl.content == ''">
-      <multi-select class="header-control" title="Columns" item-list="$ctrl.headers" ></multi-select>
+      <multi-select class="header-control" title="Columns" item-list="$ctrl.headers"></multi-select>
     </div>
 </div>
 
@@ -23,49 +23,41 @@
   <div class="content-container">
     <table class="table table-striped">
       <thead class="table-headers">
-      <tr>
-        <th class="table-header" ng-repeat="(columnKey,header) in $ctrl.headers track by $index" ng-show="header.active">
-          <a class="link" ng-click="$ctrl.sortType = columnKey; $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.updateFilterName()" title="{{columnKey}}">
-            {{header.title}}
-              <span ng-show="$ctrl.sortType == columnKey"
-                    ng-class="{ 'ion-arrow-up-b': !$ctrl.sortReverse, 'ion-arrow-down-b': $ctrl.sortReverse }"
-                    class="icon icon-right"></span>
-          </a>
-          <div class="header-filter-form">
-            <form class="form" ng-submit="$ctrl.appendColumnnFilterToSearch(columnKey, header.filter); header.filter=''">
-              <div class="form-group">
-                <label class="form-label">Filter by {{header.title}}</label>
-                <input type="text"
-                       class="form-input"
-                       placeholder="Filter this column"
-                       ng-model="header.filter" />
-              </div>
-            </form>
-          </div>
-        </th>
-      </tr>
+        <tr>
+          <th class="table-header" ng-repeat="(columnKey,header) in $ctrl.headers track by columnKey" ng-show="header.active">
+            <a class="link" ng-click="$ctrl.sortType = columnKey; $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.updateFilterName()" title="{{columnKey}}">
+              {{::header.title}}
+                <span ng-show="$ctrl.sortType == columnKey"
+                      ng-class="{ 'ion-arrow-up-b': !$ctrl.sortReverse, 'ion-arrow-down-b': $ctrl.sortReverse }"
+                      class="icon icon-right"></span>
+            </a>
+
+            <a ng-repeat="subHeader in header.subHeaders"
+               ng-click="$ctrl.sortType = subHeader.key; $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.updateFilterName()"
+               ng-class="{ 'even': $even }"
+               title="{{subHeader.key}}" class="link sub">
+              {{::subHeader.title}}
+                <span ng-show="$ctrl.sortType == subHeader.key"
+                      ng-class="{ 'ion-arrow-up-b': !$ctrl.sortReverse, 'ion-arrow-down-b': $ctrl.sortReverse }"
+                      class="icon icon-right"></span>
+            </a>
+          </th>
+        </tr>
       </thead>
 
       <tbody class="table-rows">
-      <tr ng-repeat="row in $ctrl.rows | multiSearch:$ctrl.search | orderBy:$ctrl.orderBy:$ctrl.sortReverse | limitTo: $ctrl.limitTo as issueResultList track by $index ">
-        <td ng-repeat="(key,val) in row track by $index" ng-show="$ctrl.headers[key].active"
-            ng-class="{ 'no-break': ($ctrl.headers[key].singleLine) }">
+        <tr ng-repeat="row in $ctrl.rows | multiSearch:$ctrl.search | orderBy:$ctrl.orderBy:$ctrl.sortReverse | limitTo: $ctrl.limitTo as issueResultList track by $index ">
+          <td ng-repeat="(key,val) in row track by $index" ng-show="$ctrl.headers[key].active"
+              ng-class="{ 'no-break': ($ctrl.headers[key].singleLine) }">
 
-          <div ng-if="!$ctrl.headers[key].collapsable && !row._trovare.extLinks[key] && !row._trovare.colorColumns[key]" ng-bind-html="val | highlighter: $ctrl.getSearchWords()"></div>
+              <table-field row="row" key="key" val="val" headers="$ctrl.headers" get-search-words="$ctrl.getSearchWords()" />
 
-          <div ng-if="!$ctrl.headers[key].collapsable && row._trovare.extLinks[key]">
-            <a class="link" ng-href="{{row._trovare.extLinks[key]}}" target="_blank" ng-bind-html="val | highlighter: $ctrl.getSearchWords()"></a>
-          </div>
+              <table-field ng-repeat="subHeader in $ctrl.headers[key].subHeaders"
+                           row="row" key="subHeader.key" val="row[subHeader.key]" headers="$ctrl.headers" get-search-words="$ctrl.getSearchWords()"
+                           ng-class="{ 'even': $even }" class="sub" />
 
-          <div ng-if="!$ctrl.headers[key].collapsable && row._trovare.colorColumns[key]">
-            <span class="dot" ng-class="'dot-' + row._trovare.colorColumns[key]" title="{{row[key]}}"></span>
-          </div>
-
-          <div ng-if="$ctrl.headers[key].collapsable">
-            <collapsable-text text="val" get-terms="$ctrl.getSearchWords()"></collapsable-text>
-          </div>
-        </td>
-      </tr>
+          </td>
+        </tr>
       </tbody>
     </table>
 

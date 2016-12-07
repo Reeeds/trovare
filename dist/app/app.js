@@ -243,10 +243,14 @@
       'Entwicklungs-Team':        'Team',
       'Issue ID':                 'ID',
       'Fehlerklasse':             'Prio',
-      'Externer Bearbeiter':      'Ext. Bearbeiter',
-      'Externer Bearbeiter Ref.': 'Ext. Bearbeiter Ref.',
-      'Zugewiesen an':            'Zugew. an',
-      'Planung Entwicklung':      'Planung Entw.'
+      'Externer Bearbeiter':      'Extern',
+      'Externer Bearbeiter Ref.': 'Ref.',
+      'Zugewiesen an':            'Zugew.',
+      'Planung Entwicklung':      'Planung Entw.',
+      'Problem-Melder':           'Melder',
+      'Erstellt am':              'Erstellt',
+      'Geändert am':              'Geändert',
+      'Issue Typ':                'Typ'
     })
     .value('singleLineColumns', ['Entwicklungs-Team', 'Fehlerklasse'])
     .value('colourColumns', [
@@ -259,6 +263,12 @@
           'D - Low':      'green'
         }
       }
+    ])
+    .value('multiColumns', [
+      [ "Erfasser", "Zugewiesen an", "Problem-Melder" ],
+      [ "Externer Bearbeiter", "Externer Bearbeiter Ref." ],
+      [ "Erstellt am", "Geändert am" ],
+      [ "Target Cycle", "Target Release" ]
     ])
     .value('externalLinks', [
       {
@@ -436,9 +446,9 @@ angular
       controller: IssueListController
     });
 
-  IssueListController.$inject = ['csv', 'filterColumns', 'collapsableColumns', 'singleLineColumns', 'columnHeaders', 'colourColumns', 'externalLinks', 'parserService'];
+  IssueListController.$inject = ['csv', 'filterColumns', 'collapsableColumns', 'singleLineColumns', 'columnHeaders', 'colourColumns', 'multiColumns', 'externalLinks', 'parserService'];
 
-  function IssueListController(csv, filterColumns, collapsableColumns, singleLineColumns, columnHeaders, colourColumns, externalLinks, parserService) {
+  function IssueListController(csv, filterColumns, collapsableColumns, singleLineColumns, columnHeaders, colourColumns, multiColumns, externalLinks, parserService) {
     var vm = this;
 
     vm.content            = "";
@@ -448,7 +458,7 @@ angular
     vm.search             = '';     // set the default search/filter term
     vm.headers            = {};
     vm.collapsableColumns = collapsableColumns;
-    vm.limitTo            = 50;
+    vm.limitTo            = 5;
     vm.step               = 50;
 
     vm.getSearchWords = getSearchWords;
@@ -483,13 +493,37 @@ angular
       vm.rows = new csv(fileContent, { header: true, cast: false }).parse();
       vm.headers = {};
 
-      angular.forEach(vm.rows[0], function(val, key) {
-        vm.headers[key] = {
+      var newHeader = function(key) {
+        return {
+          key: key,
           title: angular.isDefined(columnHeaders[key]) ? columnHeaders[key] : key,
           collapsable: (vm.collapsableColumns.indexOf(key) !== -1),
           singleLine: (singleLineColumns.indexOf(key) !== -1),
-          active: true
+          active: true,
+          subHeaders: {}
         };
+      }
+
+      angular.forEach(vm.rows[0], function(val, key) {
+        var added = false;
+
+        angular.forEach(multiColumns, function(multiColumn) {
+          var idxOf = multiColumn.indexOf(key);
+
+          if (idxOf === 0) {
+            vm.headers[key] = newHeader(key);
+            added = true;
+            return false;
+          } else if (idxOf !== -1) {
+            vm.headers[multiColumn[0]].subHeaders[idxOf] = newHeader(key);
+            added = true;
+            return false;
+          }
+        });
+
+        if (!added) {
+          vm.headers[key] = newHeader(key);
+        }
       });
 
       angular.forEach(vm.rows, function(row) {
@@ -685,6 +719,42 @@ angular
       return string.toString().replace(/[&<>]/g, function(tag) {
         return tagsToReplace[tag] || tag;
       });
+    }
+  }
+
+})();
+(function() {
+  'use strict';
+
+  angular
+    .module('app.issueList')
+    .component('tableField', {
+      templateUrl: 'app/issuelist/tablefield.template.html',
+      controller: TableFieldController,
+      controllerAs: 'tableFieldCtrl',
+      bindings: {
+        headers: '<',
+        row: '<',
+        key: '<',
+        val: '<',
+        getSearchWords: '&'
+      }
+    });
+
+  TableFieldController.$inject = [];
+
+  function TableFieldController() {
+    var vm = this;
+
+
+    //////////
+
+    init();
+
+    //////////
+
+    function init() {
+
     }
   }
 
