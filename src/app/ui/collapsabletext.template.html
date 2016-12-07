@@ -1,11 +1,10 @@
 <div class="collapsable-text">
   <div class="content"
-       ng-bind-html="collapsableTextCtrl.collapsed ? collapsableTextCtrl.getCollapsedContent(collapsableTextCtrl.text) : (collapsableTextCtrl.text | highlighter: collapsableTextCtrl.getTerms()) | lineBreak">
+       ng-bind-html="collapsableTextCtrl.collapsed ? collapsableTextCtrl.getCollapsedContent(collapsableTextCtrl.text) : (collapsableTextCtrl.text | highlighter: collapsableTextCtrl.getTerms() | lineBreak)">
   </div>
   <a ng-click="collapsableTextCtrl.collapsed = !collapsableTextCtrl.collapsed"
      ng-if="collapsableTextCtrl.text !== collapsableTextCtrl.getCollapsedContent(collapsableTextCtrl.text)"
      class="link">
-    <span ng-show="collapsableTextCtrl.collapsed">Show more</span>
-    <span ng-hide="collapsableTextCtrl.collapsed">Show less</span>
+    <span>{{ collapsableTextCtrl.collapsed ? 'Show more' : 'Show less' }}</span>
   </a>
 </div>
