@@ -1,0 +1,25 @@
+/* ------------------------------------------------------------------------------------------
+   UPLOAD FORM BLOCK
+   ------------------------------------------------------------------------------------------ */
+.upload-form {
+  float: left;
+}
+
+
+
+/* ------------------------------------------------------------------------------------------
+   ELEMENTS
+   ------------------------------------------------------------------------------------------ */
+.upload-form__label {
+  @include vertical-centered($main-header-height, $btn-height);
+  background-color: $color-primary-dk;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $color-primary-dkr;
+  }
+}
+
+.upload-form__input {
+  display: none;
+}

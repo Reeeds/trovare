@@ -1,9 +1,11 @@
 <div class="main-header">
-    <div class="app-name app-name--header"><i class="icon ion-ionic"></i><span class="main">trovare</span></div>
+    <div class="app-name app-name--header"><i class="icon ion-ionic"></i><span class="app-name__main">trovare</span></div>
+
     <div class="upload-form">
-      <label class="btn btn--primary" for="file-upload">Load CSV</label>
-      <input type="file" id="file-upload" on-read-file="$ctrl.fileLoaded(fileContent)" accept=".csv" class="file" />
+      <label class="btn btn--primary upload-form__label" for="file-upload">Load CSV</label>
+      <input type="file" id="file-upload" on-read-file="$ctrl.fileLoaded(fileContent)" accept=".csv" class="upload-form__input" />
     </div>
+
     <div class="file-info">
       <i class="icon ion-information-circled"></i>{{ $ctrl.rows.length > 0 ? ('Showing ' + issueResultList.length + ' of ' + $ctrl.rows.length) : 'No issues found' }}
     </div>

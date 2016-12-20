@@ -12,50 +12,15 @@
   color: $color-primary-contrast;
   z-index: 999;
 
-  .app-name {
-    float: left;
-    margin-right: $space-medium;
-    padding: 0 $space;
-    line-height: $main-header-height;
-
-    .main {
-      font-weight: $font-weight-bold;
-      text-transform: uppercase;
-      margin-right: $space-tiny;
-    }
-
-    .sub  {
-      font-weight: $font-weight-light;
-    }
-  }
-
-  .upload-form {
-    float: left;
-
-    label {
-      @include vertical-centered($main-header-height, $btn-height);
-      background-color: $color-primary-dk;
-      cursor: pointer;
-
-      &:hover {
-        background-color: $color-primary-dkr;
-      }
-    }
-
-    .file {
-      display: none;
-    }
-  }
-
   .file-info {
     float: left;
     margin: 0 $space;
     font-size: $font-size-small;
     line-height: $main-header-height;
   }
-
-
 }
+
+
 
 /* ------------------------------------------------------------------------------------------
    ELEMENTS
