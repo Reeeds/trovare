@@ -1,7 +1,7 @@
 <span ng-if="tableFieldCtrl.autoCopy && !tableFieldCtrl.headers[tableFieldCtrl.key].collapsable && !tableFieldCtrl.row._trovare.extLinks[tableFieldCtrl.key] && !tableFieldCtrl.row._trovare.colorColumns[tableFieldCtrl.key]"
      ng-bind-html="tableFieldCtrl.val | highlighter: tableFieldCtrl.getSearchWords()"
      ngclipboard data-clipboard-text="{{tableFieldCtrl.val}}"
-     class="copyable"></span>
+     class="is-copyable"></span>
 
 <div ng-if="tableFieldCtrl.autoCopy !== true && !tableFieldCtrl.headers[tableFieldCtrl.key].collapsable && !tableFieldCtrl.row._trovare.extLinks[tableFieldCtrl.key] && !tableFieldCtrl.row._trovare.colorColumns[tableFieldCtrl.key]"
      ng-bind-html="tableFieldCtrl.val | highlighter: tableFieldCtrl.getSearchWords()"></div>

@@ -23,7 +23,7 @@ angular
     function highlightTerm(content, term, idx) {
       var style = styleClasses[ idx % styleClasses.length ];
       var regEx = new RegExp('(' + term + ')', 'gi');
-      content = content.replace(regEx, '<span class="highlighted ' + style + '">$1</span>');
+      content = content.replace(regEx, '<span class="is-highlighted--' + style + '">$1</span>');
       return content;
     }
 

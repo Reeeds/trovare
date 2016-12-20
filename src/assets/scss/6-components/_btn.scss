@@ -19,12 +19,13 @@
     color: $color-primary-dk;
   }
 
-  &.btn-primary {
+  &.btn--primary {
     background-color: $color-primary;
     color: $color-primary-contrast;
 
     &:hover {
       background-color: $color-primary-dk;
+      color: $color-primary-contrast;
     }
 
     &:active {
@@ -32,18 +33,18 @@
     }
   }
 
-  &.btn-outline {
+  &.btn--outline {
     border-color: transparent;
     padding-left: 0;
     padding-right: 0;
   }
 
-  &.btn-block {
+  &.btn--block {
     width: 100%;
     display: block;
   }
 
-  &.btn-alt {
+  &.btn--alt {
     color: $color-primary-contrast;
   }
 }

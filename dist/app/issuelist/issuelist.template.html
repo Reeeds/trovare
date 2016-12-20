@@ -1,7 +1,7 @@
 <div class="main-header">
     <div class="app-name"><i class="icon ion-ionic"></i><span class="main">trovare</span></div>
     <div class="upload-form">
-      <label class="btn btn-primary" for="file-upload">Load CSV</label>
+      <label class="btn btn--primary" for="file-upload">Load CSV</label>
       <input type="file" id="file-upload" on-read-file="$ctrl.fileLoaded(fileContent)" accept=".csv" class="file" />
     </div>
     <div class="file-info">
@@ -27,9 +27,9 @@
           <th class="table-header" ng-repeat="(columnKey,header) in $ctrl.headers track by columnKey" ng-show="header.active">
             <a class="link" ng-click="$ctrl.sortType = columnKey; $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.updateFilterName()" title="{{columnKey}}">
               {{::header.title}}
-                <span ng-show="$ctrl.sortType == columnKey"
-                      ng-class="{ 'ion-arrow-up-b': !$ctrl.sortReverse, 'ion-arrow-down-b': $ctrl.sortReverse }"
-                      class="icon icon-right"></span>
+              <span ng-show="$ctrl.sortType == columnKey"
+                    ng-class="{ 'ion-arrow-up-b': !$ctrl.sortReverse, 'ion-arrow-down-b': $ctrl.sortReverse }"
+                    class="icon icon-right"></span>
             </a>
 
             <a ng-repeat="subHeader in header.subHeaders"
@@ -48,7 +48,7 @@
       <tbody class="table-rows">
         <tr ng-repeat="row in $ctrl.rows | multiSearch:$ctrl.search | orderBy:$ctrl.orderBy:$ctrl.sortReverse | limitTo: $ctrl.limitTo as issueResultList track by $index ">
           <td ng-repeat="(key,val) in row track by $index" ng-show="$ctrl.headers[key].active"
-              ng-class="{ 'no-break': ($ctrl.headers[key].singleLine) }">
+              ng-class="{ 'is-unbreakable': ($ctrl.headers[key].singleLine) }">
               <table-field row="row" key="key" val="val" headers="$ctrl.headers" get-search-words="$ctrl.getSearchWords()" auto-copy="$index === 0" />
 
               <table-field ng-repeat="subHeader in $ctrl.headers[key].subHeaders"
@@ -60,7 +60,7 @@
     </table>
 
     <div class="text-centered">
-      <a class="btn btn-primary" ng-click="$ctrl.loadMore()" ng-show="$ctrl.rows.length > $ctrl.limitTo && issueResultList.length === $ctrl.limitTo"><i class="icon ion-refresh"></i>Load more</a>
+      <a class="btn btn--primary" ng-click="$ctrl.loadMore()" ng-show="$ctrl.rows.length > $ctrl.limitTo && issueResultList.length === $ctrl.limitTo"><i class="icon ion-refresh"></i>Load more</a>
     </div>
   </div>
 </div>

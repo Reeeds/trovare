@@ -1,34 +1,34 @@
-/* ------------------------------------------------------------------------------------------
-   HELPERS
-   ------------------------------------------------------------------------------------------ */
-@import "helpers/colors";
-@import "helpers/mixins";
-@import "helpers/keyframes";
-@import "helpers/variables";
+
+@import "1-settings/colors";
+@import "1-settings/variables";
 
 
-
-/* ------------------------------------------------------------------------------------------
-   BASE
-   ------------------------------------------------------------------------------------------ */
-@import "base/general";
-@import "base/typography";
+@import "2-tools/keyframes";
+@import "2-tools/mixins";
 
 
+@import "3-generic/reset";
+@import "3-generic/sizing";
 
-/* ------------------------------------------------------------------------------------------
-   MODULES
-   ------------------------------------------------------------------------------------------ */
-@import "modules/grid";
-@import "modules/highlighting";
-@import "modules/info-box";
-@import "modules/multiselect";
-@import "modules/tables";
-@import "modules/header-filter-form";
-@import "modules/main-header";
-@import "modules/btn";
-@import "modules/container";
-@import "modules/icon";
-@import "modules/form";
-@import "modules/main-container";
-@import "modules/dot";
+
+@import "4-elements/global";
+@import "4-elements/headings";
+
+
+@import "5-objects/grid";
+
+
+@import "6-components/btn";
+@import "6-components/container";
+@import "6-components/dot";
+@import "6-components/form";
+@import "6-components/header-filter-form";
+@import "6-components/icon";
+@import "6-components/link";
+@import "6-components/main-container";
+@import "6-components/main-header";
+@import "6-components/multiselect";
+@import "6-components/tables";
+
+
+@import "7-trumps/text";
