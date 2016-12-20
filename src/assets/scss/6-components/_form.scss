@@ -1,41 +1,67 @@
 /* ------------------------------------------------------------------------------------------
-   FORM
+   FORM BLOCK
    ------------------------------------------------------------------------------------------ */
 .form {
-  .form-group {
-    &:not(:last-of-type) {
-      margin-bottom: $space;
-    }
 
-    .form-label {
-      display: block;
-      margin-bottom: $space-tiny;
-      font-weight: $font-weight-medium;
-    }
+}
 
-    .form-input {
-      width: 100%;
-      height: $input-height;
-      display: block;
-      margin: 0;
-      padding: $space-tiny $space-small;
-      border-radius: $border-radius;
-      outline: none;
-      border: 1px solid $color-border;
-      font: inherit;
-      font-size: $font-size-small;
-      line-height: ($input-height - (2 * $space-tiny));
 
-      &.large {
-        height: $input-height-large;
-        padding: $space-tiny $space;
-        font-size: $font-size;
-        line-height: ($input-height-large - (2 * $space-tiny));
-      }
 
-      &.search {
-
-      }
-    }
+/* ------------------------------------------------------------------------------------------
+   FORM ELEMENTS
+   ------------------------------------------------------------------------------------------ */
+.form__group {
+  &:not(:last-of-type) {
+    margin-bottom: $space;
   }
 }
+
+.form__label {
+  display: block;
+  margin-bottom: $space-tiny;
+  font-weight: $font-weight-medium;
+}
+
+.form__input {
+  width: 100%;
+  height: $input-height;
+  display: block;
+  margin: 0;
+  padding: $space-tiny $space-small;
+  border-radius: $border-radius;
+  outline: none;
+  border: 1px solid $color-border;
+  font: inherit;
+  font-size: $font-size-small;
+  line-height: ($input-height - (2 * $space-tiny));
+
+
+
+  /* ------------------------------------------------------------------------------------------
+     MODIFIERS
+     ------------------------------------------------------------------------------------------ */
+  &.form__input--large {
+    height: $input-height-large;
+    padding: $space-tiny $space;
+    font-size: $font-size;
+    line-height: ($input-height-large - (2 * $space-tiny));
+  }
+
+  &.form__input--search {
+
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

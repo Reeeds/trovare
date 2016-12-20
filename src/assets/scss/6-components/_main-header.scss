@@ -1,8 +1,6 @@
 /* ------------------------------------------------------------------------------------------
-   MAIN HEADER
+   MAIN HEADER BLOCK
    ------------------------------------------------------------------------------------------ */
-$main-header-height: 50px;
-
 .main-header {
   @include clearfix();
 
@@ -56,7 +54,13 @@ $main-header-height: 50px;
     line-height: $main-header-height;
   }
 
-  .header-control-container {
+
+}
+
+/* ------------------------------------------------------------------------------------------
+   ELEMENTS
+   ------------------------------------------------------------------------------------------ */
+.main-header__control-container {
     float: left;
     margin: 0 $space;
 
@@ -68,15 +72,16 @@ $main-header-height: 50px;
       margin-left: $space-large;
     }
 
-    .header-control {
-      @include vertical-centered($main-header-height, $btn-height);
+}
 
-      .multiselect-title {
-        color: inherit;
-      }
-    }
+.main-header__control {
+  @include vertical-centered($main-header-height, $btn-height);
+
+  .multiselect-title {
+    color: inherit;
   }
 }
+
 
 .with-main-header {
   margin-top: $main-header-height;

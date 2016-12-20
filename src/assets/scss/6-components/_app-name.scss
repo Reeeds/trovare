@@ -1,0 +1,26 @@
+/* ------------------------------------------------------------------------------------------
+   APP NAME BLOCK
+   ------------------------------------------------------------------------------------------ */
+.app-name {
+  float: left;
+  margin-right: $space-medium;
+  padding: 0 $space;
+
+  &.app-name--header {
+    line-height: $main-header-height;
+  }
+}
+
+
+/* ------------------------------------------------------------------------------------------
+   ELEMENTS
+   ------------------------------------------------------------------------------------------ */
+.app-name__main {
+  font-weight: $font-weight-bold;
+  text-transform: uppercase;
+  margin-right: $space-tiny;
+}
+
+.app-name__sub {
+  font-weight: $font-weight-light;
+}

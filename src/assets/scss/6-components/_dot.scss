@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------------------------
-   DOT
+   DOT BLOCK
    ------------------------------------------------------------------------------------------ */
 .dot {
   width: 8px;
@@ -8,8 +8,13 @@
   border-radius: 100%;
   background-color: $lightgrey;
 
-  &.dot-red    { background-color: $red; }
-  &.dot-orange { background-color: $orange; }
-  &.dot-yellow { background-color: $yellow; }
-  &.dot-green  { background-color: $green; }
+
+
+  /* ------------------------------------------------------------------------------------------
+     MODIFIERS
+     ------------------------------------------------------------------------------------------ */
+  &.dot--red    { background-color: $red; }
+  &.dot--orange { background-color: $orange; }
+  &.dot--yellow { background-color: $yellow; }
+  &.dot--green  { background-color: $green; }
 }
