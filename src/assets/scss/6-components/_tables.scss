@@ -1,5 +1,5 @@
 /* ------------------------------------------------------------------------------------------
-   TABLE
+   TABLE BLOCK
    ------------------------------------------------------------------------------------------ */
 .table {
   margin: 0 0 $space 0;
@@ -7,50 +7,65 @@
   font-size: $font-size;
   text-align: left;
 
-  thead tr th, tbody tr td, tfoot tr td {
-    padding: $space-tiny;
-    border: {
-      color: $color-border;
-      style: solid;
-      width: 0 0 1px 0;
-    }
-  }
+  &.table--striped {
 
-  thead {
-    font-size: $font-size-small;
-    font-weight: $font-weight-medium;
-    text-transform: uppercase;
-
-    tr {
-      th {
-        border-top-width: 1px;
-        vertical-align: top;
-
-        .link {
-          display: block;
-        }
-
-        .sub.even {
-          color: $text_light;
-        }
-      }
-    }
-  }
-
-  tbody {
-    font-weight: $font-weight-light;
-
-    .sub.even {
-      color: $text_light;
-    }
-  }
-
-  &.table-striped {
-    tbody tr, tfoot tr {
-      &:nth-child(odd) {
-        background-color: $color-table-row-odd;
-      }
-    }
   }
 }
 
+
+
+/* ------------------------------------------------------------------------------------------
+   ELEMENTS
+   ------------------------------------------------------------------------------------------ */
+.table__cell {
+  padding: $space-small $space-tiny;
+  border: {
+    color: $color-border;
+    style: solid;
+    width: 0 0 1px 0;
+  }
+}
+
+.table__field {
+  display: block;
+
+  &.table__field--sub-even {
+    color: $text_light;
+  }
+}
+
+.table__field-sub {
+  padding-top: $space-tiny;
+}
+
+.table__header-cell {
+  @extend .table__cell;
+
+  border-top-width: 1px;
+  vertical-align: top;
+}
+
+.table__header {
+  font-size: $font-size-small;
+  font-weight: $font-weight-medium;
+  text-transform: uppercase;
+}
+
+.table__body {
+  font-weight: $font-weight-light;
+}
+
+.table__body-row {
+  .table.table--striped &:nth-child(odd) {
+    background-color: $color-table-row-odd;
+  }
+}
+
+.table__body-cell {
+  @extend .table__cell;
+}
+
+.table__link {
+  display: block;
+  cursor: pointer;
+}

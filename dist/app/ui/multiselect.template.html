@@ -1,22 +1,22 @@
 <div class="multiselect">
-  <a class="multiselect-title btn btn--outline">
-    {{multiSelectCtrl.title}}<i class="icon icon--right ion-chevron-down"></i>
+  <a class="multiselect__title btn btn--outline btn--alt">
+    {{multiSelectCtrl.title}}<i class="multiselect__title-icon icon icon--right ion-chevron-down"></i>
   </a>
-  <div class="multiselect-dropdown">
-    <ul class="multiselect-list">
-      <li class="selection">
+  <div class="multiselect__dropdown">
+    <ul class="multiselect__list">
+      <li class="multiselect__selection-toolbar">
         <a class="btn" ng-click="multiSelectCtrl.changeAll(true)">All</a> <a class="btn" ng-click="multiSelectCtrl.changeAll(false)">None</a>
       </li>
-      <li ng-repeat="(key, selectionItem) in multiSelectCtrl.itemList" class="multiselect-list-item">
-        <a ng-click="multiSelectCtrl.changeSelection(key, selectionItem)" class="multiselect-list-item-link">
-          <i class="icon ion-checkmark"
-             ng-class="{ 'check-active':   (multiSelectCtrl.data.disabledItems.indexOf(key) == -1),
-                         'check-inactive': (multiSelectCtrl.data.disabledItems.indexOf(key) != -1) }"></i>
+      <li ng-repeat="(key, selectionItem) in multiSelectCtrl.itemList" class="multiselect__list-item">
+        <a ng-click="multiSelectCtrl.changeSelection(key, selectionItem)" class="multiselect__list-item-link">
+          <i class="multiselect__list-item-icon icon ion-checkmark"
+             ng-class="{ 'multiselect__list-item-icon--check-active':   (multiSelectCtrl.data.disabledItems.indexOf(key) == -1),
+                         'multiselect__list-item-icon--check-inactive': (multiSelectCtrl.data.disabledItems.indexOf(key) != -1) }"></i>
           <span>{{selectionItem.title}}</span>
         </a>
       </li>
     </ul>
-    <div class="multiselect-dropdown-button">
+    <div class="multiselect__dropdown-button">
       <button class="btn btn--primary btn--block" ng-clicK="multiSelectCtrl.applyChanges()">Apply</button>
     </div>
   </div>

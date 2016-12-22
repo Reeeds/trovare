@@ -1,78 +1,86 @@
+$multiselect-dropdown-button-size: $btn-height + (2 * $space-tiny);
+
+/* ------------------------------------------------------------------------------------------
+   MULTISELECT BLOCK
+   ------------------------------------------------------------------------------------------ */
 .multiselect {
   position: relative;
 
-  &.active {
-    .multiselect-title {
-      .icon {
-        transform: rotate(180deg);
-      }
-    }
+  &.multiselect--active {
 
-    .multiselect-dropdown {
-      display: block;
-    }
-  }
-
-  .multiselect-title {
-    cursor: pointer;
-
-    .icon {
-
-    }
-  }
-
-  .multiselect-dropdown {
-    width: 300px;
-    height: 400px;
-    display: none;
-    position: absolute;
-    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
-    border-radius: $border-radius;
-    background: rgb(255, 255, 255);
-
-    $multiselect-dropdown-button-size: $btn-height + (2 * $space-tiny);
-
-    .multiselect-list {
-      height: (400px - $multiselect-dropdown-button-size);
-      list-style: none;
-      margin: 0;
-      padding: $space-tiny 0;
-      overflow: auto;
-      border-radius: $border-radius;
-
-      .selection {
-        padding: $space-small $space;
-      }
-
-      .multiselect-list-item {
-
-        .multiselect-list-item-link {
-          display: block;
-          padding: $space-small $space;
-          color: $color-primary;
-          font-size: $font-size;
-          cursor: pointer;
-          transition: background-color 300ms ease;
-
-          &:hover {
-            background-color: rgb(245, 245, 245);
-          }
-
-          .icon {
-            display: inline-block;
-            margin-right: 5px;
-
-            &.check-inactive {
-              opacity: 0.15;
-            }
-          }
-        }
-      }
-    }
-
-    .multiselect-dropdown-button {
-      height: $multiselect-dropdown-button-size;
-      padding: $space-tiny;
-    }
   }
 }
+
+
+
+/* ------------------------------------------------------------------------------------------
+   ELEMENTS
+   ------------------------------------------------------------------------------------------ */
+.multiselect__title {
+  cursor: pointer;
+}
+
+.multiselect__title-icon {
+  .multiselect.multiselect--active & {
+    transform: rotate(180deg);
+  }
+}
+
+.multiselect__dropdown {
+  width: 300px;
+  height: 400px;
+  display: none;
+  position: absolute;
+  box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
+  border-radius: $border-radius;
+  background: rgb(255, 255, 255);
+
+  .multiselect.multiselect--active & {
+    display: block;
+  }
+}
+
+.multiselect__dropdown-button {
+  height: $multiselect-dropdown-button-size;
+  padding: $space-tiny;
+}
+
+.multiselect__list {
+  height: (400px - $multiselect-dropdown-button-size);
+  list-style: none;
+  margin: 0;
+  padding: $space-tiny 0;
+  overflow: auto;
+  border-radius: $border-radius;
+}
+
+.multiselect__selection-toolbar {
+  padding: $space-small $space;
+}
+
+.multiselect__list-item {
+
+}
+
+.multiselect__list-item-link {
+  display: block;
+  padding: $space-small $space;
+  color: $color-primary;
+  font-size: $font-size;
+  cursor: pointer;
+  transition: background-color 300ms ease;
+
+  &:hover {
+    background-color: rgb(245, 245, 245);
+  }
+}
+
+.multiselect__list-item-icon {
+  display: inline-block;
+  margin-right: 5px;
+
+  &.multiselect__list-item-icon--check-inactive {
+    opacity: 0.15;
+  }
+}
+

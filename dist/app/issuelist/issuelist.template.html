@@ -6,7 +6,7 @@
       <input type="file" id="file-upload" on-read-file="$ctrl.fileLoaded(fileContent)" accept=".csv" class="upload-form__input" />
     </div>
 
-    <div class="file-info">
+    <div class="main-header__info">
       <i class="icon ion-information-circled"></i>{{ $ctrl.rows.length > 0 ? ('Showing ' + issueResultList.length + ' of ' + $ctrl.rows.length) : 'No issues found' }}
     </div>
     <div class="main-header__control-container gap-before" ng-hide="$ctrl.content == ''">
@@ -23,41 +23,43 @@
 
 <div class="main-container" auto-loader="$ctrl.loadMore()">
   <div class="content-container">
-    <table class="table table-striped">
-      <thead class="table-headers">
-        <tr>
-          <th class="table-header" ng-repeat="(columnKey,header) in $ctrl.headers track by columnKey" ng-show="header.active">
-            <a class="link" ng-click="$ctrl.sortType = columnKey; $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.updateFilterName()" title="{{columnKey}}">
-              {{::header.title}}
+    <table class="table table--striped">
+      <thead class="table__header">
+      <tr>
+        <th class="table__header-cell" ng-repeat="(columnKey,header) in $ctrl.headers track by columnKey" ng-show="header.active">
+          <a class="table__link" ng-click="$ctrl.sortType = columnKey; $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.updateFilterName()" title="{{columnKey}}">
+            {{::header.title}}
               <span ng-show="$ctrl.sortType == columnKey"
                     ng-class="{ 'ion-arrow-up-b': !$ctrl.sortReverse, 'ion-arrow-down-b': $ctrl.sortReverse }"
                     class="icon icon-right"></span>
-            </a>
+          </a>
 
-            <a ng-repeat="subHeader in header.subHeaders"
-               ng-click="$ctrl.sortType = subHeader.key; $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.updateFilterName()"
-               ng-class="{ 'even': $even }"
-               title="{{subHeader.key}}" class="link sub">
-              {{::subHeader.title}}
+          <a ng-repeat="subHeader in header.subHeaders"
+             ng-click="$ctrl.sortType = subHeader.key; $ctrl.sortReverse = !$ctrl.sortReverse; $ctrl.updateFilterName()"
+             ng-class="{ 'table__field--sub-even': $even }"
+             title="{{subHeader.key}}" class="table__link table__field table__field-sub">
+            {{::subHeader.title}}
                 <span ng-show="$ctrl.sortType == subHeader.key"
                       ng-class="{ 'ion-arrow-up-b': !$ctrl.sortReverse, 'ion-arrow-down-b': $ctrl.sortReverse }"
                       class="icon icon-right"></span>
-            </a>
-          </th>
-        </tr>
+          </a>
+        </th>
+      </tr>
       </thead>
 
-      <tbody class="table-rows">
-        <tr ng-repeat="row in $ctrl.rows | multiSearch:$ctrl.search | orderBy:$ctrl.orderBy:$ctrl.sortReverse | limitTo: $ctrl.limitTo as issueResultList track by $index ">
-          <td ng-repeat="(key,val) in row track by $index" ng-show="$ctrl.headers[key].active"
-              ng-class="{ 'is-unbreakable': ($ctrl.headers[key].singleLine) }">
-              <table-field row="row" key="key" val="val" headers="$ctrl.headers" get-search-words="$ctrl.getSearchWords()" auto-copy="$index === 0" />
+      <tbody class="table__body">
+      <tr ng-repeat="row in $ctrl.rows | multiSearch:$ctrl.search | orderBy:$ctrl.orderBy:$ctrl.sortReverse | limitTo: $ctrl.limitTo as issueResultList track by $index"
+          class="table__body-row">
+        <td ng-repeat="(key,val) in row track by $index" ng-show="$ctrl.headers[key].active"
+            ng-class="{ 'is-unbreakable': ($ctrl.headers[key].singleLine) }" class="table__body-cell">
+          <table-field row="row" key="key" val="val" headers="$ctrl.headers" get-search-words="$ctrl.getSearchWords()" auto-copy="$index === 0" />
 
-              <table-field ng-repeat="subHeader in $ctrl.headers[key].subHeaders"
-                           row="row" key="subHeader.key" val="row[subHeader.key]" headers="$ctrl.headers" get-search-words="$ctrl.getSearchWords()"
-                           ng-class="{ 'even': $even }" class="sub" />
-          </td>
-        </tr>
+          <table-field ng-repeat="subHeader in $ctrl.headers[key].subHeaders"
+                       row="row" key="subHeader.key" val="row[subHeader.key]" headers="$ctrl.headers" get-search-words="$ctrl.getSearchWords()"
+                       class="table__field table__field-sub"
+                       ng-class="{ 'table__field--sub-even': $even }" />
+        </td>
+      </tr>
       </tbody>
     </table>
 
