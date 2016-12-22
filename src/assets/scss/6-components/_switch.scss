@@ -1,0 +1,91 @@
+$size: 18px;
+$size-button: 14px;
+$width: (2 * $size-button);
+$padding: 4px;
+
+/* ------------------------------------------------------------------------------------------
+   SWITCH BLOCK
+   ------------------------------------------------------------------------------------------ */
+.switch {
+  display: inline-block;
+  position: relative;
+  font-size: $font-size-small;
+  margin: (($btn-height - $size)/2) 0;
+  cursor: pointer;
+}
+
+
+
+/* ------------------------------------------------------------------------------------------
+   ELEMENTS
+   ------------------------------------------------------------------------------------------ */
+.switch__icon {
+  width: $width;
+  height: $size;
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0;
+  outline: none;
+  border-radius: $size;
+  border: none;
+  background: $grey;
+  background-clip: padding-box;
+
+  &::after {
+    width: $size-button;
+    height: $size-button;
+    display: block;
+    position: absolute;
+    top: ($padding / 2);
+    left: ($padding / 2);
+    border-radius: 100%;
+    background: $lightgrey;
+    transition: left .15s ease;
+    content: "";
+  }
+
+  .switch--light & {
+    background: $white;
+
+    &::after {
+      background: $grey;
+    }
+  }
+}
+
+.switch__input {
+  display: none;
+
+  &:checked + .switch__icon {
+    background: $color-primary;
+
+    &::after {
+      left: $width - $size-button - ($padding / 2);
+    }
+  }
+
+  &:active + .switch__icon {
+    &::after {
+      background: darken($grey, 10);
+    }
+  }
+
+  .switch--light & {
+    &:checked + .switch__icon {
+      background: lighten($color-primary, 40);
+    }
+
+    &:checked + .switch__icon {
+      &::after {
+        background: $white;
+      }
+    }
+  }
+}
+
+.switch__label {
+  padding: 0 0 0 ($width + $padding);
+  line-height: $size;
+}

@@ -8,9 +8,9 @@
       controller: IssueListController
     });
 
-  IssueListController.$inject = ['csv', 'filterColumns', 'collapsableColumns', 'singleLineColumns', 'columnHeaders', 'colourColumns', 'multiColumns', 'externalLinks', 'parserService'];
+  IssueListController.$inject = ['$localStorage', 'csv', 'filterColumns', 'collapsableColumns', 'singleLineColumns', 'columnHeaders', 'colourColumns', 'multiColumns', 'externalLinks', 'parserService'];
 
-  function IssueListController(csv, filterColumns, collapsableColumns, singleLineColumns, columnHeaders, colourColumns, multiColumns, externalLinks, parserService) {
+  function IssueListController($localStorage, csv, filterColumns, collapsableColumns, singleLineColumns, columnHeaders, colourColumns, multiColumns, externalLinks, parserService) {
     var vm = this;
 
     vm.content            = "";
@@ -20,13 +20,16 @@
     vm.search             = '';     // set the default search/filter term
     vm.headers            = {};
     vm.collapsableColumns = collapsableColumns;
-    vm.limitTo            = 5;
-    vm.step               = 50;
+    vm.limitTo            = 10;
+    vm.step               = 30;
+    vm.autoLoad           = $localStorage.autoload || false;
 
     vm.getSearchWords = getSearchWords;
     vm.fileLoaded   = fileLoaded;
     vm.orderBy = orderBy;
     vm.loadMore = loadMore;
+    vm.autoLoadMore = autoLoadMore;
+    vm.saveSettings = saveSettings;
     vm.appendColumnnFilterToSearch = appendColumnnFilterToSearch;
 
     /*
@@ -112,9 +115,19 @@
       return val[vm.sortType];
     }
 
+    function autoLoadMore() {
+      if (vm.autoLoad) {
+        vm.loadMore();
+      }
+    }
+
     function loadMore() {
       console.log("LOAD MORE");
       vm.limitTo += vm.step;
+    }
+
+    function saveSettings() {
+      $localStorage.autoload = vm.autoLoad;
     }
 
     function appendColumnnFilterToSearch(key, text) {

@@ -6,7 +6,8 @@
     'app.csvjs',
     'app.ui',
     'ngSanitize',
-    'ngclipboard'
+    'ngclipboard',
+    'ngStorage'
   ]);
 
 })();

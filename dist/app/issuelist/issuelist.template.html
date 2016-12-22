@@ -9,7 +9,7 @@
     <div class="main-header__info">
       <i class="icon ion-information-circled"></i>{{ $ctrl.rows.length > 0 ? ('Showing ' + issueResultList.length + ' of ' + $ctrl.rows.length) : 'No issues found' }}
     </div>
-    <div class="main-header__control-container gap-before" ng-hide="$ctrl.content == ''">
+    <div class="main-header__control-container main-header__control-container--gap-before" ng-hide="$ctrl.content == ''">
       <form class="form main-header__control">
         <div class="form__group">
           <input type="text" class="form__input form__input--search" placeholder="Search" ng-model="$ctrl.search" ng-model-options="{debounce: 500}" />
@@ -19,9 +19,17 @@
     <div class="main-header__control-container" ng-hide="$ctrl.content == ''">
       <multi-select class="main-header__control" title="Columns" item-list="$ctrl.headers"></multi-select>
     </div>
+    <div class="main-header__control-container main-header__control-container--right">
+      <div class="main-header__control">
+        <label class="switch switch--light">
+          <input type="checkbox" class="switch__input" ng-model="$ctrl.autoLoad" ng-change="$ctrl.saveSettings()" />
+          <i class="switch__icon"></i> <span class="switch__label">Auto load</span>
+        </label>
+      </div>
+    </div>
 </div>
 
-<div class="main-container" auto-loader="$ctrl.loadMore()">
+<div class="main-container" auto-loader="$ctrl.autoLoadMore()">
   <div class="content-container">
     <table class="table table--striped">
       <thead class="table__header">
@@ -63,8 +71,11 @@
       </tbody>
     </table>
 
-    <div class="text-centered">
-      <a class="btn btn--primary" ng-click="$ctrl.loadMore()" ng-show="$ctrl.rows.length > $ctrl.limitTo && issueResultList.length === $ctrl.limitTo"><i class="icon ion-refresh"></i>Load more</a>
+    <div class="text-centered" ng-show="$ctrl.rows.length > $ctrl.limitTo && issueResultList.length === $ctrl.limitTo">
+      <a class="btn btn--primary"
+         ng-click="$ctrl.loadMore()">
+        <i class="icon ion-refresh"></i>Load more
+      </a>
     </div>
   </div>
 </div>

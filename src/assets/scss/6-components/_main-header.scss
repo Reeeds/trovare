@@ -26,25 +26,20 @@
 }
 
 .main-header__control-container {
-    float: left;
-    margin: 0 $space;
+  float: left;
+  margin: 0 $space;
 
-    &.right {
-      float: right;
-    }
+  &.main-header__control-container--right {
+    float: right;
+  }
 
-    &.gap-before {
-      margin-left: $space-large;
-    }
-
+  &.main-header__control-container--gap-before {
+    margin-left: $space-large;
+  }
 }
 
 .main-header__control {
   @include vertical-centered($main-header-height, $btn-height);
-
-  .multiselect-title {
-    color: inherit;
-  }
 }
 
 
