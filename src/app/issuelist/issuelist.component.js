@@ -13,6 +13,7 @@
   function IssueListController($localStorage, csv, filterColumns, collapsableColumns, singleLineColumns, columnHeaders, colourColumns, multiColumns, externalLinks, parserService) {
     var vm = this;
 
+    vm.name               = "";
     vm.content            = "";
     vm.rows               = "";
     vm.sortType           = '';     // set the default sort type
@@ -22,8 +23,9 @@
     vm.collapsableColumns = collapsableColumns;
     vm.limitTo            = 10;
     vm.step               = 30;
-    vm.autoLoad           = $localStorage.autoload || false;
+    vm.lastUpload         = false;
 
+    vm.openLastUpload = openLastUpload;
     vm.getSearchWords = getSearchWords;
     vm.fileLoaded   = fileLoaded;
     vm.orderBy = orderBy;
@@ -32,18 +34,23 @@
     vm.saveSettings = saveSettings;
     vm.appendColumnnFilterToSearch = appendColumnnFilterToSearch;
 
-    /*
     //////////
-    var mockData = "";
 
-    mockData += "Issue ID;Titel;Status;Fehlerklasse;Erfasser;Zugewiesen an;Entwicklungs-Team;Planung Entwicklung;Externer Bearbeiter;Externer Bearbeiter Ref.;Prozessbereich;Target Cycle;Target Release\n";
-    mockData += "41223;Buchungsdetails | Total Buchungsbetrag wird im PDF nicht angezeigt;Assigned;A - Critical;LU14843;lue0759;ZIW A;R16-7_DEC;Avaloq;;Projekt NTS;;NTS_R2.1\n";
-    mockData += "41210;NTS: AFP Administration: EBV-Nummer wird nicht erkannt;Assigned;A - Critical;lu10921;lue0549;ZIW A;;;;Projekt NTS;;\n";
-    mockData += "41208;Zahlungsvorlage - Roter Einzahlungsschein - Begünstigtenangaben fehlen;Warten auf Drittlieferant;A - Critical;LU12518;lue0759;ZIW A;R16-7_DEC;Avaloq;280135;Projekt NTS;;NTS_R2.1\n";
-    mockData += "41205;Bankbelege: es sind nicht alle Dokumente in einer Mailbox ersichtlich (Folgeissue / Groupmanager Fehler Avaloq);Warten auf Drittlieferant;A - Critical;lue0456;lue0456;ZIW A;R16-7_DEC;Avaloq;280086;Projekt NTS;;NTS_R2.1";
+    init();
 
-    fileLoaded(mockData);
-    */
+    //////////
+
+    function init() {
+      try {
+        vm.lastUpload = (typeof $localStorage.lastUpload !== 'undefined' ? JSON.parse($localStorage.lastUpload) : false);
+      } catch(ex) {
+        console.log("Error while loading the last upload");
+      }
+    }
+
+    function openLastUpload() {
+      vm.fileLoaded(vm.lastUpload.content, vm.lastUpload.name);
+    }
 
     function getSearchWords() {
       if (vm.search !== "") {
@@ -53,10 +60,13 @@
       return [];
     }
 
-    function fileLoaded(fileContent) {
+    function fileLoaded(fileContent, fileName) {
+      vm.name = fileName;
       vm.content = fileContent;
       vm.rows = new csv(fileContent, { header: true, cast: false }).parse();
       vm.headers = {};
+
+      $localStorage.lastUpload = JSON.stringify({ name: vm.name, content: vm.content });
 
       var newHeader = function(key) {
         return {

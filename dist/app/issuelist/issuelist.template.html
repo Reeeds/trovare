@@ -3,7 +3,7 @@
 
     <div class="upload-form">
       <label class="btn btn--primary upload-form__label" for="file-upload">Load CSV</label>
-      <input type="file" id="file-upload" on-read-file="$ctrl.fileLoaded(fileContent)" accept=".csv" class="upload-form__input" />
+      <input type="file" id="file-upload" on-read-file="$ctrl.fileLoaded(fileContent, fileName)" accept=".csv" class="upload-form__input" />
     </div>
 
     <div class="main-header__info">
@@ -31,6 +31,14 @@
 
 <div class="main-container" auto-loader="$ctrl.autoLoadMore()">
   <div class="content-container">
+
+    <div class="text-centered" ng-if="$ctrl.lastUpload !== false && $ctrl.content === ''">
+      <a class="btn"
+         ng-click="$ctrl.openLastUpload()">
+        <i class="icon ion-refresh"></i>{{$ctrl.lastUpload.name}}
+      </a>
+    </div>
+
     <table class="table table--striped">
       <thead class="table__header">
       <tr>
