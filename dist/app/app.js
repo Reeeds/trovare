@@ -527,7 +527,7 @@ angular
     function fileLoaded(fileContent, fileName) {
       vm.name = fileName;
       vm.content = fileContent;
-      vm.rows = new csv(fileContent, { header: true, cast: false }).parse();
+      vm.rows = new csv(fileContent, { header: true, cast: false, delimiter: ';' }).parse();
       vm.headers = {};
 
       $localStorage.lastUpload = JSON.stringify({ name: vm.name, content: vm.content });
