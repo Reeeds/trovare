@@ -16,14 +16,16 @@
     vm.name               = "";
     vm.content            = "";
     vm.rows               = "";
-    vm.sortType           = '';     // set the default sort type
-    vm.sortReverse        = false;  // set the default sort order
-    vm.search             = '';     // set the default search/filter term
+    vm.sortType           = "";
+    vm.sortReverse        = false;
+    vm.search             = "";
     vm.headers            = {};
     vm.collapsableColumns = collapsableColumns;
     vm.limitTo            = 10;
     vm.step               = 30;
+    vm.stepSmall          = 10;
     vm.lastUpload         = false;
+    vm.autoLoad           = $localStorage.autoload || false;
 
     vm.openLastUpload = openLastUpload;
     vm.getSearchWords = getSearchWords;
@@ -132,8 +134,7 @@
     }
 
     function loadMore() {
-      console.log("LOAD MORE");
-      vm.limitTo += vm.step;
+      vm.limitTo += (vm.autoLoad ? vm.stepSmall : vm.step);
     }
 
     function saveSettings() {
