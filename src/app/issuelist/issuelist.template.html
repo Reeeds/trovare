@@ -10,14 +10,15 @@
       <i class="icon ion-information-circled"></i>{{ $ctrl.rows.length > 0 ? ('Showing ' + issueResultList.length + ' of ' + $ctrl.rows.length) : 'No issues found' }}
     </div>
     <div class="main-header__control-container main-header__control-container--gap-before" ng-hide="$ctrl.content == ''">
-      <form class="form main-header__control">
-        <div class="form__group">
-          <input type="text" class="form__input form__input--search" placeholder="Search" ng-model="$ctrl.search" ng-model-options="{debounce: 500}" />
-        </div>
-      </form>
+      <multi-select class="main-header__control" title="Columns" item-list="$ctrl.headers"></multi-select>
     </div>
     <div class="main-header__control-container" ng-hide="$ctrl.content == ''">
-      <multi-select class="main-header__control" title="Columns" item-list="$ctrl.headers"></multi-select>
+      <form class="form main-header__control">
+        <div class="form__group">
+          <input type="text" class="form__search" placeholder="Search"
+                 ng-model="$ctrl.search" ng-model-options="{debounce: 500}" ng-class="{ 'form__search--is-active': $ctrl.search !== '' }" />
+        </div>
+      </form>
     </div>
     <div class="main-header__control-container main-header__control-container--right">
       <div class="main-header__control">

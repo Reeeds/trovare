@@ -1,3 +1,17 @@
+%form-input {
+  width: 100%;
+  height: $input-height;
+  display: block;
+  margin: 0;
+  padding: $space-tiny $space-small;
+  border-radius: $border-radius;
+  outline: none;
+  border: 1px solid $color-border;
+  font: inherit;
+  font-size: $font-size-small;
+  line-height: ($input-height - (2 * $space-tiny));
+}
+
 /* ------------------------------------------------------------------------------------------
    FORM BLOCK
    ------------------------------------------------------------------------------------------ */
@@ -23,18 +37,7 @@
 }
 
 .form__input {
-  width: 100%;
-  height: $input-height;
-  display: block;
-  margin: 0;
-  padding: $space-tiny $space-small;
-  border-radius: $border-radius;
-  outline: none;
-  border: 1px solid $color-border;
-  font: inherit;
-  font-size: $font-size-small;
-  line-height: ($input-height - (2 * $space-tiny));
-
+  @extend %form-input;
 
 
   /* ------------------------------------------------------------------------------------------
@@ -46,9 +49,20 @@
     font-size: $font-size;
     line-height: ($input-height-large - (2 * $space-tiny));
   }
+}
 
-  &.form__input--search {
+.form__search {
+  @extend %form-input;
+  transition: width 200ms ease;
+  transition-delay: 500ms;
 
+  /* ------------------------------------------------------------------------------------------
+     MODIFIERS
+     ------------------------------------------------------------------------------------------ */
+  &:focus,
+  &.form__search--is-active {
+    width: 300px;
+    transition-delay: 0ms;
   }
 }
 
