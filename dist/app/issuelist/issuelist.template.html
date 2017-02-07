@@ -31,8 +31,9 @@
 </div>
 
 <div class="main-container" auto-loader="$ctrl.autoLoadMore()">
-  <div class="content-container">
+  <scroll-top-button container-selector=".main-container"></scroll-top-button>
 
+  <div class="content-container">
     <div class="text-centered" ng-if="$ctrl.lastUpload !== false && $ctrl.content === ''">
       <a class="btn"
          ng-click="$ctrl.openLastUpload()">
@@ -67,7 +68,6 @@
       <tbody class="table__body">
       <tr ng-repeat="row in $ctrl.rows | multiSearch:$ctrl.search | orderBy:$ctrl.orderBy:$ctrl.sortReverse | orderBy:'pinned':true | limitTo: $ctrl.limitTo as issueResultList track by $index"
           class="table__body-row">
-
         <td ng-repeat="(headerHey, header) in $ctrl.headers track by $index" ng-show="header.active"
             ng-class="{ 'is-unbreakable': (header.singleLine) }" class="table__body-cell">
           <a ng-if="$index === 0"
@@ -82,7 +82,6 @@
                        class="table__field table__field-sub"
                        ng-class="{ 'table__field--sub-even': $even }" />
         </td>
-
       </tr>
       </tbody>
     </table>

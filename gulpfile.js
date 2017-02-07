@@ -76,6 +76,8 @@ var config = {
         "./src/app/ui/collapsabletext.component.js",
         "./src/app/ui/autoloader.directive.js",
         "./src/app/ui/linebreak.filter.js",
+        "./src/app/ui/scrolltop.directive.js",
+        "./src/app/ui/scrolltopbutton.component.js",
 
         "./src/app/issuelist/issuelist.module.js",
         "./src/app/issuelist/issuelist.config.js",
