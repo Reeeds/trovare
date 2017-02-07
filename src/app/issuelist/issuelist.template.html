@@ -17,6 +17,7 @@
         <div class="form__group">
           <input type="text" class="form__search" placeholder="Search"
                  ng-model="$ctrl.search" ng-model-options="{debounce: 500}" ng-class="{ 'form__search--is-active': $ctrl.search !== '' }" />
+          <div>{{$ctrl.search}}</div>
         </div>
       </form>
     </div>

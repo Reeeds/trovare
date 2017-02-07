@@ -21,6 +21,8 @@ $multiselect-dropdown-button-size: $btn-height + (2 * $space-tiny);
 }
 
 .multiselect__title-icon {
+  transition: transform 100ms linear;
+
   .multiselect.multiselect--active & {
     transform: rotate(180deg);
   }
