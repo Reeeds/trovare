@@ -27,6 +27,7 @@
     vm.lastUpload         = false;
     vm.autoLoad           = $localStorage.autoload || false;
 
+    vm.changeIssuePinStatus = changeIssuePinStatus;
     vm.openLastUpload = openLastUpload;
     vm.getSearchWords = getSearchWords;
     vm.fileLoaded   = fileLoaded;
@@ -48,6 +49,10 @@
       } catch(ex) {
         console.log("Error while loading the last upload");
       }
+    }
+
+    function changeIssuePinStatus(issue) {
+      issue.pinned = (issue.pinned !== true);
     }
 
     function openLastUpload() {
@@ -81,6 +86,15 @@
         };
       }
 
+      vm.headers['pinned'] = {
+       key: 'pinned',
+       title: '',
+       collapsable: false,
+       singleLine: false,
+       active: true,
+       subHeaders: {}
+      };
+
       angular.forEach(vm.rows[0], function(val, key) {
         var added = false;
 
@@ -105,6 +119,7 @@
 
       angular.forEach(vm.rows, function(row) {
         row['_trovare'] = { colorColumns: {}, extLinks: {} };
+        row['pinned'] = false;
 
         angular.forEach(colourColumns, function(colorColumn) {
           if (angular.isDefined(row[colorColumn.column]) && angular.isDefined(colorColumn.colors[row[colorColumn.column]])) {

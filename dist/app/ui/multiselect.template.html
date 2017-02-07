@@ -7,7 +7,9 @@
       <li class="multiselect__selection-toolbar">
         <a class="btn" ng-click="multiSelectCtrl.changeAll(true)">All</a> <a class="btn" ng-click="multiSelectCtrl.changeAll(false)">None</a>
       </li>
-      <li ng-repeat="(key, selectionItem) in multiSelectCtrl.itemList" class="multiselect__list-item">
+      <li ng-repeat="(key, selectionItem) in multiSelectCtrl.itemList"
+          ng-show="selectionItem.title !== ''"
+          class="multiselect__list-item">
         <a ng-click="multiSelectCtrl.changeSelection(key, selectionItem)" class="multiselect__list-item-link">
           <i class="multiselect__list-item-icon icon ion-checkmark"
              ng-class="{ 'multiselect__list-item-icon--check-active':   (multiSelectCtrl.data.disabledItems.indexOf(key) == -1),
