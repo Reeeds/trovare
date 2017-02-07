@@ -68,7 +68,7 @@
 
       function changeAll(active) {
         angular.forEach(vm.itemList, function(item, key) {
-          if (active !== (vm.data.disabledItems.indexOf(key) === -1)) {
+          if (item.title !== '' && active !== (vm.data.disabledItems.indexOf(key) === -1)) {
             changeSelection(key, item);
           }
         });
