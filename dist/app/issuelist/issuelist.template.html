@@ -86,11 +86,15 @@
       </tbody>
     </table>
 
-    <div class="text-centered" ng-show="$ctrl.rows.length > $ctrl.limitTo && issueResultList.length === $ctrl.limitTo">
-      <a class="btn btn--primary"
-         ng-click="$ctrl.loadMore()">
+
+
+    <div class="text-centered" ng-switch="$ctrl.rows.length > $ctrl.limitTo && issueResultList.length === $ctrl.limitTo">
+      <a ng-switch-when="true"
+         ng-click="$ctrl.loadMore()"
+         class="btn btn--primary">
         <i class="icon ion-refresh"></i>Load more
       </a>
+      <span ng-switch-when="false" ng-if="$ctrl.rows.length > 0" class="text-info">You've reached the end <i class="ion-happy-outline"></i></span>
     </div>
   </div>
 </div>
