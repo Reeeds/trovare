@@ -1,87 +1,96 @@
 /* ------------------------------------------------------------------------------------------
-   COLORS > COLOR VARIABLES
+   COLORS > COLOR VARIABLES (for internal use only!)
    ------------------------------------------------------------------------------------------ */
-$yellow:          #ffeb3b;
-$green:           #8bc34a;
-$orange:          #ff9800;
-$blue:            #2196f3;
-$purple:          #9c27b0;
-$red:             #f44336;
-$bloodred:        #DC143C;
-$black:           #000000;
-$white:           #ffffff;
-$darkgrey:        #333333;
-$grey:            #B4B4B4;
-$lightgrey:       #f8f5f0;
-$greyblue:        #A0B2C4;
-$greyblue_light:  #f0f0f5;
+$_yellow:          #ffeb3b;
+$_green:           #8bc34a;
+$_orange:          #ff9800;
+$_blue:            #2196f3;
+$_purple:          #9c27b0;
+$_red:             #f44336;
 
-$blue-light-100:	#ffffff;
-$blue-light-95:	  #e6e6ff;
-$blue-light-90:	  #ccccff;
-$blue-light-85:	  #b3b3ff;
-$blue-light-80:	  #9999ff;
-$blue-light-75:	  #8080ff;
-$blue-light-70:	  #6666ff;
-$blue-light-65:	  #4d4dff;
-$blue-light-60:	  #3333ff;
-$blue-light-55:	  #1a1aff;
-$blue-light-50:	  #0000ff;
-$blue-light-45:	  #0000e6;
-$blue-light-40:	  #0000cc;
-$blue-light-35:	  #0000b3;
-$blue-light-30:   #000099;
-$blue-light-25:	  #000080;
-$blue-light-20:	  #000066;
-$blue-light-15:	  #00004d;
-$blue-light-10:	  #000033;
-$blue-light-5:    #00001a;
+$_darkgrey:        #333333;
+$_grey:            #B4B4B4;
+$_lightgrey:       #f8f5f0;
+$_black:           #000000;
+$_white:           #ffffff;
 
 
 
 /* ------------------------------------------------------------------------------------------
-   COLORS > FUNCTIONAL VARIABLES
+   COLORS > GENERAL
    ------------------------------------------------------------------------------------------ */
-$color-primary:           darken($blue, 18);
-
+/* PRIMARY COLOR */
+$color-primary:           darken($_blue, 18);
 $color-primary-lt:        lighten($color-primary, 3);
-$color-primary-ltr:       lighten($color-primary, 5);
-$color-primary-ltst:      lighten($color-primary, 10);
-
-
 $color-primary-dk:        darken($color-primary, 3);
 $color-primary-dkr:       darken($color-primary, 5);
 $color-primary-dkst:      darken($color-primary, 10);
 
-$color-primary-contrast:  $white;
-
-$color-border:            lighten($grey, 20);
-$color-table-row-odd:     lighten($grey, 28);
+$color-primary-contrast:  $_white;
 
 
-$highlight_color_1:     $yellow;
-$highlight_color_2:     $green;
-$highlight_color_3:     $orange;
-$highlight_color_4:     $blue;
-$highlight_color_5:     $purple;
-$highlight_color_6:     $red;
+/* STATE */
+$color-inactive:          $_grey;
 
-$header_background:     $greyblue;
-$issue_link:            $red;
-$issue_link_hover:      $purple;
-$table_row_odd:         $greyblue_light;
-$tooltip_background:    $lightgrey;
-$tooltip_font:          $darkgrey;
-$tooltip_border:        $darkgrey;
-$tooltip_arrow:         $lightgrey;
-$tooltip_arrow_border:  $darkgrey;
-$text_standard:         $darkgrey;
-$text_light:            lighten($darkgrey, 30);
 
-$checkbox-inactive_color:  $grey;
-$checkbox-active_color:    $blue;
+/* ELEMENTS */
+$color-border:            lighten($_grey, 20);
 
-$favourite-inactive_color:  $grey;
-$favourite-active_color:    $blue;
+$color-text-info:         $color-inactive;
+$color-text-light:        lighten($_darkgrey, 30);
 
-$text-info-color:           $grey;
+
+
+/* ------------------------------------------------------------------------------------------
+   COLORS > COMPONENTS
+   ------------------------------------------------------------------------------------------ */
+/* HIGHLIGHT */
+$color-highlight-1:               $_yellow;
+$color-highlight-2:               $_green;
+$color-highlight-3:               $_orange;
+$color-highlight-4:               $_blue;
+$color-highlight-5:               $_purple;
+$color-highlight-6:               $_red;
+
+
+/* PRIORITY (DOTS) */
+$color-priority-high:             $_red;
+$color-priority-medium:           $_orange;
+$color-priority-normal:           $_yellow;
+$color-priority-low:              $_green;
+
+
+/* CHECKBOX */
+$color-checkbox-inactive:         $color-inactive;
+$color-checkbox-active:           $color-primary;
+
+
+/* MULTISELECT */
+$color-multiselect-bg:            $_white;
+$color-multiselect-item-hover:    $_lightgrey;
+
+
+/* FAVOURITE */
+$color-favourite-inactive:        $color-inactive;
+$color-favourite-active:          $color-primary;
+
+
+/* SWITCH (CHECKBOX) */
+$color-switch-bg-active:          darken($_grey, 10);
+$color-switch-bg-inactive:        $_grey;
+$color-switch-fg-active:          $color-primary;
+$color-switch-fg-inactive:        $_lightgrey;
+
+$color-switch-light-bg-active:    lighten($color-primary, 40);
+$color-switch-light-bg-inactive:  $_white;
+$color-switch-light-fg-active:    $_white;
+$color-switch-light-fg-inactive:  $_grey;
+
+
+/* FORM */
+$color-form-border:               $color-border;
+
+
+/* TABLE */
+$color-table-border:              $color-border;
+$color-table-row-odd:             lighten($_grey, 28);

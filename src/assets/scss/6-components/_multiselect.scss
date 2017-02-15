@@ -35,7 +35,7 @@ $multiselect-dropdown-button-size: $btn-height + (2 * $space-tiny);
   position: absolute;
   box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.2);
   border-radius: $border-radius;
-  background: rgb(255, 255, 255);
+  background: $color-multiselect-bg;
 
   .multiselect.multiselect--active & {
     display: block;
@@ -73,7 +73,7 @@ $multiselect-dropdown-button-size: $btn-height + (2 * $space-tiny);
   transition: background-color 300ms ease;
 
   &:hover {
-    background-color: rgb(245, 245, 245);
+    background-color: $color-multiselect-item-hover;
   }
 }
 

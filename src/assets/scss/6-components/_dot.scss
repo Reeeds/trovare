@@ -6,15 +6,15 @@
   height: 8px;
   display: inline-block;
   border-radius: 100%;
-  background-color: $lightgrey;
+  background-color: $color-inactive;
 
 
 
   /* ------------------------------------------------------------------------------------------
      MODIFIERS
      ------------------------------------------------------------------------------------------ */
-  &.dot--red    { background-color: $red; }
-  &.dot--orange { background-color: $orange; }
-  &.dot--yellow { background-color: $yellow; }
-  &.dot--green  { background-color: $green; }
+  &.dot--red    { background-color: $color-priority-high; }
+  &.dot--orange { background-color: $color-priority-medium; }
+  &.dot--yellow { background-color: $color-priority-normal; }
+  &.dot--green  { background-color: $color-priority-low; }
 }

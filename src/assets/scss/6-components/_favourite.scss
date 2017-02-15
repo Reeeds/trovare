@@ -3,7 +3,7 @@
    ------------------------------------------------------------------------------------------ */
 .favourite {
   cursor: pointer;
-  color: $favourite-inactive_color;
+  color: $color-favourite-inactive;
 
 
 
@@ -11,6 +11,6 @@
      MODIFIERS
      ------------------------------------------------------------------------------------------ */
   &.favourite--is-active {
-    color: $favourite-active_color;
+    color: $color-favourite-active;
   }
 }

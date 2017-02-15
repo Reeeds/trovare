@@ -30,7 +30,7 @@ $padding: 4px;
   outline: none;
   border-radius: $size;
   border: none;
-  background: $grey;
+  background: $color-switch-bg-inactive;
   background-clip: padding-box;
 
   &::after {
@@ -41,16 +41,16 @@ $padding: 4px;
     top: ($padding / 2);
     left: ($padding / 2);
     border-radius: 100%;
-    background: $lightgrey;
+    background: $color-switch-fg-inactive;
     transition: left .15s ease;
     content: "";
   }
 
   .switch--light & {
-    background: $white;
+    background: $color-switch-light-bg-inactive;
 
     &::after {
-      background: $grey;
+      background: $color-switch-light-fg-inactive;
     }
   }
 }
@@ -59,7 +59,7 @@ $padding: 4px;
   display: none;
 
   &:checked + .switch__icon {
-    background: $color-primary;
+    background: $color-switch-fg-active;
 
     &::after {
       left: $width - $size-button - ($padding / 2);
@@ -68,18 +68,18 @@ $padding: 4px;
 
   &:active + .switch__icon {
     &::after {
-      background: darken($grey, 10);
+      background: $color-switch-bg-active;
     }
   }
 
   .switch--light & {
     &:checked + .switch__icon {
-      background: lighten($color-primary, 40);
+      background: $color-switch-light-bg-active;
     }
 
     &:checked + .switch__icon {
       &::after {
-        background: $white;
+        background: $color-switch-light-fg-active;
       }
     }
   }

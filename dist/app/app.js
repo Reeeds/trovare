@@ -326,10 +326,10 @@
       {
         column: 'Fehlerklasse',
         colors: {
-          'A - Critical': 'red',
-          'B - High':     'orange',
-          'C - Medium':   'yellow',
-          'D - Low':      'green'
+          'A - Critical': 'high',
+          'B - High':     'medium',
+          'C - Medium':   'normal',
+          'D - Low':      'low'
         }
       }
     ])

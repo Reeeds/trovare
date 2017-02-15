@@ -16,12 +16,12 @@
 }
 
 .is-highlighted {
-  &--style-1 { background-color: $highlight_color_1; }
-  &--style-2 { background-color: $highlight_color_2; }
-  &--style-3 { background-color: $highlight_color_3; }
-  &--style-4 { background-color: $highlight_color_4; }
-  &--style-5 { background-color: $highlight_color_5; }
-  &--style-6 { background-color: $highlight_color_6; }
+  &--style-1 { background-color: $color-highlight-1; }
+  &--style-2 { background-color: $color-highlight-2; }
+  &--style-3 { background-color: $color-highlight-3; }
+  &--style-4 { background-color: $color-highlight-4; }
+  &--style-5 { background-color: $color-highlight-5; }
+  &--style-6 { background-color: $color-highlight-6; }
 }
 
 .text-centered {
@@ -29,6 +29,6 @@
 }
 
 .text-info {
-  color: $text-info-color;
+  color: $color-text-info;
   font-size: $font-size-small;
 }
