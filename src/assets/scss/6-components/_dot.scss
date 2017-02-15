@@ -13,8 +13,8 @@
   /* ------------------------------------------------------------------------------------------
      MODIFIERS
      ------------------------------------------------------------------------------------------ */
-  &.dot--red    { background-color: $color-priority-high; }
-  &.dot--orange { background-color: $color-priority-medium; }
-  &.dot--yellow { background-color: $color-priority-normal; }
-  &.dot--green  { background-color: $color-priority-low; }
+  &.dot--high   { background-color: $color-priority-high; }
+  &.dot--medium { background-color: $color-priority-medium; }
+  &.dot--normal { background-color: $color-priority-normal; }
+  &.dot--low    { background-color: $color-priority-low; }
 }
