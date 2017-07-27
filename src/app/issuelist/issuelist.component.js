@@ -73,7 +73,7 @@
       vm.rows = new csv(fileContent, { header: true, cast: false, delimiter: ';' }).parse();
       vm.headers = {};
 
-      $localStorage.lastUpload = JSON.stringify({ name: vm.name, content: vm.content });
+      cacheFile();
 
       var newHeader = function(key) {
         return {
@@ -136,6 +136,14 @@
           }
         });
       });
+    }
+
+    function cacheFile() {
+      try {
+        $localStorage.lastUpload = JSON.stringify({ name: vm.name, content: vm.content });
+      } catch(ex) {
+        console.log("Couldn't write the file into localStorage: " + ex.message);
+      }
     }
 
     function orderBy(val) {
